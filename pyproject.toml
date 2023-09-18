@@ -368,4 +368,4 @@ accent = "yellow"
 toggle = { icon = "material/lightbulb-outline", name = "Switch to dark mode" }
 
 [tool.cruft]
-skip= ["CODEOWNERS","docs/TODO.md","README.md","Makefile",".gitignore","poetry.toml","tests/__init__.py","tests/conftest.py",".python-version",".gitignore",]
+skip= ["CODEOWNERS","docs/TODO.md","README.md","Makefile",".gitignore","poetry.toml","tests/__init__.py","tests/conftest.py",".python-version",".gitignore",".github/workflows/build-test-publish.yml",]

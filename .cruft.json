@@ -1,7 +1,7 @@
 {
   "template": "git@github.com:SandsB2B/cookiecutter-project-docs.git",
-  "commit": "fdae5abd07e637af2f994a1d328e8b858e379eeb",
-  "checkout": "v0.16.9",
+  "commit": "3c9c537278ecf9ac5831a39e4b62e5063cac8360",
+  "checkout": "v0.16.10",
   "context": {
     "cookiecutter": {
       "authors": "{name = \"Amazon Web Services\"};",
@@ -32,7 +32,7 @@
       "python_ci_build_version": "3.9",
       "python_requires": ">=3.8",
       "python_toolbag_version": "~0.18.5",
-      "cruft_skip": "CODEOWNERS,docs/TODO.md,README.md,Makefile,.gitignore,poetry.toml,tests/__init__.py,tests/conftest.py,.python-version,.gitignore",
+      "cruft_skip": "CODEOWNERS,docs/TODO.md,README.md,Makefile,.gitignore,poetry.toml,tests/__init__.py,tests/conftest.py,.python-version,.gitignore,.github/workflows/build-test-publish.yml",
       "src_path_prefix": "",
       "site_name": "Universal Command Line Environment for AWS.",
       "site_description": "Universal Command Line Environment for AWS.",
@@ -66,6 +66,7 @@
       "gh_email": "christo.delange@sands.com",
       "gh_username_oss_repos": "christokur",
       "gh_pages_branches": "main",
+      "gh_matrix_os": "macos-latest",
       "_extensions": [
         "toolbag.utils.template_expander.extensions.python_extension.PythonExtension"
       ],
