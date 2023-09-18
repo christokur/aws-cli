@@ -41,6 +41,7 @@ jobs:
         echo python-path:'${{ steps.setup_python.outputs.python-path }}'
         ${{ steps.setup_python.outputs.python-path }} --version
         ${{ steps.setup_python.outputs.python-path }} -m pip install poetry==1.5.1
+      shell: bash
 
     - name: Self-Configure AWS Credentials
       continue-on-error: false
@@ -81,19 +82,23 @@ jobs:
 
     - name: Install dependencies
       run: |
-        poetry lock --check
-        poetry install --with main,dev,test --no-ansi --no-interaction --verbose
+        #poetry lock --check
+        #poetry install --with main,dev,test --no-ansi --no-interaction --verbose
         pip list
+        python scripts/ci/install
+        pip list
+      shell: bash
 
     - name: Test coverage
       run: |
-        poetry env info
-        poetry run poe test-cov
-
-    - name: Poetry build and publish
+        python scripts/ci/run-tests --with-cov
+        pip uninstall -y awscli
+        python scripts/ci/run-backend-tests
+      shell: bash
+        
+    - name: Publish
       if: matrix.python-version == '3.9' && matrix.os == 'ubuntu-latest'
       run: |
-        #poetry env use ${{ matrix.python-version }}
-        poetry env info
-        poetry build
-        poetry publish -r codeartifact
+        cat ~/.pypirc
+        flit publish --repository codeartifact
+      shell: bash
