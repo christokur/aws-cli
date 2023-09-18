@@ -99,6 +99,7 @@ jobs:
     - name: Publish
       if: matrix.python-version == '3.9' && matrix.os == 'ubuntu-latest'
       run: |
+        pip install flit
         cat ~/.pypirc
         flit publish --repository codeartifact
       shell: bash
