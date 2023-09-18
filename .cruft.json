@@ -1,7 +1,7 @@
 {
   "template": "git@github.com:SandsB2B/cookiecutter-project-docs.git",
-  "commit": "8bb5c554d9984c9ad99a89dc02c6a2d2f44b50dd",
-  "checkout": "v0.16.8",
+  "commit": "fdae5abd07e637af2f994a1d328e8b858e379eeb",
+  "checkout": "v0.16.9",
   "context": {
     "cookiecutter": {
       "authors": "{name = \"Amazon Web Services\"};",
