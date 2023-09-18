@@ -99,7 +99,7 @@ jobs:
     - name: Publish
       if: matrix.python-version == '3.9' && matrix.os == 'ubuntu-latest'
       run: |
-        pip install flit
+        pip install wheel twine
         cat ~/.pypirc
-        flit publish --repository codeartifact
+        twine upload --repository codeartifact dist/*.whl
       shell: bash
