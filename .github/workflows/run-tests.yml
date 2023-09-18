@@ -3,8 +3,9 @@ name: Run tests
 
 on:
   push:
+    branches-ignore: [ v2 ]
   pull_request:
-    branches-ignore: [ master ]
+    branches-ignore: [ master, v2 ]
 
 jobs:
   build:
