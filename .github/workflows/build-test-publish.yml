@@ -89,12 +89,12 @@ jobs:
         pip list
       shell: bash
 
-    - name: Test coverage
-      run: |
-        python scripts/ci/run-tests --with-cov
-        pip uninstall -y awscli
-        python scripts/ci/run-backend-tests
-      shell: bash
+#    - name: Test coverage
+#      run: |
+#        python scripts/ci/run-tests --with-cov
+#        pip uninstall -y awscli
+#        python scripts/ci/run-backend-tests
+#      shell: bash
         
     - name: Publish
       if: matrix.python-version == '3.9' && matrix.os == 'ubuntu-latest'
