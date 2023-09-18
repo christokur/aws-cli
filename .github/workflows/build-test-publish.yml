@@ -101,5 +101,11 @@ jobs:
       run: |
         pip install wheel twine
         cat ~/.pypirc
-        twine upload --repository codeartifact dist/*.whl
+        export TWINE_USERNAME=aws
+        export TWINE_PASSWORD=`aws codeartifact get-authorization-token --domain artifacts --domain-owner $AWS_ACCOUNT_TOOLS --query authorizationToken --output text --profile=cloud-services-prod`
+        export TWINE_REPOSITORY_URL=`aws codeartifact get-repository-endpoint --domain artifacts --domain-owner $AWS_ACCOUNT_TOOLS --repository pypi --format pypi --query repositoryEndpoint --output text --profile=cloud-services-prod`
+        #twine upload --repository codeartifact dist/*.whl
+        for whl in dist/*.whl; do
+          twine upload --repository-url $TWINE_REPOSITORY_URL -u $TWINE_USER -p $TWINE_PASSWORD --verbose $whl
+        done
       shell: bash
