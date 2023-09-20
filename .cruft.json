@@ -1,7 +1,7 @@
 {
   "template": "git@github.com:SandsB2B/cookiecutter-project-docs.git",
-  "commit": "3c9c537278ecf9ac5831a39e4b62e5063cac8360",
-  "checkout": "v0.16.10",
+  "commit": "cf7377b22993760501bc2fe10e9e71fc7dbf6d93",
+  "checkout": "v0.16.28",
   "context": {
     "cookiecutter": {
       "authors": "{name = \"Amazon Web Services\"};",
@@ -13,7 +13,7 @@
       "description": "Universal Command Line Environment for AWS.",
       "license_text": "{ file = \"LICENSE.txt\" }",
       "readme": "README.rst",
-      "version": "2.13.19post1",
+      "version": "2.13.19post2",
       "package_name": "awscli",
       "packager": "flit",
       "dynamic": "version",
@@ -44,8 +44,11 @@
       "theme_dark_accent": "yellow",
       "tox_enable": "False",
       "coverage_fail_under": "5",
+      "black_exclude": "",
       "black_line_length": "80",
+      "black_skip_string_normalization": "true",
       "black_target_version": "'py38', 'py39', 'py310', 'py311'",
+      "isort_profile": "black",
       "enable_prospector": "False",
       "prospector_ignore_paths": "debug,environment/,bin/,.pytest_cache/,purgatory/",
       "pre_commit_check_yaml_excludes": "cookiecutter/.*",
@@ -75,6 +78,7 @@
         "build-backend": "\"pep517\"",
         "backend-path": "[\"backends\"]"
       },
+      "tox_legacy_ini": {},
       "poetry_dependencies": {
         "colorama": ">=0.2.5,<0.4.7",
         "docutils": ">=0.10,<0.20",
@@ -102,19 +106,20 @@
         "gitlint": "{ version = '~0.19.1' }",
         "gitown": "{ git = 'https://github.com/christokur/gitown.git', tag = 'v0.2.6' }",
         "isort": "{ version = '~5.11.5' }",
-        "poetry-plugin-bump2version": "{ version = '>=0.11.1' }",
         "pre-commit": "{ version = '~2.21.0' }",
         "prompt-toolkit": "~3.0.37",
-        "prospector": "{ git = 'https://github.com/christokur/prospector.git', extras = ['with-everything'], branch = 'master' }",
         "pyproject-fmt": "{ version = '~0.13.0' }",
         "ruff": ">=0.0.280",
         "semver": ">=3.0.0,<4.0.0",
+        "poetry-plugin-bump2version": "{ version = '>=0.11.1' }",
+        "prospector": "{ git = 'https://github.com/christokur/prospector.git', extras = ['with-everything'], branch = 'master' }",
         "PyInstaller": "==5.7.0",
         "check-manifest": "==0.47"
       },
       "poetry_docs_dependencies": {
         "pymdown-extensions": ">=10.0"
       },
+      "poetry_extras": {},
       "poetry_packages": {
         "1": {
           "include": "awscli"
@@ -124,6 +129,7 @@
       "poetry_scripts": {},
       "poetry_urls": {},
       "poe_tasks": {},
+      "portray_mkdocs_theme": {},
       "pytest_ini_options": {
         "lines": [
           "# We set error warning filters in order to enforce that particular",

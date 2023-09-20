@@ -29,7 +29,7 @@ classifiers = [
 dependencies = [
     "colorama>=0.2.5,<0.4.7",
     "docutils>=0.10,<0.20",
-    "cryptography>=3.3.2,<41.0.5",
+    "cryptography>=3.3.2,<38.0.5",
     "ruamel.yaml>=0.15.0,<=0.17.21",
     "prompt-toolkit>=3.0.24,<3.0.29",
     "distro>=1.5.0,<1.6.0",
@@ -56,9 +56,7 @@ include = [
     "exe/**/*",
 ]
 # end of cli sdist tool section
-
 # end flit
-
 [tool.black]
 line-length = 80
 target-version = ['py38', 'py39', 'py310', 'py311']
@@ -298,7 +296,7 @@ args = [
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "0.26.6"
+version = "2.13.19post2"
 version_files = [
     ".bumpversion.cfg",
     "VERSION",
