@@ -40,7 +40,7 @@ dependencies = [
     "urllib3>=1.25.4,<1.27",
     ]
 
-dynamic = ["version",]
+#dynamic = ["version",]
 
 [project.urls]
 homepage = "http://aws.amazon.com/cli/"
