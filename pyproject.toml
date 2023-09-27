@@ -296,7 +296,7 @@ args = [
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "2.13.19post2"
+version = "2.13.21post1"
 version_files = [
     ".bumpversion.cfg",
     "VERSION",

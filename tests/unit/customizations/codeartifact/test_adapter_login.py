@@ -1,6 +1,8 @@
 import errno
 import os
+import re
 import signal
+import stat
 import subprocess
 
 from datetime import datetime
@@ -11,9 +13,10 @@ from configparser import RawConfigParser
 from urllib.parse import urlsplit
 
 from awscli.testutils import unittest, mock, FileCreator, skip_if_windows
+from awscli.compat import urlparse
 from awscli.customizations.codeartifact.login import (
-    BaseLogin, NuGetLogin, DotNetLogin, NpmLogin, PipLogin, TwineLogin,
-    get_relative_expiration_time
+    BaseLogin, SwiftLogin, NuGetLogin, DotNetLogin, NpmLogin, PipLogin,
+    TwineLogin, get_relative_expiration_time, CommandFailedError
 )
 
 
@@ -51,6 +54,21 @@ class TestBaseLogin(unittest.TestCase):
                 self.endpoint, self.auth_token
             )
 
+    def test_run_commands_command_failed(self):
+        error_to_be_caught = subprocess.CalledProcessError(
+            returncode=1,
+            cmd=['cmd'],
+            output=None,
+            stderr=b'Command error message.'
+        )
+        self.subprocess_utils.run.side_effect = error_to_be_caught
+        with self.assertRaisesRegex(
+            CommandFailedError,
+            rf"{re.escape(str(error_to_be_caught))}"
+            rf" Stderr from command:\nCommand error message."
+        ):
+            self.test_subject._run_commands('tool', ['cmd'])
+
     def test_run_commands_nonexistent_command(self):
         self.subprocess_utils.run.side_effect = OSError(
             errno.ENOENT, 'not found error'
@@ -70,6 +88,337 @@ class TestBaseLogin(unittest.TestCase):
 
 def handle_timeout(signum, frame, test_name):
     raise TimeoutError(f"{test_name} timed out!!")
+
+
+class TestSwiftLogin(unittest.TestCase):
+
+    def setUp(self):
+        self.domain = 'domain'
+        self.domain_owner = 'domain-owner'
+        self.package_format = 'swift'
+        self.repository = 'repository'
+        self.auth_token = 'auth-token'
+        self.namespace = 'namespace'
+        self.expiration = (datetime.now(tzlocal()) + relativedelta(hours=10)
+                           + relativedelta(minutes=9)).replace(microsecond=0)
+        self.endpoint = f'https://{self.domain}-{self.domain_owner}.codeartifact' \
+                        f'.aws.a2z.com/{self.package_format}/{self.repository}/'
+        self.hostname = urlparse.urlparse(self.endpoint).hostname
+        self.new_entry = SwiftLogin.DEFAULT_NETRC_FMT.format(
+            hostname=self.hostname,
+            auth_token=self.auth_token
+        )
+
+        self.file_creator = FileCreator()
+        self.test_netrc_path = self.file_creator.full_path('netrc')
+        self.get_netrc_path_patch = mock.patch(
+            'awscli.customizations.codeartifact.login.SwiftLogin'
+            '.get_netrc_path'
+        )
+        self.get_netrc_path_mock = self.get_netrc_path_patch.start()
+        self.get_netrc_path_mock.return_value = self.test_netrc_path
+
+        self.base_command = ['swift', 'package-registry', 'set', self.endpoint]
+        self.macos_commands = [
+            self.base_command[:],
+            ['swift', 'package-registry', 'login', self.endpoint + 'login',
+             '--token', self.auth_token]
+        ]
+        self.non_macos_commands = [
+            self.base_command[:],
+            ['swift', 'package-registry', 'login', self.endpoint + 'login']
+        ]
+
+        self.subprocess_utils = mock.Mock()
+
+        self.test_subject = SwiftLogin(
+            self.auth_token, self.expiration, self.endpoint,
+            self.domain, self.repository, self.subprocess_utils
+        )
+
+    def tearDown(self):
+        self.get_netrc_path_patch.stop()
+        self.file_creator.remove_all()
+
+    def _assert_netrc_has_expected_content(self, expected_contents):
+        with open(self.test_netrc_path, 'r') as file:
+            actual_contents = file.read()
+            self.assertEqual(expected_contents, actual_contents)
+
+    def _assert_netrc_has_expected_permissions(self):
+        file_stat = os.stat(self.test_netrc_path)
+        file_mode = file_stat.st_mode
+        self.assertTrue(stat.S_IRUSR & file_mode)
+        self.assertTrue(stat.S_IWUSR & file_mode)
+
+    def test_get_netrc_path(self):
+        self.assertEqual(
+            SwiftLogin.get_netrc_path(),
+            self.test_netrc_path
+        )
+
+    def test_regex_only_match_escaped_hostname(self):
+        pattern = re.compile(
+            SwiftLogin.NETRC_REGEX_FMT.format(
+                escaped_hostname=re.escape(self.hostname)
+            ),
+            re.M
+        )
+        bad_endpoint = f'https://{self.domain}-{self.domain_owner}-codeartifact' \
+                          f'-aws-a2z-com/{self.package_format}/{self.repository}/'
+        bad_hostname = urlparse.urlparse(bad_endpoint).hostname
+        bad_entry = SwiftLogin.DEFAULT_NETRC_FMT.format(
+            hostname=bad_hostname,
+            auth_token=self.auth_token
+        )
+        self.assertTrue(pattern.match(self.new_entry))
+        self.assertFalse(pattern.match(bad_entry))
+
+    def test_create_netrc_if_not_exist(self):
+        self.assertFalse(os.path.exists(self.test_netrc_path))
+        self.test_subject._update_netrc_entry(
+            self.hostname,
+            'a new entry',
+            self.test_netrc_path
+        )
+        self.assertTrue(os.path.exists(self.test_netrc_path))
+        self._assert_netrc_has_expected_permissions()
+        self._assert_netrc_has_expected_content('a new entry\n')
+
+    def test_replacement_token_has_backslash(self):
+        existing_content = (
+            f'machine {self.hostname} login token password expired-auth-token\n'
+        )
+        with open(self.test_netrc_path, 'w+') as f:
+            f.write(existing_content)
+        self.test_subject.auth_token = r'new-token_.\1\g<entry_start>\n\w'
+        # make sure it uses re.sub() to replace the token
+        self.test_subject._update_netrc_entry(
+            self.hostname,
+            '',
+            self.test_netrc_path
+        )
+        self.assertTrue(os.path.exists(self.test_netrc_path))
+        self._assert_netrc_has_expected_content(
+            f'machine {self.hostname} login token password {self.test_subject.auth_token}\n'
+        )
+
+    def test_update_netrc_with_existing_entry(self):
+        existing_content = \
+            f'machine {self.hostname} login token password expired-auth-token\n'
+
+        expected_content = f'{self.new_entry}\n'
+        with open(self.test_netrc_path, 'w+') as f:
+            f.write(existing_content)
+
+        self.test_subject._update_netrc_entry(
+            self.hostname,
+            self.new_entry,
+            self.test_netrc_path
+        )
+        self._assert_netrc_has_expected_content(expected_content)
+
+    def test_update_netrc_with_existing_entry_in_between(self):
+        existing_content = (
+            f'some random line above\n'
+            f'machine {self.hostname} login token password expired-auth-token\n'
+            f'some random line below\n'
+        )
+
+        expected_content = (
+            f'some random line above\n'
+            f'{self.new_entry}\n'
+            f'some random line below\n'
+        )
+        with open(self.test_netrc_path, 'w+') as f:
+            f.write(existing_content)
+
+        self.test_subject._update_netrc_entry(
+            self.hostname,
+            self.new_entry,
+            self.test_netrc_path
+        )
+        self._assert_netrc_has_expected_content(expected_content)
+
+    def test_append_netrc_without_ending_newline(self):
+        existing_content = 'machine host login user password 1234'
+
+        expected_content = (
+            f'machine host login user password 1234\n'
+            f'{self.new_entry}\n'
+        )
+        with open(self.test_netrc_path, 'w+') as f:
+            f.write(existing_content)
+
+        self.test_subject._update_netrc_entry(
+            self.hostname,
+            self.new_entry,
+            self.test_netrc_path
+        )
+        self._assert_netrc_has_expected_content(expected_content)
+
+    def test_append_netrc_with_ending_newline(self):
+        existing_content = 'machine host login user password 1234\n'
+
+        expected_content = (
+            f'machine host login user password 1234\n'
+            f'{self.new_entry}\n'
+        )
+        with open(self.test_netrc_path, 'w+') as f:
+            f.write(existing_content)
+
+        self.test_subject._update_netrc_entry(
+            self.hostname,
+            self.new_entry,
+            self.test_netrc_path
+        )
+        self._assert_netrc_has_expected_content(expected_content)
+
+    def test_update_netrc_with_multiple_spaces_and_newlines(self):
+        existing_content = (
+            f' machine   {self.hostname}\n' 
+            f'   login token \n'
+            f'password expired-auth-token  \n'
+            f'\n'
+            f'machine example1.com\n'
+            f' login user1 \n'
+            f'password  1234\n'
+        )
+        expected_content = (
+            f' machine   {self.hostname}\n'
+            f'   login token \n'
+            f'password auth-token  \n'
+            f'\n'
+            f'machine example1.com\n'
+            f' login user1 \n'
+            f'password  1234\n'
+        )
+        with open(self.test_netrc_path, 'w+') as f:
+            f.write(existing_content)
+
+        self.test_subject._update_netrc_entry(
+            self.hostname,
+            self.new_entry,
+            self.test_netrc_path
+        )
+        self._assert_netrc_has_expected_content(expected_content)
+
+    def test_update_netrc_with_multiple_existing_entries(self):
+        existing_content = (
+            f'machine {self.hostname} login token password expired-auth-token-1\n'
+            f'machine {self.hostname} login token password expired-auth-token-2\n'
+        )
+        expected_content = (
+            f'{self.new_entry}\n'
+            f'{self.new_entry}\n'
+        )
+        with open(self.test_netrc_path, 'w+') as f:
+            f.write(existing_content)
+
+        self.test_subject._update_netrc_entry(
+            self.hostname,
+            self.new_entry,
+            self.test_netrc_path
+        )
+        self._assert_netrc_has_expected_content(expected_content)
+
+    @mock.patch('awscli.customizations.codeartifact.login.is_macos', True)
+    def test_login_macos(self):
+        self.test_subject.login()
+        expected_calls = [
+            mock.call(
+                command,
+                capture_output=True,
+                check=True
+            ) for command in self.macos_commands
+        ]
+        self.subprocess_utils.run.assert_has_calls(
+            expected_calls, any_order=True
+        )
+
+    @mock.patch('awscli.customizations.codeartifact.login.is_macos', False)
+    def test_login_non_macos(self):
+        self.test_subject.login()
+        expected_calls = [
+            mock.call(
+                command,
+                capture_output=True,
+                check=True
+            ) for command in self.non_macos_commands
+        ]
+        self.subprocess_utils.run.assert_has_calls(
+            expected_calls, any_order=True
+        )
+
+    def test_login_swift_tooling_error(self):
+        self.subprocess_utils.run.side_effect = \
+            subprocess.CalledProcessError(
+                returncode=1, cmd='swift command', stderr=b''
+            )
+        with self.assertRaises(CommandFailedError):
+            self.test_subject.login()
+
+    def test_login_swift_not_installed(self):
+        self.subprocess_utils.run.side_effect = OSError(
+            errno.ENOENT, 'not found error'
+        )
+        with self.assertRaisesRegex(
+                ValueError,
+                'swift was not found. Please verify installation.'):
+            self.test_subject.login()
+
+    def test_get_scope(self):
+        expected_value = 'namespace'
+        scope = self.test_subject.get_scope(self.namespace)
+        self.assertEqual(scope, expected_value)
+
+    def test_get_scope_none_namespace(self):
+        expected_value = None
+        scope = self.test_subject.get_scope(None)
+        self.assertEqual(scope, expected_value)
+
+    def test_get_scope_invalid_leading_character(self):
+        with self.assertRaises(ValueError):
+            self.test_subject.get_scope(f'.{self.namespace}')
+
+    def test_get_scope_invalid_length(self):
+        with self.assertRaises(ValueError):
+            self.test_subject.get_scope("a"*40)
+
+    @mock.patch('awscli.customizations.codeartifact.login.is_macos', True)
+    def test_get_commands_macos(self):
+        commands = self.test_subject.get_commands(
+            self.endpoint, self.auth_token
+        )
+        self.assertCountEqual(commands, self.macos_commands)
+
+    @mock.patch('awscli.customizations.codeartifact.login.is_macos', False)
+    def test_get_commands_non_macos(self):
+        commands = self.test_subject.get_commands(
+            self.endpoint, self.auth_token
+        )
+        self.assertCountEqual(commands, self.non_macos_commands)
+
+    @mock.patch('awscli.customizations.codeartifact.login.is_macos', True)
+    def test_get_commands_with_scope_macos(self):
+        commands = self.test_subject.get_commands(
+            self.endpoint, self.auth_token, scope=self.namespace
+        )
+        self.macos_commands[0] += ['--scope', self.namespace]
+        self.assertCountEqual(commands, self.macos_commands)
+
+    @mock.patch('awscli.customizations.codeartifact.login.is_macos', False)
+    def test_get_commands_with_scope_non_macos(self):
+        commands = self.test_subject.get_commands(
+            self.endpoint, self.auth_token, scope=self.namespace
+        )
+        self.non_macos_commands[0] += ['--scope', self.namespace]
+        self.assertCountEqual(commands, self.non_macos_commands)
+
+    def test_login_dry_run(self):
+        self.test_subject.login(dry_run=True)
+        self.subprocess_utils.check_output.assert_not_called()
+        self.assertFalse(os.path.exists(self.test_netrc_path))
 
 
 class TestNuGetLogin(unittest.TestCase):
@@ -145,9 +494,10 @@ Registered Sources:
             self.list_operation_command,
             stderr=self.subprocess_utils.PIPE
         )
-        self.subprocess_utils.check_output.assert_called_with(
+        self.subprocess_utils.run.assert_called_with(
             self.add_operation_command,
-            stderr=self.subprocess_utils.PIPE
+            capture_output=True,
+            check=True
         )
 
     def test_login_dry_run(self):
@@ -167,9 +517,10 @@ Registered Sources:
             self.list_operation_command,
             stderr=self.subprocess_utils.PIPE
         )
-        self.subprocess_utils.check_output.assert_called_with(
+        self.subprocess_utils.run.assert_called_with(
             self.add_operation_command,
-            stderr=self.subprocess_utils.PIPE
+            capture_output=True,
+            check=True
         )
 
     def test_login_dry_run_old_nuget(self):
@@ -188,9 +539,10 @@ Registered Sources:
         self.subprocess_utils.check_output.return_value = \
             list_response.encode('utf-8')
         self.test_subject.login()
-        self.subprocess_utils.check_output.assert_called_with(
+        self.subprocess_utils.run.assert_called_with(
             self.update_operation_command,
-            stderr=self.subprocess_utils.PIPE
+            capture_output=True,
+            check=True
         )
 
     def test_login_source_url_already_exists_old_nuget(self):
@@ -202,7 +554,7 @@ Registered Sources:
         self.subprocess_utils.check_output.return_value = \
             list_response.encode('utf-8')
         self.test_subject.login()
-        self.subprocess_utils.check_output.assert_called_with(
+        self.subprocess_utils.run.assert_called_with(
             [
                 'nuget', 'sources', 'update',
                 '-name', non_default_source_name,
@@ -210,7 +562,8 @@ Registered Sources:
                 '-username', 'aws',
                 '-password', self.auth_token
             ],
-            stderr=self.subprocess_utils.PIPE
+            capture_output=True,
+            check=True
         )
 
     def test_login_source_url_already_exists(self):
@@ -221,7 +574,7 @@ Registered Sources:
         self.subprocess_utils.check_output.return_value = \
             list_response.encode('utf-8')
         self.test_subject.login()
-        self.subprocess_utils.check_output.assert_called_with(
+        self.subprocess_utils.run.assert_called_with(
             [
                 'nuget', 'sources', 'update',
                 '-name', non_default_source_name,
@@ -229,7 +582,8 @@ Registered Sources:
                 '-username', 'aws',
                 '-password', self.auth_token
             ],
-            stderr=self.subprocess_utils.PIPE
+            capture_output=True,
+            check=True
         )
 
     def test_login_nuget_not_installed(self):
@@ -347,9 +701,10 @@ to an 'HTTPS' source."""
             self.list_operation_command,
             stderr=self.subprocess_utils.PIPE
         )
-        self.subprocess_utils.check_output.assert_called_with(
+        self.subprocess_utils.run.assert_called_with(
             self.add_operation_command_non_windows,
-            stderr=self.subprocess_utils.PIPE
+            capture_output=True,
+            check=True
         )
 
     @mock.patch('awscli.customizations.codeartifact.login.is_windows', True)
@@ -361,9 +716,10 @@ to an 'HTTPS' source."""
             self.list_operation_command,
             stderr=self.subprocess_utils.PIPE
         )
-        self.subprocess_utils.check_output.assert_called_with(
+        self.subprocess_utils.run.assert_called_with(
             self.add_operation_command_windows,
-            stderr=self.subprocess_utils.PIPE
+            capture_output=True,
+            check=True
         )
 
     def test_login_dry_run(self):
@@ -384,9 +740,10 @@ to an 'HTTPS' source."""
             self.list_operation_command,
             stderr=self.subprocess_utils.PIPE
         )
-        self.subprocess_utils.check_output.assert_called_with(
+        self.subprocess_utils.run.assert_called_with(
             self.add_operation_command_non_windows,
-            stderr=self.subprocess_utils.PIPE
+            capture_output=True,
+            check=True
         )
 
     @mock.patch('awscli.customizations.codeartifact.login.is_windows', True)
@@ -398,9 +755,10 @@ to an 'HTTPS' source."""
             self.list_operation_command,
             stderr=self.subprocess_utils.PIPE
         )
-        self.subprocess_utils.check_output.assert_called_with(
+        self.subprocess_utils.run.assert_called_with(
             self.add_operation_command_windows,
-            stderr=self.subprocess_utils.PIPE
+            capture_output=True,
+            check=True
         )
 
     def test_login_sources_listed_with_extra_non_list_text_dry_run(self):
@@ -445,9 +803,10 @@ to an 'HTTPS' source."""
         self.subprocess_utils.check_output.return_value = \
             list_response.encode('utf-8')
         self.test_subject.login()
-        self.subprocess_utils.check_output.assert_called_with(
+        self.subprocess_utils.run.assert_called_with(
             self.update_operation_command_non_windows,
-            stderr=self.subprocess_utils.PIPE
+            capture_output=True,
+            check=True
         )
 
     @mock.patch('awscli.customizations.codeartifact.login.is_windows', True)
@@ -458,9 +817,10 @@ to an 'HTTPS' source."""
         self.subprocess_utils.check_output.return_value = \
             list_response.encode('utf-8')
         self.test_subject.login()
-        self.subprocess_utils.check_output.assert_called_with(
+        self.subprocess_utils.run.assert_called_with(
             self.update_operation_command_windows,
-            stderr=self.subprocess_utils.PIPE
+            capture_output=True,
+            check=True
         )
 
     @mock.patch('awscli.customizations.codeartifact.login.is_windows', True)
@@ -472,14 +832,15 @@ to an 'HTTPS' source."""
         self.subprocess_utils.check_output.return_value = \
             list_response.encode('utf-8')
         self.test_subject.login()
-        self.subprocess_utils.check_output.assert_called_with(
+        self.subprocess_utils.run.assert_called_with(
             [
                 'dotnet', 'nuget', 'update', 'source', non_default_source_name,
                 '--source', self.nuget_index_url,
                 '--username', 'aws',
                 '--password', self.auth_token
             ],
-            stderr=self.subprocess_utils.PIPE
+            capture_output=True,
+            check=True
         )
 
     def test_login_dotnet_not_installed(self):
@@ -675,7 +1036,7 @@ class TestPipLogin(unittest.TestCase):
 
     def test_login_dry_run(self):
         self.test_subject.login(dry_run=True)
-        self.subprocess_utils.assert_not_called()
+        self.subprocess_utils.run.assert_not_called()
 
 
 class TestTwineLogin(unittest.TestCase):
@@ -774,7 +1135,7 @@ class TestTwineLogin(unittest.TestCase):
 
     def test_login_dry_run(self):
         self.test_subject.login(dry_run=True)
-        self.subprocess_utils.assert_not_called()
+        self.subprocess_utils.run.assert_not_called()
         self.assertFalse(os.path.exists(self.test_pypi_rc_path))
 
     def test_login_existing_pypi_rc_not_clobbered(self):
