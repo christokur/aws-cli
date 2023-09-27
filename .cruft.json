@@ -1,7 +1,7 @@
 {
   "template": "git@github.com:SandsB2B/cookiecutter-project-docs.git",
-  "commit": "cf7377b22993760501bc2fe10e9e71fc7dbf6d93",
-  "checkout": "v0.16.28",
+  "commit": "49798ba458dc9844a6694c4b7ddb3909407c2527",
+  "checkout": "v0.16.33",
   "context": {
     "cookiecutter": {
       "authors": "{name = \"Amazon Web Services\"};",
@@ -13,7 +13,7 @@
       "description": "Universal Command Line Environment for AWS.",
       "license_text": "{ file = \"LICENSE.txt\" }",
       "readme": "README.rst",
-      "version": "2.13.21post1",
+      "version": "2.13.21post2",
       "package_name": "awscli",
       "packager": "flit",
       "dynamic": "version",
@@ -32,7 +32,7 @@
       "python_ci_build_version": "3.9",
       "python_requires": ">=3.8",
       "python_toolbag_version": "~0.18.5",
-      "cruft_skip": "CODEOWNERS,docs/TODO.md,README.md,Makefile,.gitignore,poetry.toml,tests/__init__.py,tests/conftest.py,.python-version,.gitignore,.github/workflows/build-test-publish.yml",
+      "cruft_skip": "CODEOWNERS,docs/TODO.md,README.md,Makefile,.gitignore,poetry.toml,tests/__init__.py,tests/conftest.py,.python-version,.gitignore,.github/workflows/build-test-publish.yml,.bumpversion.cfg",
       "src_path_prefix": "",
       "site_name": "Universal Command Line Environment for AWS.",
       "site_description": "Universal Command Line Environment for AWS.",
@@ -57,6 +57,7 @@
       "pre_commit_fail_fast": "false",
       "poetry_keywords": "",
       "poetry_include": "",
+      "poetry_exclude": ".bumpversion.cfg",
       "poetry_url_documentation": "",
       "poetry_url_homepage": "http://aws.amazon.com/cli/",
       "portray_pdocs_modules": "",
@@ -69,6 +70,7 @@
       "gh_email": "christo.delange@sands.com",
       "gh_username_oss_repos": "christokur",
       "gh_pages_branches": "main",
+      "gh_build_branches": "\"*\"",
       "gh_matrix_os": "macos-latest",
       "_extensions": [
         "toolbag.utils.template_expander.extensions.python_extension.PythonExtension"
@@ -96,7 +98,8 @@
         "rpds-py": "~0.9.2",
         "tox": "==3.24.3",
         "build": "==0.7.0",
-        "wheel": "==0.37.1"
+        "wheel": "==0.37.1",
+        "flit_core": ">=3.7.1,<3.8.1"
       },
       "poetry_localdev_dependencies": {
         "black": "{ version = '~23.7.0', extras = ['d']}",

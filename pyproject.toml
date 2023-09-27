@@ -6,6 +6,7 @@ build-backend = "pep517"
 backend-path = ["backends"]
 [project]
 name = "awscli"
+version = "2.13.21post2"
 description = "Universal Command Line Environment for AWS."
 authors = [
   {name = "Amazon Web Services"},
@@ -296,7 +297,7 @@ args = [
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "2.13.21post1"
+version = "2.13.21post2"
 version_files = [
     ".bumpversion.cfg",
     "VERSION",
@@ -366,4 +367,4 @@ accent = "yellow"
 toggle = { icon = "material/lightbulb-outline", name = "Switch to dark mode" }
 
 [tool.cruft]
-skip= ["CODEOWNERS","docs/TODO.md","README.md","Makefile",".gitignore","poetry.toml","tests/__init__.py","tests/conftest.py",".python-version",".gitignore",".github/workflows/build-test-publish.yml",]
+skip= ["CODEOWNERS","docs/TODO.md","README.md","Makefile",".gitignore","poetry.toml","tests/__init__.py","tests/conftest.py",".python-version",".gitignore",".github/workflows/build-test-publish.yml",".bumpversion.cfg",]

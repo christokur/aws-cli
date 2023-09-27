@@ -82,8 +82,6 @@ jobs:
 
     - name: Install dependencies and build
       run: |
-        #poetry lock --check
-        #poetry install --with main,dev,test --no-ansi --no-interaction --verbose
         pip list
         python scripts/ci/install
         pip list
