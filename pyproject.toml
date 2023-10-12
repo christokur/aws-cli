@@ -6,7 +6,7 @@ build-backend = "pep517"
 backend-path = ["backends"]
 [project]
 name = "awscli"
-version = "2.13.21post2"
+version = "2.13.25post1"
 description = "Universal Command Line Environment for AWS."
 authors = [
   {name = "Amazon Web Services"},
@@ -297,7 +297,7 @@ args = [
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "2.13.21post2"
+version = "2.13.25post1"
 version_files = [
     ".bumpversion.cfg",
     "VERSION",
