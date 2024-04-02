@@ -1,5 +1,5 @@
 AC_CONFIG_MACRO_DIRS([m4])
-AC_INIT([awscli], [2.13.25])
+AC_INIT([awscli], [2.15.34])
 AC_CONFIG_SRCDIR([bin/aws])
 AM_PATH_PYTHON([3.8])
 
@@ -53,6 +53,10 @@ fi
 AC_MSG_RESULT($with_download_deps)
 AC_SUBST(DOWNLOAD_DEPS_FLAG)
 
+ac_operating_system=`(uname -s) 2>/dev/null || echo unknown`
+if test "$ac_operating_system" = Darwin; then
+    AC_CHECK_PENDING_MACOS_END_OF_SUPPORT([10.15.0], [June 20, 2024])
+fi
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT
 OVERRIDE_HELP
