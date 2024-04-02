@@ -40,7 +40,7 @@ jobs:
         run: |
           echo python-path:'${{ steps.setup_python.outputs.python-path }}'
           ${{ steps.setup_python.outputs.python-path }} --version
-          ${{ steps.setup_python.outputs.python-path }} -m pip install poetry==1.5.1
+          ${{ steps.setup_python.outputs.python-path }} -m pip install poetry==1.6.1
         shell: bash
 
       - name: Self-Configure AWS Credentials
