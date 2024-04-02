@@ -17,7 +17,7 @@
       "package_name": "awscli",
       "packager": "flit",
       "dynamic": "version",
-      "poetry_version": "~1.6.0",
+      "poetry_version": "~1.6.1",
       "poetry_source_name": "codeartifact",
       "poetry_source_url": "https://artifacts-433714148419.d.codeartifact.us-east-2.amazonaws.com/pypi/pypi/simple/",
       "testpaths": "",
@@ -81,9 +81,9 @@
       "ruff_extend_exclude": "",
       "ruff_ignore": "",
       "_extensions": [
-        "toolbag.utils.template_expander.extensions.PythonExtension",
         "toolbag.utils.template_expander.extensions.python_extension.PythonExtension",
-        "toolbag.utils.template_expander.extensions.ExpandCookiecutterTemplateExtension"
+        "toolbag.utils.template_expander.extensions.ExpandCookiecutterTemplateExtension",
+        "toolbag.utils.template_expander.extensions.PythonExtension"
       ],
       "_notes": {
         "lists": "Lists have a special meaning for Cookiecutter so we are forced to wrap them in a map or express as a CSV string and split in the template.",
