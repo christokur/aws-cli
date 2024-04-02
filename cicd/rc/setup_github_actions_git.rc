@@ -4,16 +4,24 @@
 #set -x
 set +e
 
+[ ! -z "$CI_GPG_KEY" ] || { echo "Please set CI_GPG_KEY." ; exit 1; }
+[ ! -z "$CI_SSH_KEY" ] || { echo "Please set CI_SSH_KEY." ; exit 1; }
+
+
 function setup_gpg_key() {
     export GPG_TTY=$(tty)
-    echo "${CI_GPG_KEY}" >key.asc
-    gpg --import key.asc
+    echo "${CI_GPG_KEY}" >/tmp/key.asc
+    gpg --import /tmp/key.asc >/dev/null 2>&1
     #gpg --list-secret-keys --keyid-format=long
-    export GIT_SIGNING_KEY_NAME=$(gpg --list-secret-keys --keyid-format=long --with-colons | grep '^sec' | cut -d : -f 5)
+    export GIT_SIGNING_KEY_NAME=$(gpg --list-secret-keys --keyid-format=long --with-colons | grep '^sec' | cut -d : -f 5 | tail -1)
 }
 
 function setup_ssh_config() {
-    set -e
+    export errexit=$(
+      shopt                 -o errexit > /dev/null
+      echo $?
+    )                                                      || true
+    [ 0 -eq $errexit ] || { set -e; }
     pushd .
     cd ~
     #pwd
@@ -45,36 +53,46 @@ EOF
     eval `ssh-agent -s`
     ssh-add -L || true
     ssh-add -D || true
-    ssh git@github.com -i ~/.ssh/id_ed25519 || true
-    ssh git@github.com || true
-    ssh-add -L || true
+    ssh git@github.com -i ~/.ssh/id_ed25519 >/dev/null 2>&1 || true
+    ssh git@github.com >/dev/null 2>&1 || true
+    ssh-add -L >/dev/null 2>&1 || true
     popd || true
+    [ 0 -eq $errexit ] || { set +e; }
     return 0
 }
 
 function setup_git_config() {
-    set -e
+    export xtrace=$(
+      shopt                -o xtrace > /dev/null
+      echo $?
+    )                                                    || true
+    export errexit=$(
+      shopt                 -o errexit > /dev/null
+      echo $?
+    )                                                      || true
+    [ 1 -eq $xtrace ] || { echo xtrace=$xtrace; }
+    [ 1 -eq $errexit ] || { set +e; }
     #set -x
     keyname=${1:-$GIT_SIGNING_KEY_NAME}
     [ ! -z "$keyname" ] || { echo "ERROR: GIT_SIGNING_KEY_NAME is not set or setup_gpg_key() was not used or signing key name not provided."; return 1;}
     [ ! -z "$(git config --global --list 2>/dev/null | egrep $keyname 2>/dev/null || true)" ] || {
-      git config --global user.email "svc_p_githubPipelines@sands.com"
-      git config --global user.name "svcpgithubPipelines"
-      git config --global --add user.signingkey $keyname
-      git config --global --add commit.gpgsign true
-      git config --global --unset-all gpg.format || true
-      git config --global --add gpg.program gpg
+      git config --global --get user.email; [ 0 -eq $? ] || git config --global user.email "svc_p_githubPipelines@sands.com"
+      git config --global --get user.name; [ 0 -eq $? ] ||  git config --global user.name "svcpgithubPipelines"
+      git config --global --get user.signingkey; [ 0 -eq $? ] || git config --global --add user.signingkey $keyname
+      git config --global --get commit.gpgsign; [ 0 -eq $? ] || git config --global --add commit.gpgsign true
+      git config --global --get gpg.format; [ 1 -eq $? ] || git config --global --unset-all gpg.format
+      git config --global --get gpg.program gpg; [ 0 -eq $? ] || git config --global --add gpg.program gpg
       set +e
       #git config --global --list | grep insteadof | sort | uniq
       for insteadof in $(git config --global --list | grep insteadof 2>/dev/null | cut -d '=' -f 1 | sort | uniq) ; do
         git config --global --unset-all $insteadof
       done
-      set -e
+      [ 1 -eq $errexit ] || { set -e; }
     }
     #git config --global --list
     #cat ~/.gitconfig
     #echo "HOME=$HOME"
-    #set +x
+    [ 1 -eq $errexit ] || { set -e; }
 }
 
 function fix_git_remote() {
