@@ -13,7 +13,7 @@
       "description": "Universal Command Line Environment for AWS.",
       "license_text": "{ file = \"LICENSE.txt\" }",
       "readme": "README.rst",
-      "version": "2.15.34post1",
+      "version": "2.15.34.post1",
       "package_name": "awscli",
       "packager": "flit",
       "dynamic": "version",
