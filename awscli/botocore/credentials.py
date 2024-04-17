@@ -80,6 +80,9 @@ def create_credential_resolver(session, cache=None, region_name=None):
         'ec2_metadata_service_endpoint_mode': resolve_imds_endpoint_mode(
             session),
         'ec2_credential_refresh_window': _DEFAULT_ADVISORY_REFRESH_TIMEOUT,
+        'ec2_metadata_v1_disabled': session.get_config_variable(
+            'ec2_metadata_v1_disabled'
+        ),
     }
 
     if cache is None:
@@ -350,7 +353,8 @@ class RefreshableCredentials(Credentials):
 
     def __init__(self, access_key, secret_key, token,
                  expiry_time, refresh_using, method,
-                 time_fetcher=_local_now):
+                 time_fetcher=_local_now,
+                 advisory_timeout=None, mandatory_timeout=None):
         self._refresh_using = refresh_using
         self._access_key = access_key
         self._secret_key = secret_key
@@ -362,20 +366,38 @@ class RefreshableCredentials(Credentials):
         self._frozen_credentials = ReadOnlyCredentials(
             access_key, secret_key, token)
         self._normalize()
+        if advisory_timeout is not None:
+            self._advisory_refresh_timeout = advisory_timeout
+        if mandatory_timeout is not None:
+            self._mandatory_refresh_timeout = mandatory_timeout
 
     def _normalize(self):
         self._access_key = botocore.compat.ensure_unicode(self._access_key)
         self._secret_key = botocore.compat.ensure_unicode(self._secret_key)
 
     @classmethod
-    def create_from_metadata(cls, metadata, refresh_using, method):
+    def create_from_metadata(
+            cls,
+            metadata,
+            refresh_using,
+            method,
+            advisory_timeout=None,
+            mandatory_timeout=None,
+    ):
+        kwargs = {}
+        if advisory_timeout is not None:
+            kwargs['advisory_timeout'] = advisory_timeout
+        if mandatory_timeout is not None:
+            kwargs['mandatory_timeout'] = mandatory_timeout
+
         instance = cls(
             access_key=metadata['access_key'],
             secret_key=metadata['secret_key'],
             token=metadata['token'],
             expiry_time=cls._expiry_datetime(metadata['expiry_time']),
             method=method,
-            refresh_using=refresh_using
+            refresh_using=refresh_using,
+            **kwargs,
         )
         return instance
 
@@ -1790,6 +1812,7 @@ class ContainerProvider(CredentialProvider):
     ENV_VAR = 'AWS_CONTAINER_CREDENTIALS_RELATIVE_URI'
     ENV_VAR_FULL = 'AWS_CONTAINER_CREDENTIALS_FULL_URI'
     ENV_VAR_AUTH_TOKEN = 'AWS_CONTAINER_AUTHORIZATION_TOKEN'
+    ENV_VAR_AUTH_TOKEN_FILE = 'AWS_CONTAINER_AUTHORIZATION_TOKEN_FILE'
 
     def __init__(self, environ=None, fetcher=None):
         if environ is None:
@@ -1823,12 +1846,20 @@ class ContainerProvider(CredentialProvider):
         )
 
     def _build_headers(self):
-        headers = {}
-        auth_token = self._environ.get(self.ENV_VAR_AUTH_TOKEN)
+        auth_token = None
+        if self.ENV_VAR_AUTH_TOKEN_FILE in self._environ:
+            auth_token_file_path = self._environ[self.ENV_VAR_AUTH_TOKEN_FILE]
+            with open(auth_token_file_path) as token_file:
+                auth_token = token_file.read()
+        elif self.ENV_VAR_AUTH_TOKEN in self._environ:
+            auth_token = self._environ[self.ENV_VAR_AUTH_TOKEN]
         if auth_token is not None:
-            return {
-                'Authorization': auth_token
-            }
+            self._validate_auth_token(auth_token)
+            return {'Authorization': auth_token}
+
+    def _validate_auth_token(self, auth_token):
+        if "\r" in auth_token or "\n" in auth_token:
+            raise ValueError("Auth token value is not a legal header value")
 
     def _create_fetcher(self, full_uri, headers):
         def fetch_creds():

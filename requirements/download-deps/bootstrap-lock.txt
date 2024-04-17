@@ -6,13 +6,13 @@
 #
 
 # The following packages are considered to be unsafe in a requirements file:
-flit-core==3.8.0 \
-    --hash=sha256:64a29ec845164a6abe1136bf4bc5ae012bdfe758ed42fc7571a9059a7c80bd83 \
-    --hash=sha256:b305b30c99526df5e63d6022dd2310a0a941a187bd3884f4c8ef0418df6c39f3
+flit-core==3.9.0 \
+    --hash=sha256:72ad266176c4a3fcfab5f2930d76896059851240570ce9a98733b658cb786eba \
+    --hash=sha256:7aada352fb0c7f5538c4fafeddf314d3a6a92ee8e2b1de70482329e42de70301
     # via -r requirements/download-deps/../bootstrap.txt
-pip==23.3 \
-    --hash=sha256:bb7d4f69f488432e4e96394612f43ab43dd478d073ef7422604a570f7157561e \
-    --hash=sha256:bc38bb52bc286514f8f7cb3a1ba5ed100b76aaef29b521d48574329331c5ae7b
+pip==23.3.2 \
+    --hash=sha256:5052d7889c1f9d05224cd41741acb7c5d6fa735ab34e339624a614eaaa7e7d76 \
+    --hash=sha256:7fd9972f96db22c8077a1ee2691b172c8089b17a5652a44494a9ecb0d78f9149
     # via -r requirements/download-deps/../bootstrap.txt
 setuptools==65.3.0 \
     --hash=sha256:2e24e0bec025f035a2e72cdd1961119f557d78ad331bb00ff82efb2ab8da8e82 \

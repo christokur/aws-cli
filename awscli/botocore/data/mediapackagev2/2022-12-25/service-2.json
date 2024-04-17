@@ -290,7 +290,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"ValidationException"}
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"}
       ],
       "documentation":"<p>Retrieves all channels in a specific channel group that are configured in AWS Elemental MediaPackage, including the origin endpoints that are associated with it.</p>"
     },
@@ -502,7 +503,7 @@
           "documentation":"<p>The date and time the channel group was modified.</p>"
         },
         "Description":{
-          "shape":"String",
+          "shape":"ResourceDescription",
           "documentation":"<p>Any descriptive information that you want to add to the channel group for future identification purposes.</p>"
         }
       },
@@ -547,7 +548,7 @@
           "documentation":"<p>The date and time the channel was modified.</p>"
         },
         "Description":{
-          "shape":"String",
+          "shape":"ResourceDescription",
           "documentation":"<p>Any descriptive information that you want to add to the channel for future identification purposes.</p>"
         }
       },
@@ -648,8 +649,12 @@
           "shape":"Timestamp",
           "documentation":"<p>The date and time the channel group was modified.</p>"
         },
+        "ETag":{
+          "shape":"EntityTag",
+          "documentation":"<p>The current Entity Tag (ETag) associated with this resource. The entity tag can be used to safely make concurrent updates to the resource.</p>"
+        },
         "Description":{
-          "shape":"String",
+          "shape":"ResourceDescription",
           "documentation":"<p>The description for your channel group.</p>"
         },
         "Tags":{
@@ -724,10 +729,14 @@
           "documentation":"<p>The date and time the channel was modified.</p>"
         },
         "Description":{
-          "shape":"String",
+          "shape":"ResourceDescription",
           "documentation":"<p>The description for your channel.</p>"
         },
         "IngestEndpoints":{"shape":"IngestEndpointList"},
+        "ETag":{
+          "shape":"EntityTag",
+          "documentation":"<p>The current Entity Tag (ETag) associated with this resource. The entity tag can be used to safely make concurrent updates to the resource.</p>"
+        },
         "Tags":{
           "shape":"TagMap",
           "documentation":"<p>The comma-separated list of tag key:value pairs assigned to the channel.</p>"
@@ -754,14 +763,14 @@
         "ProgramDateTimeIntervalSeconds":{
           "shape":"CreateHlsManifestConfigurationProgramDateTimeIntervalSecondsInteger",
           "documentation":"<p>Inserts EXT-X-PROGRAM-DATE-TIME tags in the output manifest at the interval that you specify. If you don't enter an interval, EXT-X-PROGRAM-DATE-TIME tags aren't included in the manifest. The tags sync the stream to the wall clock so that viewers can seek to a specific time in the playback timeline on the player. ID3Timed metadata messages generate every 5 seconds whenever the content is ingested.</p> <p>Irrespective of this parameter, if any ID3Timed metadata is in the HLS input, it is passed through to the HLS output.</p>"
-        }
+        },
+        "FilterConfiguration":{"shape":"FilterConfiguration"}
       },
       "documentation":"<p>Create an HTTP live streaming (HLS) manifest configuration.</p>"
     },
     "CreateHlsManifestConfigurationManifestWindowSecondsInteger":{
       "type":"integer",
       "box":true,
-      "max":900,
       "min":30
     },
     "CreateHlsManifestConfigurationProgramDateTimeIntervalSecondsInteger":{
@@ -794,14 +803,14 @@
         "ProgramDateTimeIntervalSeconds":{
           "shape":"CreateLowLatencyHlsManifestConfigurationProgramDateTimeIntervalSecondsInteger",
           "documentation":"<p>Inserts EXT-X-PROGRAM-DATE-TIME tags in the output manifest at the interval that you specify. If you don't enter an interval, EXT-X-PROGRAM-DATE-TIME tags aren't included in the manifest. The tags sync the stream to the wall clock so that viewers can seek to a specific time in the playback timeline on the player. ID3Timed metadata messages generate every 5 seconds whenever the content is ingested.</p> <p>Irrespective of this parameter, if any ID3Timed metadata is in the HLS input, it is passed through to the HLS output.</p>"
-        }
+        },
+        "FilterConfiguration":{"shape":"FilterConfiguration"}
       },
       "documentation":"<p>Create a low-latency HTTP live streaming (HLS) manifest configuration.</p>"
     },
     "CreateLowLatencyHlsManifestConfigurationManifestWindowSecondsInteger":{
       "type":"integer",
       "box":true,
-      "max":900,
       "min":30
     },
     "CreateLowLatencyHlsManifestConfigurationProgramDateTimeIntervalSecondsInteger":{
@@ -942,6 +951,10 @@
         "LowLatencyHlsManifests":{
           "shape":"GetLowLatencyHlsManifests",
           "documentation":"<p>A low-latency HLS manifest configuration.</p>"
+        },
+        "ETag":{
+          "shape":"EntityTag",
+          "documentation":"<p>The current Entity Tag (ETag) associated with this resource. The entity tag can be used to safely make concurrent updates to the resource.</p>"
         },
         "Tags":{
           "shape":"TagMap",
@@ -1163,6 +1176,45 @@
       },
       "documentation":"<p>The encryption type.</p>"
     },
+    "EntityTag":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[\\S]+"
+    },
+    "FilterConfiguration":{
+      "type":"structure",
+      "members":{
+        "ManifestFilter":{
+          "shape":"FilterConfigurationManifestFilterString",
+          "documentation":"<p>Optionally specify one or more manifest filters for all of your manifest egress requests. When you include a manifest filter, note that you cannot use an identical manifest filter query parameter for this manifest's endpoint URL.</p>"
+        },
+        "Start":{
+          "shape":"Timestamp",
+          "documentation":"<p>Optionally specify the start time for all of your manifest egress requests. When you include start time, note that you cannot use start time query parameters for this manifest's endpoint URL.</p>"
+        },
+        "End":{
+          "shape":"Timestamp",
+          "documentation":"<p>Optionally specify the end time for all of your manifest egress requests. When you include end time, note that you cannot use end time query parameters for this manifest's endpoint URL.</p>"
+        },
+        "TimeDelaySeconds":{
+          "shape":"FilterConfigurationTimeDelaySecondsInteger",
+          "documentation":"<p>Optionally specify the time delay for all of your manifest egress requests. Enter a value that is smaller than your endpoint's startover window. When you include time delay, note that you cannot use time delay query parameters for this manifest's endpoint URL.</p>"
+        }
+      },
+      "documentation":"<p>Filter configuration includes settings for manifest filtering, start and end times, and time delay that apply to all of your egress requests for this manifest. </p>"
+    },
+    "FilterConfigurationManifestFilterString":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "FilterConfigurationTimeDelaySecondsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1209600,
+      "min":0
+    },
     "GetChannelGroupRequest":{
       "type":"structure",
       "required":["ChannelGroupName"],
@@ -1206,8 +1258,12 @@
           "documentation":"<p>The date and time the channel group was modified.</p>"
         },
         "Description":{
-          "shape":"String",
+          "shape":"ResourceDescription",
           "documentation":"<p>The description for your channel group.</p>"
+        },
+        "ETag":{
+          "shape":"EntityTag",
+          "documentation":"<p>The current Entity Tag (ETag) associated with this resource. The entity tag can be used to safely make concurrent updates to the resource.</p>"
         },
         "Tags":{
           "shape":"TagMap",
@@ -1254,7 +1310,7 @@
           "documentation":"<p>The name that describes the channel. The name is the primary identifier for the channel, and must be unique for your account in the AWS Region and channel group.</p>"
         },
         "Policy":{
-          "shape":"String",
+          "shape":"PolicyText",
           "documentation":"<p>The policy assigned to the channel.</p>"
         }
       }
@@ -1311,10 +1367,14 @@
           "documentation":"<p>The date and time the channel was modified.</p>"
         },
         "Description":{
-          "shape":"String",
+          "shape":"ResourceDescription",
           "documentation":"<p>The description for your channel.</p>"
         },
         "IngestEndpoints":{"shape":"IngestEndpointList"},
+        "ETag":{
+          "shape":"EntityTag",
+          "documentation":"<p>The current Entity Tag (ETag) associated with this resource. The entity tag can be used to safely make concurrent updates to the resource.</p>"
+        },
         "Tags":{
           "shape":"TagMap",
           "documentation":"<p>The comma-separated list of tag key:value pairs assigned to the channel.</p>"
@@ -1348,7 +1408,8 @@
           "shape":"Integer",
           "documentation":"<p>Inserts EXT-X-PROGRAM-DATE-TIME tags in the output manifest at the interval that you specify. If you don't enter an interval, EXT-X-PROGRAM-DATE-TIME tags aren't included in the manifest. The tags sync the stream to the wall clock so that viewers can seek to a specific time in the playback timeline on the player. ID3Timed metadata messages generate every 5 seconds whenever the content is ingested.</p> <p>Irrespective of this parameter, if any ID3Timed metadata is in the HLS input, it is passed through to the HLS output.</p>"
         },
-        "ScteHls":{"shape":"ScteHls"}
+        "ScteHls":{"shape":"ScteHls"},
+        "FilterConfiguration":{"shape":"FilterConfiguration"}
       },
       "documentation":"<p>Retrieve the HTTP live streaming (HLS) manifest configuration.</p>"
     },
@@ -1383,7 +1444,8 @@
           "shape":"Integer",
           "documentation":"<p>Inserts EXT-X-PROGRAM-DATE-TIME tags in the output manifest at the interval that you specify. If you don't enter an interval, EXT-X-PROGRAM-DATE-TIME tags aren't included in the manifest. The tags sync the stream to the wall clock so that viewers can seek to a specific time in the playback timeline on the player. ID3Timed metadata messages generate every 5 seconds whenever the content is ingested.</p> <p>Irrespective of this parameter, if any ID3Timed metadata is in the HLS input, it is passed through to the HLS output.</p>"
         },
-        "ScteHls":{"shape":"ScteHls"}
+        "ScteHls":{"shape":"ScteHls"},
+        "FilterConfiguration":{"shape":"FilterConfiguration"}
       },
       "documentation":"<p>Retrieve the low-latency HTTP live streaming (HLS) manifest configuration.</p>"
     },
@@ -1429,19 +1491,19 @@
       ],
       "members":{
         "ChannelGroupName":{
-          "shape":"String",
+          "shape":"ResourceName",
           "documentation":"<p>The name that describes the channel group. The name is the primary identifier for the channel group, and must be unique for your account in the AWS Region.</p>"
         },
         "ChannelName":{
-          "shape":"String",
+          "shape":"ResourceName",
           "documentation":"<p>The name that describes the channel. The name is the primary identifier for the channel, and must be unique for your account in the AWS Region and channel group.</p>"
         },
         "OriginEndpointName":{
-          "shape":"String",
+          "shape":"ResourceName",
           "documentation":"<p>The name that describes the origin endpoint. The name is the primary identifier for the origin endpoint, and and must be unique for your account in the AWS Region and channel.</p>"
         },
         "Policy":{
-          "shape":"String",
+          "shape":"PolicyText",
           "documentation":"<p>The policy assigned to the origin endpoint.</p>"
         }
       }
@@ -1531,6 +1593,10 @@
         "LowLatencyHlsManifests":{
           "shape":"GetLowLatencyHlsManifests",
           "documentation":"<p>A low-latency HLS manifest configuration.</p>"
+        },
+        "ETag":{
+          "shape":"EntityTag",
+          "documentation":"<p>The current Entity Tag (ETag) associated with this resource. The entity tag can be used to safely make concurrent updates to the resource.</p>"
         },
         "Tags":{
           "shape":"TagMap",
@@ -2195,6 +2261,12 @@
           "location":"uri",
           "locationName":"ChannelGroupName"
         },
+        "ETag":{
+          "shape":"EntityTag",
+          "documentation":"<p>The expected current Entity Tag (ETag) for the resource. If the specified ETag does not match the resource's current entity tag, the update request will be rejected.</p>",
+          "location":"header",
+          "locationName":"x-amzn-update-if-match"
+        },
         "Description":{
           "shape":"ResourceDescription",
           "documentation":"<p>Any descriptive information that you want to add to the channel group for future identification purposes.</p>"
@@ -2232,8 +2304,12 @@
           "documentation":"<p>The date and time the channel group was modified.</p>"
         },
         "Description":{
-          "shape":"String",
+          "shape":"ResourceDescription",
           "documentation":"<p>The description for your channel group.</p>"
+        },
+        "ETag":{
+          "shape":"EntityTag",
+          "documentation":"<p>The current Entity Tag (ETag) associated with this resource. The entity tag can be used to safely make concurrent updates to the resource.</p>"
         },
         "Tags":{
           "shape":"TagMap",
@@ -2260,6 +2336,12 @@
           "documentation":"<p>The name that describes the channel. The name is the primary identifier for the channel, and must be unique for your account in the AWS Region and channel group. </p>",
           "location":"uri",
           "locationName":"ChannelName"
+        },
+        "ETag":{
+          "shape":"EntityTag",
+          "documentation":"<p>The expected current Entity Tag (ETag) for the resource. If the specified ETag does not match the resource's current entity tag, the update request will be rejected.</p>",
+          "location":"header",
+          "locationName":"x-amzn-update-if-match"
         },
         "Description":{
           "shape":"ResourceDescription",
@@ -2298,10 +2380,14 @@
           "documentation":"<p>The date and time the channel was modified.</p>"
         },
         "Description":{
-          "shape":"String",
+          "shape":"ResourceDescription",
           "documentation":"<p>The description for your channel.</p>"
         },
         "IngestEndpoints":{"shape":"IngestEndpointList"},
+        "ETag":{
+          "shape":"EntityTag",
+          "documentation":"<p>The current Entity Tag (ETag) associated with this resource. The entity tag can be used to safely make concurrent updates to the resource.</p>"
+        },
         "Tags":{
           "shape":"TagMap",
           "documentation":"<p>The comma-separated list of tag key:value pairs assigned to the channel.</p>",
@@ -2359,6 +2445,12 @@
         "LowLatencyHlsManifests":{
           "shape":"CreateLowLatencyHlsManifests",
           "documentation":"<p>A low-latency HLS manifest configuration.</p>"
+        },
+        "ETag":{
+          "shape":"EntityTag",
+          "documentation":"<p>The expected current Entity Tag (ETag) for the resource. If the specified ETag does not match the resource's current entity tag, the update request will be rejected.</p>",
+          "location":"header",
+          "locationName":"x-amzn-update-if-match"
         }
       }
     },
@@ -2429,6 +2521,10 @@
           "shape":"GetLowLatencyHlsManifests",
           "documentation":"<p>A low-latency HLS manifest configuration.</p>"
         },
+        "ETag":{
+          "shape":"EntityTag",
+          "documentation":"<p>The current Entity Tag (ETag) associated with this resource. The entity tag can be used to safely make concurrent updates to the resource.</p>"
+        },
         "Tags":{
           "shape":"TagMap",
           "documentation":"<p>The comma-separated list of tag key:value pairs assigned to the origin endpoint.</p>",
@@ -2484,7 +2580,10 @@
         "MEMBER_MIN_LENGTH",
         "MEMBER_MAX_LENGTH",
         "MEMBER_INVALID_ENUM_VALUE",
-        "MEMBER_DOES_NOT_MATCH_PATTERN"
+        "MEMBER_DOES_NOT_MATCH_PATTERN",
+        "INVALID_MANIFEST_FILTER",
+        "INVALID_TIME_DELAY_SECONDS",
+        "END_TIME_EARLIER_THAN_START_TIME"
       ]
     }
   },
