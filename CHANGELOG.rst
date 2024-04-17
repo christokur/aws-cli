@@ -2,6 +2,78 @@
 CHANGELOG
 =========
 
+2.15.38
+=======
+
+* api-change:``networkmonitor``: Examples were added to CloudWatch Network Monitor commands.
+* api-change:``omics``: This release adds support for retrieval of S3 direct access metadata on sequence stores and read sets, and adds support for SHA256up and SHA512up HealthOmics ETags.
+* api-change:``medialive``: AWS Elemental MediaLive introduces workflow monitor, a new feature that enables the visualization and monitoring of your media workflows. Create signal maps of your existing workflows and monitor them by creating notification and monitoring template groups.
+* api-change:``supplychain``: This release includes API SendDataIntegrationEvent for AWS Supply Chain
+* api-change:``connect``: This release adds new Submit Auto Evaluation Action for Amazon Connect Rules.
+* api-change:``codebuild``: Support access tokens for Bitbucket sources
+* api-change:``cleanrooms``: AWS Clean Rooms Differential Privacy is now fully available. Differential privacy protects against user-identification attempts.
+* api-change:``s3control``: Documentation updates for Amazon S3-control.
+* api-change:``rekognition``: Added support for ContentType to content moderation detections.
+* api-change:``qconnect``: This release adds a new QiC public API updateSession and updates an existing QiC public API createSession
+* api-change:``rds``: Updates Amazon RDS documentation for Standard Edition 2 support in RDS Custom for Oracle.
+* api-change:``pipes``: LogConfiguration ARN validation fixes
+* api-change:``workspaces-thin-client``: Adding tags field to SoftwareSet. Removing tags fields from Summary objects. Changing the list of exceptions in tagging APIs. Fixing an issue where the SDK returns empty tags in Get APIs.
+* api-change:``cloudfront``: CloudFront origin access control extends support to AWS Lambda function URLs and AWS Elemental MediaPackage v2 origins.
+* api-change:``iam``: For CreateOpenIDConnectProvider API, the ThumbprintList parameter is no longer required.
+* api-change:``cloudwatch``: This release adds support for Metric Characteristics for CloudWatch Anomaly Detection. Anomaly Detector now takes Metric Characteristics object with Periodic Spikes boolean field that tells Anomaly Detection that spikes that repeat at the same time every week are part of the expected pattern.
+* api-change:``batch``: This release adds the task properties field to attempt details and the name field on EKS container detail.
+
+
+2.15.37
+=======
+
+* api-change:``mgn``: Added USE_SOURCE as default option to LaunchConfigurationTemplate bootMode parameter.
+* api-change:``pinpoint``: The OrchestrationSendingRoleArn has been added to the email channel and is used to send emails from campaigns or journeys.
+* api-change:``controlcatalog``: This is the initial SDK release for AWS Control Catalog, a central catalog for AWS managed controls. This release includes 3 new APIs - ListDomains, ListObjectives, and ListCommonControls - that vend high-level data to categorize controls across the AWS platform.
+* api-change:``rds``: This release adds support for specifying the CA certificate to use for the new db instance when restoring from db snapshot, restoring from s3, restoring to point in time, and creating a db instance read replica.
+* api-change:``resource-groups``: Added a new QueryErrorCode RESOURCE_TYPE_NOT_SUPPORTED that is returned by the ListGroupResources operation if the group query contains unsupported resource types.
+* api-change:``quicksight``: Adding IAMIdentityCenterInstanceArn parameter to CreateAccountSubscription
+* api-change:``verifiedpermissions``: Adding BatchIsAuthorizedWithToken API which supports multiple authorization requests against a PolicyStore given a bearer token.
+* api-change:``mediaconvert``: This release includes support for bringing your own fonts to use for burn-in or DVB-Sub captioning workflows.
+* api-change:``networkmonitor``: Updated the allowed monitorName length for CloudWatch Network Monitor.
+* api-change:``codebuild``: Add new webhook filter types for GitHub webhooks
+
+
+2.15.36
+=======
+
+* api-change:``emr-containers``: This release adds support for integration with EKS AccessEntry APIs to enable automatic Cluster Access for EMR on EKS.
+* api-change:``verifiedpermissions``: Adds GroupConfiguration field to Identity Source API's
+* api-change:``cleanroomsml``: The release includes a public SDK for AWS Clean Rooms ML APIs, making them globally available to developers worldwide.
+* api-change:``datazone``: This release supports the feature of dataQuality to enrich asset with dataQualityResult in Amazon DataZone.
+* api-change:``groundstation``: This release adds visibilityStartTime and visibilityEndTime to DescribeContact and ListContacts responses.
+* api-change:``cleanrooms``: Feature: New schemaStatusDetails field to the existing Schema object that displays a status on Schema API responses to show whether a schema is queryable or not. New BatchGetSchemaAnalysisRule API to retrieve multiple schemaAnalysisRules using a single API call.
+* api-change:``b2bi``: Adding support for X12 5010 HIPAA EDI version and associated transaction sets.
+* api-change:``transfer``: Add ability to specify Security Policies for SFTP Connectors
+* api-change:``ivs``: API update to include an SRT ingest endpoint and passphrase for all channels.
+* api-change:``docdb``: This release adds Global Cluster Switchover capability which enables you to change your global cluster's primary AWS Region, the region that serves writes, while preserving the replication between all regions in the global cluster.
+* api-change:``cloudformation``: This release would return a new field - PolicyAction in cloudformation's existed DescribeChangeSetResponse, showing actions we are going to apply on the physical resource (e.g., Delete, Retain) according to the user's template
+* api-change:``ec2``: Amazon EC2 G6 instances powered by NVIDIA L4 Tensor Core GPUs can be used for a wide range of graphics-intensive and machine learning use cases. Gr6 instances also feature NVIDIA L4 GPUs and can be used for graphics workloads with higher memory requirements.
+* api-change:``medialive``: Cmaf Ingest outputs are now supported in Media Live
+* api-change:``lambda``: Add Ruby 3.3 (ruby3.3) support to AWS Lambda
+* api-change:``medical-imaging``: SearchImageSets API now supports following enhancements - Additional support for searching on UpdatedAt and SeriesInstanceUID - Support for searching existing filters between dates/times - Support for sorting the search result by Ascending/Descending - Additional parameters returned in the response
+
+
+2.15.35
+=======
+
+* api-change:``rolesanywhere``: This release increases the limit on the roleArns request parameter for the *Profile APIs that support it. This parameter can now take up to 250 role ARNs.
+* api-change:``securityhub``: Documentation updates for AWS Security Hub
+* api-change:``cloudwatch``: This release adds support for CloudWatch Anomaly Detection on cross-account metrics. SingleMetricAnomalyDetector and MetricDataQuery inputs to Anomaly Detection APIs now take an optional AccountId field.
+* api-change:``deadline``: AWS Deadline Cloud is a new fully managed service that helps customers set up, deploy, and scale rendering projects in minutes, so they can improve the efficiency of their rendering pipelines and take on more projects.
+* api-change:``emr``: This release fixes a broken link in the documentation.
+* api-change:``ecs``: Documentation only update for Amazon ECS.
+* api-change:``datazone``: This release supports the feature of AI recommendations for descriptions to enrich the business data catalog in Amazon DataZone.
+* api-change:``glue``: Adding View related fields to responses of read-only Table APIs.
+* api-change:``lightsail``: This release adds support to upgrade the TLS version of the distribution.
+* api-change:``ivschat``: Doc-only update. Changed "Resources" to "Key Concepts" in docs and updated text.
+
+
 2.15.34
 =======
 
@@ -7189,6 +7261,103 @@ CHANGELOG
 * feature:region: Added support for pulling the default region from IMDS when running on an EC2 instance. See `#3680 <https://github.com/aws/aws-cli/issues/3680>`__.
 * feature:s3: Added support for the ``--copy-props`` parameter to the high level S3 commands. This new parameter configures how additional metadata, tags, etc. should be copied for S3 to S3 transfers. See `#4840 <https://github.com/aws/aws-cli/issues/4840>`__.
 * feature:wizard: Added support for AWS CLI Wizards. See `#3752 <https://github.com/aws/aws-cli/issues/3752>`__.
+
+
+1.32.83
+=======
+
+* api-change:``batch``: This release adds the task properties field to attempt details and the name field on EKS container detail.
+* api-change:``cloudfront``: CloudFront origin access control extends support to AWS Lambda function URLs and AWS Elemental MediaPackage v2 origins.
+* api-change:``cloudwatch``: This release adds support for Metric Characteristics for CloudWatch Anomaly Detection. Anomaly Detector now takes Metric Characteristics object with Periodic Spikes boolean field that tells Anomaly Detection that spikes that repeat at the same time every week are part of the expected pattern.
+* api-change:``codebuild``: Support access tokens for Bitbucket sources
+* api-change:``iam``: For CreateOpenIDConnectProvider API, the ThumbprintList parameter is no longer required.
+* api-change:``medialive``: AWS Elemental MediaLive introduces workflow monitor, a new feature that enables the visualization and monitoring of your media workflows. Create signal maps of your existing workflows and monitor them by creating notification and monitoring template groups.
+* api-change:``omics``: This release adds support for retrieval of S3 direct access metadata on sequence stores and read sets, and adds support for SHA256up and SHA512up HealthOmics ETags.
+* api-change:``pipes``: LogConfiguration ARN validation fixes
+* api-change:``rds``: Updates Amazon RDS documentation for Standard Edition 2 support in RDS Custom for Oracle.
+* api-change:``s3control``: Documentation updates for Amazon S3-control.
+
+
+1.32.82
+=======
+
+* api-change:``cleanrooms``: AWS Clean Rooms Differential Privacy is now fully available. Differential privacy protects against user-identification attempts.
+* api-change:``connect``: This release adds new Submit Auto Evaluation Action for Amazon Connect Rules.
+* api-change:``networkmonitor``: Examples were added to CloudWatch Network Monitor commands.
+* api-change:``qconnect``: This release adds a new QiC public API updateSession and updates an existing QiC public API createSession
+* api-change:``rekognition``: Added support for ContentType to content moderation detections.
+* api-change:``supplychain``: This release includes API SendDataIntegrationEvent for AWS Supply Chain
+* api-change:``workspaces-thin-client``: Adding tags field to SoftwareSet. Removing tags fields from Summary objects. Changing the list of exceptions in tagging APIs. Fixing an issue where the SDK returns empty tags in Get APIs.
+
+
+1.32.81
+=======
+
+* api-change:``codebuild``: Add new webhook filter types for GitHub webhooks
+* api-change:``mediaconvert``: This release includes support for bringing your own fonts to use for burn-in or DVB-Sub captioning workflows.
+* api-change:``pinpoint``: The OrchestrationSendingRoleArn has been added to the email channel and is used to send emails from campaigns or journeys.
+* api-change:``rds``: This release adds support for specifying the CA certificate to use for the new db instance when restoring from db snapshot, restoring from s3, restoring to point in time, and creating a db instance read replica.
+
+
+1.32.80
+=======
+
+* api-change:``controlcatalog``: This is the initial SDK release for AWS Control Catalog, a central catalog for AWS managed controls. This release includes 3 new APIs - ListDomains, ListObjectives, and ListCommonControls - that vend high-level data to categorize controls across the AWS platform.
+* api-change:``mgn``: Added USE_SOURCE as default option to LaunchConfigurationTemplate bootMode parameter.
+* api-change:``networkmonitor``: Updated the allowed monitorName length for CloudWatch Network Monitor.
+
+
+1.32.79
+=======
+
+* api-change:``quicksight``: Adding IAMIdentityCenterInstanceArn parameter to CreateAccountSubscription
+* api-change:``resource-groups``: Added a new QueryErrorCode RESOURCE_TYPE_NOT_SUPPORTED that is returned by the ListGroupResources operation if the group query contains unsupported resource types.
+* api-change:``verifiedpermissions``: Adding BatchIsAuthorizedWithToken API which supports multiple authorization requests against a PolicyStore given a bearer token.
+
+
+1.32.78
+=======
+
+* api-change:``b2bi``: Adding support for X12 5010 HIPAA EDI version and associated transaction sets.
+* api-change:``cleanrooms``: Feature: New schemaStatusDetails field to the existing Schema object that displays a status on Schema API responses to show whether a schema is queryable or not. New BatchGetSchemaAnalysisRule API to retrieve multiple schemaAnalysisRules using a single API call.
+* api-change:``ec2``: Amazon EC2 G6 instances powered by NVIDIA L4 Tensor Core GPUs can be used for a wide range of graphics-intensive and machine learning use cases. Gr6 instances also feature NVIDIA L4 GPUs and can be used for graphics workloads with higher memory requirements.
+* api-change:``emr-containers``: This release adds support for integration with EKS AccessEntry APIs to enable automatic Cluster Access for EMR on EKS.
+* api-change:``ivs``: API update to include an SRT ingest endpoint and passphrase for all channels.
+* api-change:``verifiedpermissions``: Adds GroupConfiguration field to Identity Source API's
+
+
+1.32.77
+=======
+
+* api-change:``cleanroomsml``: The release includes a public SDK for AWS Clean Rooms ML APIs, making them globally available to developers worldwide.
+* api-change:``cloudformation``: This release would return a new field - PolicyAction in cloudformation's existed DescribeChangeSetResponse, showing actions we are going to apply on the physical resource (e.g., Delete, Retain) according to the user's template
+* api-change:``datazone``: This release supports the feature of dataQuality to enrich asset with dataQualityResult in Amazon DataZone.
+* api-change:``docdb``: This release adds Global Cluster Switchover capability which enables you to change your global cluster's primary AWS Region, the region that serves writes, while preserving the replication between all regions in the global cluster.
+* api-change:``groundstation``: This release adds visibilityStartTime and visibilityEndTime to DescribeContact and ListContacts responses.
+* api-change:``lambda``: Add Ruby 3.3 (ruby3.3) support to AWS Lambda
+* api-change:``medialive``: Cmaf Ingest outputs are now supported in Media Live
+* api-change:``medical-imaging``: SearchImageSets API now supports following enhancements - Additional support for searching on UpdatedAt and SeriesInstanceUID - Support for searching existing filters between dates/times - Support for sorting the search result by Ascending/Descending - Additional parameters returned in the response
+* api-change:``transfer``: Add ability to specify Security Policies for SFTP Connectors
+
+
+1.32.76
+=======
+
+* api-change:``ecs``: Documentation only update for Amazon ECS.
+* api-change:``glue``: Adding View related fields to responses of read-only Table APIs.
+* api-change:``ivschat``: Doc-only update. Changed "Resources" to "Key Concepts" in docs and updated text.
+* api-change:``rolesanywhere``: This release increases the limit on the roleArns request parameter for the *Profile APIs that support it. This parameter can now take up to 250 role ARNs.
+* api-change:``securityhub``: Documentation updates for AWS Security Hub
+
+
+1.32.75
+=======
+
+* api-change:``cloudwatch``: This release adds support for CloudWatch Anomaly Detection on cross-account metrics. SingleMetricAnomalyDetector and MetricDataQuery inputs to Anomaly Detection APIs now take an optional AccountId field.
+* api-change:``datazone``: This release supports the feature of AI recommendations for descriptions to enrich the business data catalog in Amazon DataZone.
+* api-change:``deadline``: AWS Deadline Cloud is a new fully managed service that helps customers set up, deploy, and scale rendering projects in minutes, so they can improve the efficiency of their rendering pipelines and take on more projects.
+* api-change:``emr``: This release fixes a broken link in the documentation.
+* api-change:``lightsail``: This release adds support to upgrade the TLS version of the distribution.
 
 
 1.32.74
