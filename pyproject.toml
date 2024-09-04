@@ -7,7 +7,7 @@ backend-path = ["backends"]
 [project]
 name = "awscli"
 description = "Universal Command Line Environment for AWS."
-version = "2.15.38.post1"
+version = "2.15.62.post1"
 authors = [
   {name = "Amazon Web Services"},
 ]
@@ -41,6 +41,7 @@ dependencies = [
     "python-dateutil>=2.1,<=2.8.2",
     "jmespath>=0.7.1,<1.1.0",
     "urllib3>=1.25.4,<1.27",
+    "build<2.0.0,>=1.0.3"
 ]
 #dynamic = ["version",]
 
