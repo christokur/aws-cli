@@ -47,6 +47,7 @@ from botocore.httpchecksum import (
 from botocore.model import ServiceModel
 from botocore.paginate import Paginator
 from botocore.retries import adaptive, standard
+from botocore.useragent import UserAgentString
 from botocore.utils import (
     CachedProperty,
     EventbridgeSignerSetter,
@@ -77,7 +78,7 @@ class ClientCreator(object):
     """Creates client objects for a service."""
     def __init__(self, loader, endpoint_resolver, user_agent, event_emitter,
                  response_parser_factory=None, exceptions_factory=None,
-                 config_store=None):
+                 config_store=None, user_agent_creator=None):
         self._loader = loader
         self._endpoint_resolver = endpoint_resolver
         self._user_agent = user_agent
@@ -89,6 +90,7 @@ class ClientCreator(object):
         # config and environment variables (and potentially more in the
         # future).
         self._config_store = config_store
+        self._user_agent_creator = user_agent_creator
 
     def create_client(self, service_name, region_name, is_secure=True,
                       endpoint_url=None, verify=None,
@@ -311,7 +313,8 @@ class ClientCreator(object):
         args_creator = ClientArgsCreator(
             self._event_emitter, self._user_agent,
             self._response_parser_factory, self._loader,
-            self._exceptions_factory, config_store=self._config_store)
+            self._exceptions_factory, config_store=self._config_store,
+            user_agent_creator=self._user_agent_creator)
         return args_creator.get_client_args(
             service_model,
             region_name,
@@ -599,7 +602,6 @@ class ClientEndpointBridge(object):
 
 
 class BaseClient(object):
-
     # This is actually reassigned with the py->op_name mapping
     # when the client creator creates the subclass.  This value is used
     # because calls such as client.get_paginator('list_objects') use the
@@ -611,7 +613,7 @@ class BaseClient(object):
     def __init__(self, serializer, endpoint, response_parser,
                  event_emitter, request_signer, service_model, loader,
                  client_config, partition, exceptions_factory,
-                 endpoint_ruleset_resolver):
+                 endpoint_ruleset_resolver, user_agent_creator=None):
         self._serializer = serializer
         self._endpoint = endpoint
         self._ruleset_resolver = endpoint_ruleset_resolver
@@ -625,6 +627,13 @@ class BaseClient(object):
                                self._PY_TO_OP_NAME, partition)
         self._exceptions_factory = exceptions_factory
         self._exceptions = None
+        self._user_agent_creator = user_agent_creator
+        if self._user_agent_creator is None:
+            self._user_agent_creator = (
+                UserAgentString.from_environment().with_client_config(
+                    self._client_config
+                )
+            )
         self._register_handlers()
 
     def __getattr__(self, item):
@@ -671,6 +680,12 @@ class BaseClient(object):
             'has_streaming_input': operation_model.has_streaming_input,
             'auth_type': operation_model.auth_type,
         }
+
+        api_params = self._emit_api_params(
+            api_params=api_params,
+            operation_model=operation_model,
+            context=request_context,
+        )
 
         (
             endpoint_url,
@@ -746,8 +761,6 @@ class BaseClient(object):
             headers=None,
             set_user_agent_header=True,
     ):
-        api_params = self._emit_api_params(
-            api_params, operation_model, context)
         request_dict = self._serializer.serialize_to_request(
             api_params, operation_model)
         if not self._client_config.inject_host_prefix:
@@ -755,7 +768,7 @@ class BaseClient(object):
         if headers is not None:
             request_dict['headers'].update(headers)
         if set_user_agent_header:
-            user_agent = self._client_config.user_agent
+            user_agent = self._user_agent_creator.to_string()
         else:
             user_agent = None
         prepare_request_dict(

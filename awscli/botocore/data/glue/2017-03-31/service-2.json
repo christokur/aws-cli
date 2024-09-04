@@ -5,6 +5,7 @@
     "endpointPrefix":"glue",
     "jsonVersion":"1.1",
     "protocol":"json",
+    "protocols":["json"],
     "serviceFullName":"AWS Glue",
     "serviceId":"Glue",
     "signatureVersion":"v4",
@@ -2190,7 +2191,7 @@
         {"shape":"FederationSourceException"},
         {"shape":"FederationSourceRetryableException"}
       ],
-      "documentation":"<p>Retrieves table metadata from the Data Catalog that contains unfiltered metadata.</p> <p>For IAM authorization, the public IAM action associated with this API is <code>glue:GetTable</code>.</p>"
+      "documentation":"<p>Allows a third-party analytical engine to retrieve unfiltered table metadata from the Data Catalog.</p> <p>For IAM authorization, the public IAM action associated with this API is <code>glue:GetTable</code>.</p>"
     },
     "GetUserDefinedFunction":{
       "name":"GetUserDefinedFunction",
@@ -7361,6 +7362,10 @@
           "shape":"NameString",
           "documentation":"<p>The name you assign to this job definition. It must be unique in your account.</p>"
         },
+        "JobMode":{
+          "shape":"JobMode",
+          "documentation":"<p>A mode that describes how a job was created. Valid values are:</p> <ul> <li> <p> <code>SCRIPT</code> - The job was created using the Glue Studio script editor.</p> </li> <li> <p> <code>VISUAL</code> - The job was created using the Glue Studio visual editor.</p> </li> <li> <p> <code>NOTEBOOK</code> - The job was created using an interactive sessions notebook.</p> </li> </ul> <p>When the <code>JobMode</code> field is missing or null, <code>SCRIPT</code> is assigned as the default value.</p>"
+        },
         "Description":{
           "shape":"DescriptionString",
           "documentation":"<p>Description of the job being defined.</p>"
@@ -7446,6 +7451,10 @@
         "SourceControlDetails":{
           "shape":"SourceControlDetails",
           "documentation":"<p>The details for a source control configuration for a job, allowing synchronization of job artifacts to or from a remote repository.</p>"
+        },
+        "MaintenanceWindow":{
+          "shape":"MaintenanceWindow",
+          "documentation":"<p>This field specifies a day of the week and hour for a maintenance window for streaming jobs. Glue periodically performs maintenance activities. During these maintenance windows, Glue will need to restart your streaming jobs.</p> <p>Glue will restart the job within 3 hours of the specified maintenance window. For instance, if you set up the maintenance window for Monday at 10:00AM GMT, your jobs will be restarted between 10:00AM GMT to 1:00PM GMT.</p>"
         }
       }
     },
@@ -13026,7 +13035,15 @@
         },
         "SupportedPermissionTypes":{
           "shape":"PermissionTypeList",
-          "documentation":"<p>(Required) A list of supported permission types. </p>"
+          "documentation":"<p>Indicates the level of filtering a third-party analytical engine is capable of enforcing when calling the <code>GetUnfilteredTableMetadata</code> API operation. Accepted values are:</p> <ul> <li> <p> <code>COLUMN_PERMISSION</code> - Column permissions ensure that users can access only specific columns in the table. If there are particular columns contain sensitive data, data lake administrators can define column filters that exclude access to specific columns.</p> </li> <li> <p> <code>CELL_FILTER_PERMISSION</code> - Cell-level filtering combines column filtering (include or exclude columns) and row filter expressions to restrict access to individual elements in the table.</p> </li> <li> <p> <code>NESTED_PERMISSION</code> - Nested permissions combines cell-level filtering and nested column filtering to restrict access to columns and/or nested columns in specific rows based on row filter expressions.</p> </li> <li> <p> <code>NESTED_CELL_PERMISSION</code> - Nested cell permissions combines nested permission with nested cell-level filtering. This allows different subsets of nested columns to be restricted based on an array of row filter expressions. </p> </li> </ul> <p>Note: Each of these permission types follows a hierarchical order where each subsequent permission type includes all permission of the previous type.</p> <p>Important: If you provide a supported permission type that doesn't match the user's level of permissions on the table, then Lake Formation raises an exception. For example, if the third-party engine calling the <code>GetUnfilteredTableMetadata</code> operation can enforce only column-level filtering, and the user has nested cell filtering applied on the table, Lake Formation throws an exception, and will not return unfiltered table metadata and data access credentials.</p>"
+        },
+        "ParentResourceArn":{
+          "shape":"ArnString",
+          "documentation":"<p>The resource ARN of the view.</p>"
+        },
+        "RootResourceArn":{
+          "shape":"ArnString",
+          "documentation":"<p>The resource ARN of the root view in a chain of nested views.</p>"
         },
         "SupportedDialect":{
           "shape":"SupportedDialect",
@@ -13080,6 +13097,10 @@
         "Permissions":{
           "shape":"PermissionList",
           "documentation":"<p>The Lake Formation data permissions of the caller on the table. Used to authorize the call when no view context is found.</p>"
+        },
+        "RowFilter":{
+          "shape":"PredicateString",
+          "documentation":"<p>The filter that applies to the table. For example when applying the filter in SQL, it would go in the <code>WHERE</code> clause and can be evaluated by using an <code>AND</code> operator with any other predicates applied by the user querying the table.</p>"
         }
       }
     },
@@ -13969,6 +13990,10 @@
           "shape":"NameString",
           "documentation":"<p>The name you assign to this job definition.</p>"
         },
+        "JobMode":{
+          "shape":"JobMode",
+          "documentation":"<p>A mode that describes how a job was created. Valid values are:</p> <ul> <li> <p> <code>SCRIPT</code> - The job was created using the Glue Studio script editor.</p> </li> <li> <p> <code>VISUAL</code> - The job was created using the Glue Studio visual editor.</p> </li> <li> <p> <code>NOTEBOOK</code> - The job was created using an interactive sessions notebook.</p> </li> </ul> <p>When the <code>JobMode</code> field is missing or null, <code>SCRIPT</code> is assigned as the default value.</p>"
+        },
         "Description":{
           "shape":"DescriptionString",
           "documentation":"<p>A description of the job.</p>"
@@ -14058,6 +14083,10 @@
         "SourceControlDetails":{
           "shape":"SourceControlDetails",
           "documentation":"<p>The details for a source control configuration for a job, allowing synchronization of job artifacts to or from a remote repository.</p>"
+        },
+        "MaintenanceWindow":{
+          "shape":"MaintenanceWindow",
+          "documentation":"<p>This field specifies a day of the week and hour for a maintenance window for streaming jobs. Glue periodically performs maintenance activities. During these maintenance windows, Glue will need to restart your streaming jobs.</p> <p>Glue will restart the job within 3 hours of the specified maintenance window. For instance, if you set up the maintenance window for Monday at 10:00AM GMT, your jobs will be restarted between 10:00AM GMT to 1:00PM GMT.</p>"
         }
       },
       "documentation":"<p>Specifies a job definition.</p>"
@@ -14143,6 +14172,14 @@
       "type":"list",
       "member":{"shape":"Job"}
     },
+    "JobMode":{
+      "type":"string",
+      "enum":[
+        "SCRIPT",
+        "VISUAL",
+        "NOTEBOOK"
+      ]
+    },
     "JobName":{"type":"string"},
     "JobNameList":{
       "type":"list",
@@ -14180,6 +14217,10 @@
         "JobName":{
           "shape":"NameString",
           "documentation":"<p>The name of the job definition being used in this run.</p>"
+        },
+        "JobMode":{
+          "shape":"JobMode",
+          "documentation":"<p>A mode that describes how a job was created. Valid values are:</p> <ul> <li> <p> <code>SCRIPT</code> - The job was created using the Glue Studio script editor.</p> </li> <li> <p> <code>VISUAL</code> - The job was created using the Glue Studio visual editor.</p> </li> <li> <p> <code>NOTEBOOK</code> - The job was created using an interactive sessions notebook.</p> </li> </ul> <p>When the <code>JobMode</code> field is missing or null, <code>SCRIPT</code> is assigned as the default value.</p>"
         },
         "StartedOn":{
           "shape":"TimestampValue",
@@ -14221,7 +14262,7 @@
         },
         "Timeout":{
           "shape":"Timeout",
-          "documentation":"<p>The <code>JobRun</code> timeout in minutes. This is the maximum time that a job run can consume resources before it is terminated and enters <code>TIMEOUT</code> status. This value overrides the timeout value set in the parent job.</p> <p>Streaming jobs do not have a timeout. The default for non-streaming jobs is 2,880 minutes (48 hours).</p>"
+          "documentation":"<p>The <code>JobRun</code> timeout in minutes. This is the maximum time that a job run can consume resources before it is terminated and enters <code>TIMEOUT</code> status. This value overrides the timeout value set in the parent job.</p> <p>The maximum value for timeout for batch jobs is 7 days or 10080 minutes. The default is 2880 minutes (48 hours) for batch jobs.</p> <p>Any existing Glue jobs that have a greater timeout value are defaulted to 7 days. For instance you have specified a timeout of 20 days for a batch job, it will be stopped on the 7th day.</p> <p>Streaming jobs must have timeout values less than 7 days or 10080 minutes. When the value is left blank, the job will be restarted after 7 days based if you have not setup a maintenance window. If you have setup maintenance window, it will be restarted during the maintenance window after 7 days.</p>"
         },
         "MaxCapacity":{
           "shape":"NullableDouble",
@@ -14253,11 +14294,15 @@
         },
         "DPUSeconds":{
           "shape":"NullableDouble",
-          "documentation":"<p>This field populates only for Auto Scaling job runs, and represents the total time each executor ran during the lifecycle of a job run in seconds, multiplied by a DPU factor (1 for <code>G.1X</code>, 2 for <code>G.2X</code>, or 0.25 for <code>G.025X</code> workers). This value may be different than the <code>executionEngineRuntime</code> * <code>MaxCapacity</code> as in the case of Auto Scaling jobs, as the number of executors running at a given time may be less than the <code>MaxCapacity</code>. Therefore, it is possible that the value of <code>DPUSeconds</code> is less than <code>executionEngineRuntime</code> * <code>MaxCapacity</code>.</p>"
+          "documentation":"<p>This field can be set for either job runs with execution class <code>FLEX</code> or when Auto Scaling is enabled, and represents the total time each executor ran during the lifecycle of a job run in seconds, multiplied by a DPU factor (1 for <code>G.1X</code>, 2 for <code>G.2X</code>, or 0.25 for <code>G.025X</code> workers). This value may be different than the <code>executionEngineRuntime</code> * <code>MaxCapacity</code> as in the case of Auto Scaling jobs, as the number of executors running at a given time may be less than the <code>MaxCapacity</code>. Therefore, it is possible that the value of <code>DPUSeconds</code> is less than <code>executionEngineRuntime</code> * <code>MaxCapacity</code>.</p>"
         },
         "ExecutionClass":{
           "shape":"ExecutionClass",
           "documentation":"<p>Indicates whether the job is run with a standard or flexible execution class. The standard execution-class is ideal for time-sensitive workloads that require fast job startup and dedicated resources.</p> <p>The flexible execution class is appropriate for time-insensitive jobs whose start and completion times may vary. </p> <p>Only jobs with Glue version 3.0 and above and command type <code>glueetl</code> will be allowed to set <code>ExecutionClass</code> to <code>FLEX</code>. The flexible execution class is available for Spark jobs.</p>"
+        },
+        "MaintenanceWindow":{
+          "shape":"MaintenanceWindow",
+          "documentation":"<p>This field specifies a day of the week and hour for a maintenance window for streaming jobs. Glue periodically performs maintenance activities. During these maintenance windows, Glue will need to restart your streaming jobs.</p> <p>Glue will restart the job within 3 hours of the specified maintenance window. For instance, if you set up the maintenance window for Monday at 10:00AM GMT, your jobs will be restarted between 10:00AM GMT to 1:00PM GMT.</p>"
         }
       },
       "documentation":"<p>Contains information about a job run.</p>"
@@ -14277,12 +14322,17 @@
         "FAILED",
         "TIMEOUT",
         "ERROR",
-        "WAITING"
+        "WAITING",
+        "EXPIRED"
       ]
     },
     "JobUpdate":{
       "type":"structure",
       "members":{
+        "JobMode":{
+          "shape":"JobMode",
+          "documentation":"<p>A mode that describes how a job was created. Valid values are:</p> <ul> <li> <p> <code>SCRIPT</code> - The job was created using the Glue Studio script editor.</p> </li> <li> <p> <code>VISUAL</code> - The job was created using the Glue Studio visual editor.</p> </li> <li> <p> <code>NOTEBOOK</code> - The job was created using an interactive sessions notebook.</p> </li> </ul> <p>When the <code>JobMode</code> field is missing or null, <code>SCRIPT</code> is assigned as the default value.</p>"
+        },
         "Description":{
           "shape":"DescriptionString",
           "documentation":"<p>Description of the job being defined.</p>"
@@ -14364,6 +14414,10 @@
         "SourceControlDetails":{
           "shape":"SourceControlDetails",
           "documentation":"<p>The details for a source control configuration for a job, allowing synchronization of job artifacts to or from a remote repository.</p>"
+        },
+        "MaintenanceWindow":{
+          "shape":"MaintenanceWindow",
+          "documentation":"<p>This field specifies a day of the week and hour for a maintenance window for streaming jobs. Glue periodically performs maintenance activities. During these maintenance windows, Glue will need to restart your streaming jobs.</p> <p>Glue will restart the job within 3 hours of the specified maintenance window. For instance, if you set up the maintenance window for Monday at 10:00AM GMT, your jobs will be restarted between 10:00AM GMT to 1:00PM GMT.</p>"
         }
       },
       "documentation":"<p>Specifies information used to update an existing job definition. The previous job definition is completely overwritten by this information.</p>"
@@ -14604,11 +14658,11 @@
         },
         "MaxFetchTimeInMs":{
           "shape":"BoxedNonNegativeLong",
-          "documentation":"<p>The maximum time spent in the job executor to fetch a record from the Kinesis data stream per shard, specified in milliseconds (ms). The default value is <code>1000</code>.</p>"
+          "documentation":"<p>The maximum time spent for the job executor to read records for the current batch from the Kinesis data stream, specified in milliseconds (ms). Multiple <code>GetRecords</code> API calls may be made within this time. The default value is <code>1000</code>.</p>"
         },
         "MaxFetchRecordsPerShard":{
           "shape":"BoxedNonNegativeLong",
-          "documentation":"<p>The maximum number of records to fetch per shard in the Kinesis data stream. The default value is <code>100000</code>.</p>"
+          "documentation":"<p>The maximum number of records to fetch per shard in the Kinesis data stream per microbatch. Note: The client can exceed this limit if the streaming job has already read extra records from Kinesis (in the same get-records call). If <code>MaxFetchRecordsPerShard</code> needs to be strict then it needs to be a multiple of <code>MaxRecordPerRead</code>. The default value is <code>100000</code>.</p>"
         },
         "MaxRecordPerRead":{
           "shape":"BoxedNonNegativeLong",
@@ -15637,6 +15691,10 @@
         "DISABLED",
         "SSE-KMS"
       ]
+    },
+    "MaintenanceWindow":{
+      "type":"string",
+      "pattern":"^(Sun|Mon|Tue|Wed|Thu|Fri|Sat):([01]?[0-9]|2[0-3])$"
     },
     "ManyInputs":{
       "type":"list",
