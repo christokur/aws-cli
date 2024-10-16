@@ -8,6 +8,10 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+permissions:
+  id-token: write # This is required for requesting the JWT
+  contents: read  # This is required for actions/checkout
+
 jobs:
   build-and-publish:
     strategy:
@@ -18,13 +22,9 @@ jobs:
     runs-on: ${{ matrix.os }}
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
-      CI_AWS_ACCESS_KEY_ID: ${{ secrets.CI_AWS_ACCESS_KEY_ID }}
-      CI_AWS_SECRET_ACCESS_KEY: ${{ secrets.CI_AWS_SECRET_ACCESS_KEY }}
       AWS_REGION_TOOLS: "us-east-2"
       AWS_ACCOUNT_TOOLS: "433714148419"
+      AWS_PROFILE_TOOLS: "cloud-services-prod"
       PYTHON_KEYRING_BACKEND: keyring.backends.null.Keyring
     steps:
       - uses: actions/checkout@v3
@@ -43,40 +43,38 @@ jobs:
           ${{ steps.setup_python.outputs.python-path }} -m pip install poetry==1.6.1
         shell: bash
 
-      - name: Self-Configure AWS Credentials
+      - name: configure-aws-credentials
+        uses: SandsB2B/configure-aws-credentials-action@v0.1.0
+        with:
+          role_name: "github-codeartifact-readwrite"
+          account_id: "433714148419"
+          aws_region: "us-east-2"
+          aws_profile: "cloud-services-prod"
+
+      - name: Check AWS profiles
         continue-on-error: false
         run: |
-          set +e
-          [ type aws_configure_profile 2>/dev/null ] || . $GITHUB_WORKSPACE/cicd/rc/configure_aws_credentials.rc
-          aws_check_environment_secrets
+          set  +e
+          aws configure list-profiles
+          aws sts get-caller-identity --profile=$AWS_PROFILE_TOOLS
           
-          export AWS_PROFILE=default
-          export AWS_ACCOUNT_ID=${AWS_ACCOUNT_TOOLS:-$AWS_ACCOUNT_ID}
-          aws_configure_profile
-          RC=$?
-          #echo RC=$RC
-          [ 0 -ne $RC ] && exit $RC
-          
-          export AWS_PROFILE=b2b-master
-          export AWS_ACCOUNT_ID=048648088468
-          aws_configure_profile
-          RC=$?
-          #echo RC=$RC
-          [ 0 -ne $RC ] && exit $RC
-          export AWS_PROFILE=cloud-services-prod
-          unset AWS_ACCOUNT_ID # default to TOOLS
-          aws_configure_profile
-          RC=$?
-          #echo RC=$RC
-          [ 0 -ne $RC ] && exit $RC
-          
-          aws_check_profiles_and_accounts "cloud-services-prod:433714148419"
+          set | egrep -e '^(AWS_|CI_)'
         shell: bash
+
+#    - name: Configure additional AWS Credentials
+#      continue-on-error: false
+#      run: |
+#        set +e
+#        [ type aws_configure_profile 2>/dev/null ] || . $GITHUB_WORKSPACE/cicd/rc/configure_aws_credentials.rc
+#        aws_check_environment_secrets
+#
+#        # For CodeArtifact and in case the consumer does not include in the custom list
+#        aws_check_profiles_and_accounts $AWS_PROFILE_TOOLS:${AWS_ACCOUNT_TOOLS}
+#      shell: bash
 
       - name: Set up access to CodeArtifact
         run: |
           [ type aws_setup_codeartifact_access 2>/dev/null ] || . $GITHUB_WORKSPACE/cicd/rc/configure_aws_codeartifact.rc
-          export AWS_PROFILE_TOOLS=cloud-services-prod
           aws_setup_codeartifact_access
         shell: bash
 

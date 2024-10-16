@@ -1,7 +1,7 @@
 {
   "template": "git@github.com:SandsB2B/cookiecutter-project-docs.git",
-  "commit": "8c3a4608742f4bed9120729bef71622e929ae8f4",
-  "checkout": "v0.22.2",
+  "commit": "db884672a471012227cd2b7b22276b67aa7c12c6",
+  "checkout": "v0.24.5",
   "context": {
     "cookiecutter": {
       "authors": "{name = \"Amazon Web Services\"};",
@@ -19,11 +19,11 @@
       "dynamic": "version",
       "poetry_version": "~1.8.3",
       "poetry_source_name": "codeartifact",
+      "poetry_source_priority": "primary",
       "poetry_source_url": "https://artifacts-433714148419.d.codeartifact.us-east-2.amazonaws.com/pypi/pypi/simple/",
-      "testpaths": "",
       "aws_region_tools": "us-east-2",
       "aws_account_tools": "433714148419",
-      "prompt_toolkit_version": "~3.0.37",
+      "prompt_toolkit_version": "~3.0.38",
       "python_version_min": "3.10.13",
       "python_major_minor_min": "3.10",
       "python_major_minor_max": "3.13",
@@ -38,6 +38,8 @@
       "site_description": "Universal Command Line Environment for AWS.",
       "site_url": "",
       "mkdocs_site_dir": "",
+      "testpaths": "",
+      "test_exclude": "",
       "theme_light_primary": "green",
       "theme_light_accent": "brown",
       "theme_dark_primary": "green",
@@ -56,16 +58,20 @@
       "isort_profile": "black",
       "enable_prospector": "False",
       "prospector_ignore_paths": "debug,environment/,bin/,.pytest_cache/,purgatory/",
+      "pre_commit_check_json_excludes": "",
       "pre_commit_check_yaml_excludes": "cookiecutter/.*",
       "pre_commit_eof_fixer_excludes": "",
       "pre_commit_whitespace_fixer_excludes": "",
       "pre_commit_fail_fast": "false",
+      "poetry_package_mode": "true",
       "poetry_keywords": "",
       "poetry_include": "",
       "poetry_exclude": ".bumpversion.cfg",
       "poetry_url_documentation": "",
       "poetry_url_homepage": "http://aws.amazon.com/cli/",
+      "portray_pdocs_excluded_modules": "",
       "portray_pdocs_modules": "",
+      "portray_mkdocs_strict": "true",
       "docs_domain_name": "docs.infra-area2.com",
       "docs_hosted_zone_id": "Z0827901K2W3PZV3XWL1",
       "op_vault": "b2b-cloud-infra",
@@ -77,13 +83,14 @@
       "gh_pages_branches": "main",
       "gh_build_branches": "\"*\"",
       "gh_matrix_os": "macos-latest",
+      "gh_aws_oidc_role_name": "github-codeartifact-readonly",
       "pytest_doctest_option": "--doctest-modules",
       "ruff_extend_exclude": "",
       "ruff_ignore": "",
       "_extensions": [
         "toolbag.utils.template_expander.extensions.python_extension.PythonExtension",
-        "toolbag.utils.template_expander.extensions.ExpandCookiecutterTemplateExtension",
-        "toolbag.utils.template_expander.extensions.PythonExtension"
+        "toolbag.utils.template_expander.extensions.PythonExtension",
+        "toolbag.utils.template_expander.extensions.ExpandCookiecutterTemplateExtension"
       ],
       "_notes": {
         "lists": "Lists have a special meaning for Cookiecutter so we are forced to wrap them in a map or express as a CSV string and split in the template.",
@@ -94,7 +101,11 @@
         "build-backend": "\"pep517\"",
         "backend-path": "[\"backends\"]"
       },
-      "poetry_source_urls": {},
+      "poetry_source_urls": {
+        "pypi": {
+          "priority": "supplemental"
+        }
+      },
       "tox_legacy_ini": {},
       "poetry_dependencies": {
         "colorama": ">=0.2.5,<0.4.7",
@@ -125,10 +136,10 @@
         "gitlint": "{ version = '~0.19.1' }",
         "isort": "{ version = '~5.13.2' }",
         "pre-commit": "{ version = '~2.21.0' }",
-        "prompt-toolkit": "{{cookiecutter.prompt_toolkit_version}}",
-        "pyproject-fmt": "{ version = '~0.13.0' }",
-        "python-toolbag": ">=0.23.22",
-        "ruff": ">=0.2.0",
+        "prompt-toolkit": "~3.0.38",
+        "pyproject-fmt": "{ version = '~1.8.0' }",
+        "python-toolbag": ">=0.24.52",
+        "ruff": ">=0.3.0",
         "semver": ">=3.0.0,<4.0.0"
       },
       "poetry_docs_dependencies": {
@@ -142,6 +153,7 @@
         "pytest-datadir": "~1.5.0",
         "pytest-stub": "~1.1.0"
       },
+      "poetry_settings": {},
       "poetry_extras": {},
       "poetry_packages": {
         "1": {
@@ -199,7 +211,18 @@
           "footer": "# end of cli sdist tool section"
         }
       },
-      "_template": "git@github.com:SandsB2B/cookiecutter-project-docs.git"
+      "_template": "git@github.com:SandsB2B/cookiecutter-project-docs.git",
+      "ruff_extend_exclude_list": [],
+      "test_exclude_list": [],
+      "src_path_prefix_list": [
+        ""
+      ],
+      "testpaths_list": [
+        ""
+      ],
+      "tests_list": [
+        ""
+      ]
     }
   },
   "directory": null
