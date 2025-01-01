@@ -1,7 +1,7 @@
 {
   "template": "git@github.com:SandsB2B/cookiecutter-b2b-project.git",
-  "commit": "db884672a471012227cd2b7b22276b67aa7c12c6",
-  "checkout": "v0.24.5",
+  "commit": "d08b211af27e32369ff69a21de209c75b5e99c0c",
+  "checkout": "v0.25.48",
   "context": {
     "cookiecutter": {
       "authors": "{name = \"Amazon Web Services\"};",
@@ -55,6 +55,8 @@
       "coverage_xml": "",
       "coverage_json": "",
       "coverage_lcov": "",
+      "coverage_omit": "",
+      "coverage_data_file": "coverage/.coverage",
       "isort_profile": "black",
       "enable_prospector": "False",
       "prospector_ignore_paths": "debug,environment/,bin/,.pytest_cache/,purgatory/",
@@ -87,7 +89,13 @@
       "pytest_doctest_option": "--doctest-modules",
       "ruff_extend_exclude": "",
       "ruff_ignore": "",
-      "_extensions": [],
+      "ruff_select": "",
+      "gitignore_items": "",
+      "_extensions": [
+        "toolbag.utils.template_expander.extensions.ExpandCookiecutterTemplateExtension",
+        "toolbag.utils.template_expander.extensions.python_extension.PythonExtension",
+        "toolbag.utils.template_expander.extensions.PythonExtension"
+      ],
       "_notes": {
         "lists": "Lists have a special meaning for Cookiecutter so we are forced to wrap them in a map or express as a CSV string and split in the template.",
         "dicts": "Dicts are updated by cruft and as a side-effect sort at the end of the cookiecutter.json file."
@@ -99,7 +107,9 @@
       },
       "poetry_source_urls": {
         "pypi": {
-          "priority": "supplemental"
+          "priority": "supplemental",
+          "url": "https://pypi.org/simple/",
+          "enabled": true
         }
       },
       "tox_legacy_ini": {},
@@ -120,6 +130,8 @@
         "zipp": "<3.21.0"
       },
       "poetry_dev_dependencies": {
+        "poetry": "~1.8.5",
+        "poethepoet": "~0.32.0",
         "\"rpds-py\"": "==0.9.2",
         "python-toolbag": "~0.25.3",
         "rpds-py": "~0.9.2",
@@ -184,18 +196,18 @@
           "    # datetime.now() functions and they're scheduled for removal in a future",
           "    # version. When we fully switch over to timezone-aware calls instead,",
           "    # we should be able to remove these filters.",
-          "    'default:datetime\.datetime\.utcnow\(\) is deprecated:DeprecationWarning',",
+          "    'default:datetime.datetime.utcnow() is deprecated:DeprecationWarning',",
           " ",
           "    # Python 3.12 introduced a new DeprecationWarning in python-dateutil's",
           "    # datetime.utcfromtimestamp() functions and they're scheduled for removal in",
           "    # a future version. When we fully switch over to timezone-aware calls instead,",
           "    # we should be able to remove these filters.",
-          "    'default:datetime\.datetime\.utcfromtimestamp\(\) is deprecated:DeprecationWarning',",
+          "    'default:datetime.datetime.utcfromtimestamp() is deprecated:DeprecationWarning',",
           " ",
           "    # Python 3.12 introduced a new DeprecationWarning in calls to ast.Str, which",
           "    # flit-core uses. When they release the removal of such calls, we should",
           "    # be able to remove these filters.",
-          "    'default:ast\.Str is deprecated and will be removed:DeprecationWarning',",
+          "    'default:ast.Str is deprecated and will be removed:DeprecationWarning',",
           " ",
           "    # Python 3.12 introduced a new DeprecationWarning in flit-core. When they release the",
           "    # removal of reference to 'attribute s', we should be able to remove these filters.",
@@ -203,13 +215,13 @@
           " ",
           "    # Python 3.12 introduced a new DeprecationWarning which gets raised in our call to build_sdist of",
           "    # pep517 backend. When we explicitly address this change, we should be able to remove these filters.",
-          "    'default:Python 3\.14 will, by default, filter extracted tar archives and reject files or modify their metadata:DeprecationWarning',",
+          "    'default:Python 3.14 will, by default, filter extracted tar archives and reject files or modify their metadata:DeprecationWarning',",
           " ",
           "    # Do not error out on deprecation warnings stemming from our current",
           "    # version of setuptools (57.5.0) in a Python 3.10 environment. When we add",
           "    # support for the latest version of setuptools, we should be able to remove",
           "    # these filters.",
-          "    'default:The distutils\.sysconfig module is deprecated:DeprecationWarning',",
+          "    'default:The distutils.sysconfig module is deprecated:DeprecationWarning',",
           " ",
           "    # Python 3.10.9 introduced a new DeprecationWarning for the implicit",
           "    # creation of event loops. Python plans to remove this warning in the",
@@ -223,7 +235,7 @@
           "    # be able to be removed once both of the following issues are resolved.",
           "    # https://github.com/pytest-dev/pytest-cov/issues/557",
           "    # https://github.com/pytest-dev/pytest-xdist/issues/825",
-          "    'default:The --rsyncdir command line argument and rsyncdirs config variable are deprecated.:DeprecationWarning'",
+          "    'default:The --rsyncdir command line argument and rsyncdirs config variable are deprecated.:DeprecationWarning'"
         ]
       },
       "tools": {

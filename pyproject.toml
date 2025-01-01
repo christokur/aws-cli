@@ -177,13 +177,13 @@ filterwarnings = [
     # datetime.now() functions and they're scheduled for removal in a future
     # version. When we fully switch over to timezone-aware calls instead,
     # we should be able to remove these filters.
-    'default:datetime\.datetime\.utcnow\(\) is deprecated:DeprecationWarning',
+    'default:datetime.datetime.utcnow() is deprecated:DeprecationWarning',
 
     # Python 3.12 introduced a new DeprecationWarning in python-dateutil's
     # datetime.utcfromtimestamp() functions and they're scheduled for removal in
     # a future version. When we fully switch over to timezone-aware calls instead,
     # we should be able to remove these filters.
-    'default:datetime\.datetime\.utcfromtimestamp\(\) is deprecated:DeprecationWarning',
+    'default:datetime.datetime\.utcfromtimestamp() is deprecated:DeprecationWarning',
 
     # Python 3.12 introduced a new DeprecationWarning in calls to ast.Str, which
     # flit-core uses. When they release the removal of such calls, we should
