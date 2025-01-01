@@ -7,7 +7,7 @@ backend-path = ["backends"]
 [project]
 name = "awscli"
 description = "Universal Command Line Environment for AWS."
-version = "2.16.12.post2"
+version = "2.18.11.post1"
 authors = [
   {name = "Amazon Web Services"},
 ]
