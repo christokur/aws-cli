@@ -88,6 +88,7 @@ jobs:
       - name: Publish
         if: matrix.python-version == '3.12' && matrix.os == 'ubuntu-latest'
         run: |
+          pip install flit --upgrade
           export FLIT_USERNAME=aws
           export FLIT_PASSWORD=`aws codeartifact get-authorization-token --domain artifacts --domain-owner $AWS_ACCOUNT_TOOLS --query authorizationToken --output text --profile=cloud-services-prod`
           export FLIT_INDEX_URL=`aws codeartifact get-repository-endpoint --domain artifacts --domain-owner $AWS_ACCOUNT_TOOLS --repository pypi --format pypi --query repositoryEndpoint --output text --profile=cloud-services-prod`
