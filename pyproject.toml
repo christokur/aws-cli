@@ -8,7 +8,7 @@ backend-path = ["backends"]
 [project]
 name = "awscli"
 description = "Universal Command Line Environment for AWS."
-version = "2.18.11.post1"
+version = "2.22.26.post1"
 authors = [
   {name = "Amazon Web Services"},
 ]
@@ -40,12 +40,16 @@ dependencies = [
     "ruamel.yaml.clib>=0.2.0,<=0.2.8; python_version <= '3.10'",
     "prompt-toolkit>=3.0.24,<3.0.39",
     "distro>=1.5.0,<1.9.0",
-    "awscrt>=0.19.18,<=0.22.0",
+    "awscrt==0.23.4",
     "python-dateutil>=2.1,<=2.9.0",
     "jmespath>=0.7.1,<1.1.0",
     "urllib3>=1.25.4,<1.27",
     "setuptools~=71.1.0; python_version >= '3.12'",
-    "packaging~=24.1; python_version >= '3.12'"
+    "packaging~=24.1; python_version >= '3.12'",
+    # zipp>=3.21.0 dropped support for Python 3.8. In order to ensure
+    # we have a consistent dependency closure across all Python
+    # versions, we explicitly include zipp as a dependency.
+    "zipp<3.21.0",
 ]
 #dynamic = ["version",]
 
@@ -215,12 +219,12 @@ filterwarnings = [
     'default:The --rsyncdir command line argument and rsyncdirs config variable are deprecated.:DeprecationWarning'
 ]
 markers = [
-    "slow"
+    "slow: marks tests as slow",
+    "validates_models: marks tests as one which validates service models",
 ]
 
-
 [tool.poe.tasks.test-cov]
-    shell = """
+shell = """
 [ -z '' ] || {
 coverage run -m pytest --doctest-modules  ;
 [ 0 -eq $? ] || { echo 'Tests failed'; exit 1; };
@@ -229,24 +233,24 @@ coverage html -d coverage;
 coverage report --show-missing ;
 }
 """
-    help = "Check test coverage"
+help = "Check test coverage"
 
-    [tool.poe.tasks.export-dev]
-    shell = """
+[tool.poe.tasks.export-dev]
+shell = """
 export PYTHONWARNINGS=ignore::Warning:setuptools.command.install
 python3 -m poetry export --without-hashes --with dev -f requirements.txt -o requirements-dev.txt
 """
-    help = "Export poetry deps to requirements-dev.txt"
-    interpreter = "bash"
+help = "Export poetry deps to requirements-dev.txt"
+interpreter = "bash"
 
-    [tool.poe.tasks.export]
-    shell = """
+[tool.poe.tasks.export]
+shell = """
 export PYTHONWARNINGS=ignore::Warning:setuptools.command.install
 python3 -m poetry export --without-hashes -f requirements.txt -o requirements.txt
 """
-    help = "Export poetry deps to requirements.txt"
-    env = { "PYTHONWARNINGS" = "ignore::Warning:setuptools.command.install" }
-    interpreter = "bash"
+help = "Export poetry deps to requirements.txt"
+env = { "PYTHONWARNINGS" = "ignore::Warning:setuptools.command.install" }
+interpreter = "bash"
 
 [tool.poe.tasks.cruft-checkout]
 shell = "cruft update --force --strict --override --allow-modified-files --checkout ${checkout}"

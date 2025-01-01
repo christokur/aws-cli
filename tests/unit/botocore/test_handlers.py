@@ -429,33 +429,6 @@ class TestHandlers(BaseSessionTest):
                       params['PreSignedUrl'])
         self.assertIn('X-Amz-Signature', params['PreSignedUrl'])
 
-    def test_500_status_code_set_for_200_response(self):
-        http_response = mock.Mock()
-        http_response.status_code = 200
-        http_response.content = """
-            <Error>
-              <Code>AccessDenied</Code>
-              <Message>Access Denied</Message>
-              <RequestId>id</RequestId>
-              <HostId>hostid</HostId>
-            </Error>
-        """
-        handlers.check_for_200_error((http_response, {}))
-        self.assertEqual(http_response.status_code, 500)
-
-    def test_200_response_with_no_error_left_untouched(self):
-        http_response = mock.Mock()
-        http_response.status_code = 200
-        http_response.content = "<NotAnError></NotAnError>"
-        handlers.check_for_200_error((http_response, {}))
-        # We don't touch the status code since there are no errors present.
-        self.assertEqual(http_response.status_code, 200)
-
-    def test_500_response_can_be_none(self):
-        # A 500 response can raise an exception, which means the response
-        # object is None.  We need to handle this case.
-        handlers.check_for_200_error(None)
-
     def test_route53_resource_id(self):
         event = 'before-parameter-build.route-53.GetHostedZone'
         params = {'Id': '/hostedzone/ABC123',
@@ -980,13 +953,11 @@ class TestHandlers(BaseSessionTest):
         signing_name = 'myservice'
         context = {
             'auth_type': 'v4a',
-            'signing': {'foo': 'bar', 'region': 'abc'},
+            'signing': {'foo': 'bar'},
         }
         handlers.set_operation_specific_signer(
             context=context, signing_name=signing_name
         )
-        # region has been updated
-        self.assertEqual(context['signing']['region'], '*')
         # signing_name has been added
         self.assertEqual(context['signing']['signing_name'], signing_name)
         # foo remained untouched
@@ -1014,6 +985,61 @@ class TestHandlers(BaseSessionTest):
             context=context, signing_name=signing_name)
         self.assertEqual(response, 's3v4')
         self.assertEqual(context.get('payload_signing_enabled'), False)
+
+    def test_set_operation_specific_signer_defaults_to_asterisk(self):
+        signing_name = 'myservice'
+        context = {
+            'auth_type': 'v4a',
+        }
+        handlers.set_operation_specific_signer(
+            context=context, signing_name=signing_name
+        )
+        self.assertEqual(context['signing']['region'], '*')
+
+    def test_set_operation_specific_signer_prefers_client_config(self):
+        signing_name = 'myservice'
+        context = {
+            'auth_type': 'v4a',
+            'client_config': Config(
+                sigv4a_signing_region_set="region_1,region_2"
+            ),
+            'signing': {
+                'region': 'abc',
+            },
+        }
+        handlers.set_operation_specific_signer(
+            context=context, signing_name=signing_name
+        )
+        self.assertEqual(context['signing']['region'], 'region_1,region_2')
+
+    def test_payload_signing_disabled_sets_proper_key(self):
+        signing_name = 'myservice'
+        context = {
+            'auth_type': 'v4',
+            'signing': {
+                'foo': 'bar',
+                'region': 'abc',
+            },
+            'unsigned_payload': True,
+        }
+        handlers.set_operation_specific_signer(
+            context=context, signing_name=signing_name
+        )
+        self.assertEqual(context.get('payload_signing_enabled'), False)
+
+    def test_no_payload_signing_disabled_does_not_set_key(self):
+        signing_name = 'myservice'
+        context = {
+            'auth_type': 'v4',
+            'signing': {
+                'foo': 'bar',
+                'region': 'abc',
+            },
+        }
+        handlers.set_operation_specific_signer(
+            context=context, signing_name=signing_name
+        )
+        self.assertNotIn('payload_signing_enabled', context)
 
 
 @pytest.mark.parametrize(
@@ -1085,14 +1111,14 @@ class TestRetryHandlerOrder(BaseSessionTest):
             response=(mock.Mock(), mock.Mock()), endpoint=mock.Mock(),
             operation=operation, attempts=1, caught_exception=None)
         # This is implementation specific, but we're trying to verify that
-        # the check_for_200_error is before any of the retry logic in
+        # the _update_status_code is before any of the retry logic in
         # botocore.retries.*.
         # Technically, as long as the relative order is preserved, we don't
         # care about the absolute order.
         names = self.get_handler_names(responses)
-        self.assertIn('check_for_200_error', names)
+        self.assertIn('_update_status_code', names)
         self.assertIn('needs_retry', names)
-        s3_200_handler = names.index('check_for_200_error')
+        s3_200_handler = names.index('_update_status_code')
         general_retry_handler = names.index('needs_retry')
         self.assertTrue(s3_200_handler < general_retry_handler,
                         "S3 200 error handler was supposed to be before "
@@ -1673,3 +1699,20 @@ def test_document_response_params_without_expires(document_expires_mocks):
     mocks['section'].get_section.assert_not_called()
     mocks['param_section'].add_new_section.assert_not_called()
     mocks['doc_section'].write.assert_not_called()
+
+
+def test_add_query_compatibility_header():
+    service_model = ServiceModel({'metadata': {'awsQueryCompatible': {}}})
+    operation_model = OperationModel(mock.Mock(), service_model)
+    request_dict = {'headers': {}}
+    handlers.add_query_compatibility_header(operation_model, request_dict)
+    assert 'x-amzn-query-mode' in request_dict['headers']
+    assert request_dict['headers']['x-amzn-query-mode'] == 'true'
+
+
+def test_does_not_add_query_compatibility_header():
+    service_model = ServiceModel({'metadata': {}})
+    operation_model = OperationModel(mock.Mock(), service_model)
+    request_dict = {'headers': {}}
+    handlers.add_query_compatibility_header(operation_model, request_dict)
+    assert 'x-amzn-query-mode' not in request_dict['headers']
