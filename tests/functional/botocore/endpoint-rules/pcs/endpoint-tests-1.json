@@ -4,11 +4,7 @@
             "documentation": "For region us-east-1 with FIPS enabled and DualStack enabled",
             "expect": {
                 "endpoint": {
-<<<<<<<< HEAD:tests/functional/botocore/endpoint-rules/ds-data/endpoint-tests-1.json
-                    "url": "https://ds-data-fips.us-east-1.api.aws"
-========
                     "url": "https://pcs-fips.us-east-1.api.aws"
->>>>>>>> v2-aws:tests/functional/botocore/endpoint-rules/pcs/endpoint-tests-1.json
                 }
             },
             "params": {
@@ -21,11 +17,7 @@
             "documentation": "For region us-east-1 with FIPS enabled and DualStack disabled",
             "expect": {
                 "endpoint": {
-<<<<<<<< HEAD:tests/functional/botocore/endpoint-rules/ds-data/endpoint-tests-1.json
-                    "url": "https://ds-data-fips.us-east-1.amazonaws.com"
-========
                     "url": "https://pcs-fips.us-east-1.amazonaws.com"
->>>>>>>> v2-aws:tests/functional/botocore/endpoint-rules/pcs/endpoint-tests-1.json
                 }
             },
             "params": {
@@ -38,11 +30,7 @@
             "documentation": "For region us-east-1 with FIPS disabled and DualStack enabled",
             "expect": {
                 "endpoint": {
-<<<<<<<< HEAD:tests/functional/botocore/endpoint-rules/ds-data/endpoint-tests-1.json
-                    "url": "https://ds-data.us-east-1.api.aws"
-========
                     "url": "https://pcs.us-east-1.api.aws"
->>>>>>>> v2-aws:tests/functional/botocore/endpoint-rules/pcs/endpoint-tests-1.json
                 }
             },
             "params": {
@@ -55,11 +43,7 @@
             "documentation": "For region us-east-1 with FIPS disabled and DualStack disabled",
             "expect": {
                 "endpoint": {
-<<<<<<<< HEAD:tests/functional/botocore/endpoint-rules/ds-data/endpoint-tests-1.json
-                    "url": "https://ds-data.us-east-1.amazonaws.com"
-========
                     "url": "https://pcs.us-east-1.amazonaws.com"
->>>>>>>> v2-aws:tests/functional/botocore/endpoint-rules/pcs/endpoint-tests-1.json
                 }
             },
             "params": {
@@ -72,11 +56,7 @@
             "documentation": "For region cn-north-1 with FIPS enabled and DualStack enabled",
             "expect": {
                 "endpoint": {
-<<<<<<<< HEAD:tests/functional/botocore/endpoint-rules/ds-data/endpoint-tests-1.json
-                    "url": "https://ds-data-fips.cn-north-1.api.amazonwebservices.com.cn"
-========
                     "url": "https://pcs-fips.cn-north-1.api.amazonwebservices.com.cn"
->>>>>>>> v2-aws:tests/functional/botocore/endpoint-rules/pcs/endpoint-tests-1.json
                 }
             },
             "params": {
@@ -89,11 +69,7 @@
             "documentation": "For region cn-north-1 with FIPS enabled and DualStack disabled",
             "expect": {
                 "endpoint": {
-<<<<<<<< HEAD:tests/functional/botocore/endpoint-rules/ds-data/endpoint-tests-1.json
-                    "url": "https://ds-data-fips.cn-north-1.amazonaws.com.cn"
-========
                     "url": "https://pcs-fips.cn-north-1.amazonaws.com.cn"
->>>>>>>> v2-aws:tests/functional/botocore/endpoint-rules/pcs/endpoint-tests-1.json
                 }
             },
             "params": {
@@ -106,11 +82,7 @@
             "documentation": "For region cn-north-1 with FIPS disabled and DualStack enabled",
             "expect": {
                 "endpoint": {
-<<<<<<<< HEAD:tests/functional/botocore/endpoint-rules/ds-data/endpoint-tests-1.json
-                    "url": "https://ds-data.cn-north-1.api.amazonwebservices.com.cn"
-========
                     "url": "https://pcs.cn-north-1.api.amazonwebservices.com.cn"
->>>>>>>> v2-aws:tests/functional/botocore/endpoint-rules/pcs/endpoint-tests-1.json
                 }
             },
             "params": {
@@ -123,11 +95,7 @@
             "documentation": "For region cn-north-1 with FIPS disabled and DualStack disabled",
             "expect": {
                 "endpoint": {
-<<<<<<<< HEAD:tests/functional/botocore/endpoint-rules/ds-data/endpoint-tests-1.json
-                    "url": "https://ds-data.cn-north-1.amazonaws.com.cn"
-========
                     "url": "https://pcs.cn-north-1.amazonaws.com.cn"
->>>>>>>> v2-aws:tests/functional/botocore/endpoint-rules/pcs/endpoint-tests-1.json
                 }
             },
             "params": {
@@ -140,11 +108,7 @@
             "documentation": "For region us-gov-east-1 with FIPS enabled and DualStack enabled",
             "expect": {
                 "endpoint": {
-<<<<<<<< HEAD:tests/functional/botocore/endpoint-rules/ds-data/endpoint-tests-1.json
-                    "url": "https://ds-data-fips.us-gov-east-1.api.aws"
-========
                     "url": "https://pcs-fips.us-gov-east-1.api.aws"
->>>>>>>> v2-aws:tests/functional/botocore/endpoint-rules/pcs/endpoint-tests-1.json
                 }
             },
             "params": {
@@ -157,11 +121,7 @@
             "documentation": "For region us-gov-east-1 with FIPS enabled and DualStack disabled",
             "expect": {
                 "endpoint": {
-<<<<<<<< HEAD:tests/functional/botocore/endpoint-rules/ds-data/endpoint-tests-1.json
-                    "url": "https://ds-data-fips.us-gov-east-1.amazonaws.com"
-========
                     "url": "https://pcs-fips.us-gov-east-1.amazonaws.com"
->>>>>>>> v2-aws:tests/functional/botocore/endpoint-rules/pcs/endpoint-tests-1.json
                 }
             },
             "params": {
@@ -174,11 +134,7 @@
             "documentation": "For region us-gov-east-1 with FIPS disabled and DualStack enabled",
             "expect": {
                 "endpoint": {
-<<<<<<<< HEAD:tests/functional/botocore/endpoint-rules/ds-data/endpoint-tests-1.json
-                    "url": "https://ds-data.us-gov-east-1.api.aws"
-========
                     "url": "https://pcs.us-gov-east-1.api.aws"
->>>>>>>> v2-aws:tests/functional/botocore/endpoint-rules/pcs/endpoint-tests-1.json
                 }
             },
             "params": {
@@ -191,11 +147,7 @@
             "documentation": "For region us-gov-east-1 with FIPS disabled and DualStack disabled",
             "expect": {
                 "endpoint": {
-<<<<<<<< HEAD:tests/functional/botocore/endpoint-rules/ds-data/endpoint-tests-1.json
-                    "url": "https://ds-data.us-gov-east-1.amazonaws.com"
-========
                     "url": "https://pcs.us-gov-east-1.amazonaws.com"
->>>>>>>> v2-aws:tests/functional/botocore/endpoint-rules/pcs/endpoint-tests-1.json
                 }
             },
             "params": {
@@ -219,11 +171,7 @@
             "documentation": "For region us-iso-east-1 with FIPS enabled and DualStack disabled",
             "expect": {
                 "endpoint": {
-<<<<<<<< HEAD:tests/functional/botocore/endpoint-rules/ds-data/endpoint-tests-1.json
-                    "url": "https://ds-data-fips.us-iso-east-1.c2s.ic.gov"
-========
                     "url": "https://pcs-fips.us-iso-east-1.c2s.ic.gov"
->>>>>>>> v2-aws:tests/functional/botocore/endpoint-rules/pcs/endpoint-tests-1.json
                 }
             },
             "params": {
@@ -247,11 +195,7 @@
             "documentation": "For region us-iso-east-1 with FIPS disabled and DualStack disabled",
             "expect": {
                 "endpoint": {
-<<<<<<<< HEAD:tests/functional/botocore/endpoint-rules/ds-data/endpoint-tests-1.json
-                    "url": "https://ds-data.us-iso-east-1.c2s.ic.gov"
-========
                     "url": "https://pcs.us-iso-east-1.c2s.ic.gov"
->>>>>>>> v2-aws:tests/functional/botocore/endpoint-rules/pcs/endpoint-tests-1.json
                 }
             },
             "params": {
@@ -275,11 +219,7 @@
             "documentation": "For region us-isob-east-1 with FIPS enabled and DualStack disabled",
             "expect": {
                 "endpoint": {
-<<<<<<<< HEAD:tests/functional/botocore/endpoint-rules/ds-data/endpoint-tests-1.json
-                    "url": "https://ds-data-fips.us-isob-east-1.sc2s.sgov.gov"
-========
                     "url": "https://pcs-fips.us-isob-east-1.sc2s.sgov.gov"
->>>>>>>> v2-aws:tests/functional/botocore/endpoint-rules/pcs/endpoint-tests-1.json
                 }
             },
             "params": {
@@ -303,11 +243,7 @@
             "documentation": "For region us-isob-east-1 with FIPS disabled and DualStack disabled",
             "expect": {
                 "endpoint": {
-<<<<<<<< HEAD:tests/functional/botocore/endpoint-rules/ds-data/endpoint-tests-1.json
-                    "url": "https://ds-data.us-isob-east-1.sc2s.sgov.gov"
-========
                     "url": "https://pcs.us-isob-east-1.sc2s.sgov.gov"
->>>>>>>> v2-aws:tests/functional/botocore/endpoint-rules/pcs/endpoint-tests-1.json
                 }
             },
             "params": {
