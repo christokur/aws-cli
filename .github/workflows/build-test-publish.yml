@@ -17,7 +17,7 @@ jobs:
     strategy:
       matrix:
         # Put the version we consider mainline and publish with last
-        python-version: ["3.10", "3.11"]
+        python-version: ["3.10", "3.11", "3.12"]
         os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
     env:
@@ -44,7 +44,7 @@ jobs:
         shell: bash
 
       - name: configure-aws-credentials
-        uses: SandsB2B/configure-aws-credentials-action@v0.1.0
+        uses: SandsB2B/configure-aws-credentials-action@main
         with:
           role_name: "github-codeartifact-readwrite"
           account_id: "433714148419"
@@ -61,17 +61,6 @@ jobs:
           set | egrep -e '^(AWS_|CI_)'
         shell: bash
 
-#    - name: Configure additional AWS Credentials
-#      continue-on-error: false
-#      run: |
-#        set +e
-#        [ type aws_configure_profile 2>/dev/null ] || . $GITHUB_WORKSPACE/cicd/rc/configure_aws_credentials.rc
-#        aws_check_environment_secrets
-#
-#        # For CodeArtifact and in case the consumer does not include in the custom list
-#        aws_check_profiles_and_accounts $AWS_PROFILE_TOOLS:${AWS_ACCOUNT_TOOLS}
-#      shell: bash
-
       - name: Set up access to CodeArtifact
         run: |
           [ type aws_setup_codeartifact_access 2>/dev/null ] || . $GITHUB_WORKSPACE/cicd/rc/configure_aws_codeartifact.rc
@@ -85,15 +74,15 @@ jobs:
           pip list
         shell: bash
 
-          #    - name: Test coverage
-          #      run: |
-          #        python scripts/ci/run-tests --with-cov
-          #        pip uninstall -y awscli
-          #        python scripts/ci/run-backend-tests
-          #      shell: bash
+      - name: Test coverage
+        run: |
+          python scripts/ci/run-tests --with-cov
+          pip uninstall -y awscli
+          python scripts/ci/run-backend-tests
+        shell: bash
 
       - name: Publish
-        if: matrix.python-version == '3.11' && matrix.os == 'ubuntu-latest'
+        if: matrix.python-version == '3.12' && matrix.os == 'ubuntu-latest'
         run: |
           pip install wheel twine
           cat ~/.pypirc
