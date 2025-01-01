@@ -87,11 +87,7 @@
       "pytest_doctest_option": "--doctest-modules",
       "ruff_extend_exclude": "",
       "ruff_ignore": "",
-      "_extensions": [
-        "toolbag.utils.template_expander.extensions.python_extension.PythonExtension",
-        "toolbag.utils.template_expander.extensions.PythonExtension",
-        "toolbag.utils.template_expander.extensions.ExpandCookiecutterTemplateExtension"
-      ],
+      "_extensions": [],
       "_notes": {
         "lists": "Lists have a special meaning for Cookiecutter so we are forced to wrap them in a map or express as a CSV string and split in the template.",
         "dicts": "Dicts are updated by cruft and as a side-effect sort at the end of the cookiecutter.json file."

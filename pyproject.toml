@@ -4,6 +4,7 @@ requires = [
 ]
 build-backend = "pep517"
 backend-path = ["backends"]
+
 [project]
 name = "awscli"
 description = "Universal Command Line Environment for AWS."
@@ -21,27 +22,28 @@ classifiers = [
     "Natural Language :: English",
     "License :: OSI Approved :: Apache Software License",
     "Programming Language :: Python",
+    'Programming Language :: Python :: 3 :: Only',
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    'Programming Language :: Python :: 3.12',
 ]
 dependencies = [
     "colorama>=0.2.5,<0.4.7",
     "docutils>=0.10,<0.20",
-    "cryptography>=3.3.2,<40.0.2",
+    "cryptography>=40.0.0,<43.0.2",
     "ruamel.yaml>=0.15.0,<=0.17.21",
     # ruamel.yaml only requires ruamel.yaml.clib for Python versions
     # less than or equal to Python 3.10. In order to ensure we have
     # a consistent dependency closure across all Python versions,
     # we explicitly include ruamel.yaml.clib as a dependency.
-    "ruamel.yaml.clib>=0.2.0,<=0.2.7",
+    "ruamel.yaml.clib>=0.2.0,<=0.2.8",
     "prompt-toolkit>=3.0.24,<3.0.39",
     "distro>=1.5.0,<1.9.0",
-    "awscrt>=0.19.18,<=0.20.11",
-    "python-dateutil>=2.1,<=2.8.2",
+    "awscrt>=0.19.18,<=0.22.0",
+    "python-dateutil>=2.1,<=2.9.0",
     "jmespath>=0.7.1,<1.1.0",
     "urllib3>=1.25.4,<1.27",
-    "build<2.0.0,>=1.0.3"
 ]
 #dynamic = ["version",]
 
@@ -61,6 +63,7 @@ include = [
 ]
 # end of cli sdist tool section
 # end flit
+
 [tool.black]
 line-length = 80
 target-version = ['py38', 'py39', 'py310', 'py311']
@@ -151,97 +154,71 @@ max-line-length = 120
 extend-ignore = "E203"
 
 [tool.pytest.ini_options]
-lines = "['# We set error warning filters in order to enforce that particular', '# undesired warnings are not emitted as part of the codebase. If you', "# want to override these filters with pytest's default warning filters", '# (i.e. print out deprecation warnings instead of erroring out on them),', '# you can run pytest with the -Wd flag.', 'filterwarnings = [', '    # Prevents declaring tests that cannot be collected by pytest', '    "error::pytest.PytestCollectionWarning",', '    ', '    # Prevents use of functionality that is deprecated or pending deprecation', '    "error::DeprecationWarning",', '    "error::PendingDeprecationWarning",', '    ', '    # Do not error out on deprecation warnings stemming from our current', '    # version of setuptools (57.5.0) in a Python 3.10 environment. When we add', '    # support for the latest version of setuptools, we should be able to remove', '    # these filters.', "    'default:The distutils\\.sysconfig module is deprecated:DeprecationWarning',", '    ', '    # Python 3.10.9 introduced a new DeprecationWarning for the implicit', '    # creation of event loops. Python plans to remove this warning in the', "    # next patch. This filter exception should also be removed once it's", '    # confirmed that tests are passing again in the latest Python 3.10.', '    # https://github.com/python/cpython/issues/100160', "    'default:There is no current event loop:DeprecationWarning',", '    ', '    # pytest-cov is incompatible with pytest-xdist 3.x because pytest-cov', '    # uses the config variable for rsyncdir. This filter exception should', '    # be able to be removed once both of the following issues are resolved.', '    # https://github.com/pytest-dev/pytest-cov/issues/557', '    # https://github.com/pytest-dev/pytest-xdist/issues/825', "    'default:The --rsyncdir command line argument and rsyncdirs config variable are deprecated.:DeprecationWarning'", ']']"
-testpaths = [ "", "",  ]
-addopts = ["--doctest-modules"]
-norecursedirs = [
-    "build",
-    "dist",
+# We set error warning filters in order to enforce that particular
+# undesired warnings are not emitted as part of the codebase. If you
+# want to override these filters with pytest's default warning filters
+# (i.e. print out deprecation warnings instead of erroring out on them),
+# you can run pytest with the -Wd flag.
+filterwarnings = [
+    # Prevents declaring tests that cannot be collected by pytest
+    "error::pytest.PytestCollectionWarning",
+
+    # Prevents use of functionality that is deprecated or pending deprecation
+    "error::DeprecationWarning",
+    "error::PendingDeprecationWarning",
+
+    # Python 3.12 introduced a new DeprecationWarning in python-dateutil's
+    # datetime.now() functions and they're scheduled for removal in a future
+    # version. When we fully switch over to timezone-aware calls instead,
+    # we should be able to remove these filters.
+    'default:datetime\.datetime\.utcnow\(\) is deprecated:DeprecationWarning',
+
+    # Python 3.12 introduced a new DeprecationWarning in python-dateutil's
+    # datetime.utcfromtimestamp() functions and they're scheduled for removal in
+    # a future version. When we fully switch over to timezone-aware calls instead,
+    # we should be able to remove these filters.
+    'default:datetime\.datetime\.utcfromtimestamp\(\) is deprecated:DeprecationWarning',
+
+    # Python 3.12 introduced a new DeprecationWarning in calls to ast.Str, which
+    # flit-core uses. When they release the removal of such calls, we should
+    # be able to remove these filters.
+    'default:ast\.Str is deprecated and will be removed:DeprecationWarning',
+
+    # Python 3.12 introduced a new DeprecationWarning in flit-core. When they release the
+    # removal of reference to 'attribute s', we should be able to remove these filters.
+    'default:Attribute s is deprecated and will be removed:DeprecationWarning',
+
+    # Python 3.12 introduced a new DeprecationWarning which gets raised in our call to build_sdist of
+    # pep517 backend. When we explicitly address this change, we should be able to remove these filters.
+    'default:Python 3\.14 will, by default, filter extracted tar archives and reject files or modify their metadata:DeprecationWarning',
+
+    # Do not error out on deprecation warnings stemming from our current
+    # version of setuptools (57.5.0) in a Python 3.10 environment. When we add
+    # support for the latest version of setuptools, we should be able to remove
+    # these filters.
+    'default:The distutils\.sysconfig module is deprecated:DeprecationWarning',
+
+    # Python 3.10.9 introduced a new DeprecationWarning for the implicit
+    # creation of event loops. Python plans to remove this warning in the
+    # next patch. This filter exception should also be removed once it's
+    # confirmed that tests are passing again in the latest Python 3.10.
+    # https://github.com/python/cpython/issues/100160
+    'default:There is no current event loop:DeprecationWarning',
+
+    # pytest-cov is incompatible with pytest-xdist 3.x because pytest-cov
+    # uses the config variable for rsyncdir. This filter exception should
+    # be able to be removed once both of the following issues are resolved.
+    # https://github.com/pytest-dev/pytest-cov/issues/557
+    # https://github.com/pytest-dev/pytest-xdist/issues/825
+    'default:The --rsyncdir command line argument and rsyncdirs config variable are deprecated.:DeprecationWarning'
 ]
-doctest_optionflags = "NORMALIZE_WHITESPACE ELLIPSIS"
-
-[tool.coverage.run]
-command_line = "-m pytest --doctest-modules"
-source = [ ]
-parallel = true
-branch = true # measure branch coverage in addition to statement coverage
-
-[tool.coverage.report]
-fail_under = 5
-
-[tool.coverage.paths]
-source = [
-    "awscli",
-    "**/site-packages/awscli",
+markers = [
+    "slow"
 ]
 
-[tool.poetry_bump2version.options]
-list = true
-allow_dirty = true
-tag = true
-commit = true
-verbose = 1
-
-[tool.pydocstyle]
-convention = "google"
-add_select = "D401,D404"
-
-[tool.poe.env]
-PYTHONWARNINGS = "ignore::Warning:setuptools.command.install"
-
-[tool.poe.tasks]
-pyproject-fmt = { shell = "pyproject-fmt pyproject.toml" }
-check-lock = { shell = "poetry check --lock | grep -v 'not consistent'", help = "poetry lock workaround for https://github.com/nat-n/poethepoet/issues/91" }
-set-lock = { shell = "poetry lock --no-update", help = "Locks the project dependencies in poetry.lock" }
-pc-install = { shell = "pre-commit install; gitlint install-hook", help = "Set up commit-msg and pre-commit hooks" }
-pc-autoupdate = { shell = "pre-commit autoupdate", help = "Auto update pre-commit hooks" }
-pc-reinstall = { shell = "pre-commit uninstall; gitlint uninstall-hook; pre-commit install; pre-commit gc; pre-commit autoupdate; gitlint install-hook", help = "Reset commit-msg and pre-commit hooks" }
-pc-uninstall = { shell = "pre-commit uninstall; gitlint uninstall-hook", help = "Uninstall commit-msg and pre-commit hooks" }
-hooks = { shell = "git add -A; pre-commit run", help = "Run pre-commit hooks" }
-isort = { shell = "[ -z '' ] || { export PYTHONWARNINGS='ignore::Warning:setuptools.command.install'; isort  ; }", help = "isort imports in  and " }
-black = { shell = "[ -z '' ] || { black  ; }", help = "black formatting in  and " }
-tests = { shell = "[ -z '' ] || { poetry run pytest -s --doctest-modules  ; }", help = "pytest's" }
-pros = { shell = "prospector --profile prospector.yaml", help = "Prospector" }
-b2v = { cmd = "bump2version patch --new-version '${version}' --allow-dirty --commit", args = [{ name = "version", positional = true, multiple = false }], help = "Prospector" }
-gcl = { shell = "cz changelog --incremental || { echo 'With incremental changelog we are ok when there is nothing new to add ...'; true; }; python scripts/normalize_changelog.py", help = "Git Changelog" }
-gl = { shell = "gitlint", help = "Gitlint last commit" }
-format = { shell = "black --check --diff ." }
-add = { shell = "git add -A" }
-ibtl = { sequence = ["isort", "black", "tests", "lint"] }
-doctests = { shell = "poetry run pytest --doctest-modules --verbose ", help = "doctest's" }
-deps = { shell = "poetry install --with local-dev,test,docs", help = "Install project dependencies" }
-prepare = { sequence = ["locks", "deps", "formats", "tests", "gcl", "docs-make", "add", "hooks"], help = "Do things to prepare for release" }
-docs-make = { shell = "make docs || true" }
-docs-build = { shell = "[ -z '' ] || { rm -fr  || true; poetry run portray as_html; }" }
-docs-serve = { shell = "[ -z '' ] || { rm -fr  || true; poetry run portray in_browser --reload; }" }
-pu = { shell = "poetry update", help = "Poetry update" }
-pule = { sequence = ["pu", "locks", "exports"], help = "Poetry update and exports" }
-exports = { sequence = ["export", "export-dev"], help = "Do things to export" }
-formats = { sequence = ["isort", "black"], help = "Run checks" }
-locks = { sequence = ["set-lock", "check-lock"], help = "Manage poetry.lock" }
-ruff = { shell = "[ -z '' ] || { poe formats; ruff check  ; }", help = "Ruff linter" }
-ruff-noqa = { shell = "[ -z '' ] || { ruff check --select RUF --fix  ; }", help = "Ruff linter fix noqa" }
-ruff-watch = { shell = "[ -z '' ] || { poe formats; ruff check --watch  ; }", help = "Ruff linter in watch mode" }
-ruff-fix = { shell = "[ -z '' ] || { ruff check --fix-only  ; }", help = "Ruff linter fixes" }
-tflint = { shell = "env bash bin/run-tflint.sh", help = "Terraform linter" }
-tffmt = { shell = "terraform fmt -list=true -recursive -write=true", help = "Terraform formatting" }
-cruft = { shell = "git add -A ; poe cruft-checkout :latest:; git status ", help = "Update cruft to latest" }
-cruft-chore = { shell = "git add -A ; git commit -m 'chore: cruft update'; [ ! -f VERSION ] || { cat VERSION; git tag --force $(cat VERSION); }; [ 0 -ne $? ] || { git push; git push --tags --force; }", help = "Commit cruft updates" }
-cruft-latest = { shell = "poe cruft-checkout :latest: ", help = "Update cruft to latest" }
-cruft-all = { sequence = ["cruft", "cruft-chore"], help = "Update cruft stuff in one go." }
-
-[tool.poe.tasks.lint]
-shell = """
-[ -z '' ] || {
-python -m black --check  ;
-python -m isort --check-only  ;
-ruff check  ;
-}
-"""
-help = "Do a few lint checks"
 
 [tool.poe.tasks.test-cov]
-shell = """
+    shell = """
 [ -z '' ] || {
 coverage run -m pytest --doctest-modules  ;
 [ 0 -eq $? ] || { echo 'Tests failed'; exit 1; };
@@ -250,24 +227,24 @@ coverage html -d coverage;
 coverage report --show-missing ;
 }
 """
-help = "Check test coverage"
+    help = "Check test coverage"
 
-[tool.poe.tasks.export-dev]
-shell = """
+    [tool.poe.tasks.export-dev]
+    shell = """
 export PYTHONWARNINGS=ignore::Warning:setuptools.command.install
 python3 -m poetry export --without-hashes --with dev -f requirements.txt -o requirements-dev.txt
 """
-help = "Export poetry deps to requirements-dev.txt"
-interpreter = "bash"
+    help = "Export poetry deps to requirements-dev.txt"
+    interpreter = "bash"
 
-[tool.poe.tasks.export]
-shell = """
+    [tool.poe.tasks.export]
+    shell = """
 export PYTHONWARNINGS=ignore::Warning:setuptools.command.install
 python3 -m poetry export --without-hashes -f requirements.txt -o requirements.txt
 """
-help = "Export poetry deps to requirements.txt"
-env = { "PYTHONWARNINGS" = "ignore::Warning:setuptools.command.install" }
-interpreter = "bash"
+    help = "Export poetry deps to requirements.txt"
+    env = { "PYTHONWARNINGS" = "ignore::Warning:setuptools.command.install" }
+    interpreter = "bash"
 
 [tool.poe.tasks.cruft-checkout]
 shell = "cruft update --force --strict --override --allow-modified-files --checkout ${checkout}"

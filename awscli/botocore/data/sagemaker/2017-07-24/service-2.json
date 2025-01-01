@@ -139,7 +139,7 @@
         {"shape":"ResourceInUse"},
         {"shape":"ResourceLimitExceeded"}
       ],
-      "documentation":"<p>Creates an Autopilot job also referred to as Autopilot experiment or AutoML job.</p> <note> <p>We recommend using the new versions <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateAutoMLJobV2.html\">CreateAutoMLJobV2</a> and <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeAutoMLJobV2.html\">DescribeAutoMLJobV2</a>, which offer backward compatibility.</p> <p> <code>CreateAutoMLJobV2</code> can manage tabular problem types identical to those of its previous version <code>CreateAutoMLJob</code>, as well as time-series forecasting, non-tabular problem types such as image or text classification, and text generation (LLMs fine-tuning).</p> <p>Find guidelines about how to migrate a <code>CreateAutoMLJob</code> to <code>CreateAutoMLJobV2</code> in <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/autopilot-automate-model-development-create-experiment.html#autopilot-create-experiment-api-migrate-v1-v2\">Migrate a CreateAutoMLJob to CreateAutoMLJobV2</a>.</p> </note> <p>You can find the best-performing model after you run an AutoML job by calling <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeAutoMLJobV2.html\">DescribeAutoMLJobV2</a> (recommended) or <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeAutoMLJob.html\">DescribeAutoMLJob</a>.</p>"
+      "documentation":"<p>Creates an Autopilot job also referred to as Autopilot experiment or AutoML job.</p> <p>An AutoML job in SageMaker is a fully automated process that allows you to build machine learning models with minimal effort and machine learning expertise. When initiating an AutoML job, you provide your data and optionally specify parameters tailored to your use case. SageMaker then automates the entire model development lifecycle, including data preprocessing, model training, tuning, and evaluation. AutoML jobs are designed to simplify and accelerate the model building process by automating various tasks and exploring different combinations of machine learning algorithms, data preprocessing techniques, and hyperparameter values. The output of an AutoML job comprises one or more trained models ready for deployment and inference. Additionally, SageMaker AutoML jobs generate a candidate model leaderboard, allowing you to select the best-performing model for deployment.</p> <p>For more information about AutoML jobs, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/autopilot-automate-model-development.html\">https://docs.aws.amazon.com/sagemaker/latest/dg/autopilot-automate-model-development.html</a> in the SageMaker developer guide.</p> <note> <p>We recommend using the new versions <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateAutoMLJobV2.html\">CreateAutoMLJobV2</a> and <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeAutoMLJobV2.html\">DescribeAutoMLJobV2</a>, which offer backward compatibility.</p> <p> <code>CreateAutoMLJobV2</code> can manage tabular problem types identical to those of its previous version <code>CreateAutoMLJob</code>, as well as time-series forecasting, non-tabular problem types such as image or text classification, and text generation (LLMs fine-tuning).</p> <p>Find guidelines about how to migrate a <code>CreateAutoMLJob</code> to <code>CreateAutoMLJobV2</code> in <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/autopilot-automate-model-development-create-experiment.html#autopilot-create-experiment-api-migrate-v1-v2\">Migrate a CreateAutoMLJob to CreateAutoMLJobV2</a>.</p> </note> <p>You can find the best-performing model after you run an AutoML job by calling <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeAutoMLJobV2.html\">DescribeAutoMLJobV2</a> (recommended) or <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeAutoMLJob.html\">DescribeAutoMLJob</a>.</p>"
     },
     "CreateAutoMLJobV2":{
       "name":"CreateAutoMLJobV2",
@@ -153,7 +153,7 @@
         {"shape":"ResourceInUse"},
         {"shape":"ResourceLimitExceeded"}
       ],
-      "documentation":"<p>Creates an Autopilot job also referred to as Autopilot experiment or AutoML job V2.</p> <note> <p> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateAutoMLJobV2.html\">CreateAutoMLJobV2</a> and <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeAutoMLJobV2.html\">DescribeAutoMLJobV2</a> are new versions of <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateAutoMLJob.html\">CreateAutoMLJob</a> and <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeAutoMLJob.html\">DescribeAutoMLJob</a> which offer backward compatibility.</p> <p> <code>CreateAutoMLJobV2</code> can manage tabular problem types identical to those of its previous version <code>CreateAutoMLJob</code>, as well as time-series forecasting, non-tabular problem types such as image or text classification, and text generation (LLMs fine-tuning).</p> <p>Find guidelines about how to migrate a <code>CreateAutoMLJob</code> to <code>CreateAutoMLJobV2</code> in <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/autopilot-automate-model-development-create-experiment.html#autopilot-create-experiment-api-migrate-v1-v2\">Migrate a CreateAutoMLJob to CreateAutoMLJobV2</a>.</p> </note> <p>For the list of available problem types supported by <code>CreateAutoMLJobV2</code>, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_AutoMLProblemTypeConfig.html\">AutoMLProblemTypeConfig</a>.</p> <p>You can find the best-performing model after you run an AutoML job V2 by calling <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeAutoMLJobV2.html\">DescribeAutoMLJobV2</a>.</p>"
+      "documentation":"<p>Creates an Autopilot job also referred to as Autopilot experiment or AutoML job V2.</p> <p>An AutoML job in SageMaker is a fully automated process that allows you to build machine learning models with minimal effort and machine learning expertise. When initiating an AutoML job, you provide your data and optionally specify parameters tailored to your use case. SageMaker then automates the entire model development lifecycle, including data preprocessing, model training, tuning, and evaluation. AutoML jobs are designed to simplify and accelerate the model building process by automating various tasks and exploring different combinations of machine learning algorithms, data preprocessing techniques, and hyperparameter values. The output of an AutoML job comprises one or more trained models ready for deployment and inference. Additionally, SageMaker AutoML jobs generate a candidate model leaderboard, allowing you to select the best-performing model for deployment.</p> <p>For more information about AutoML jobs, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/autopilot-automate-model-development.html\">https://docs.aws.amazon.com/sagemaker/latest/dg/autopilot-automate-model-development.html</a> in the SageMaker developer guide.</p> <p>AutoML jobs V2 support various problem types such as regression, binary, and multiclass classification with tabular data, text and image classification, time-series forecasting, and fine-tuning of large language models (LLMs) for text generation.</p> <note> <p> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateAutoMLJobV2.html\">CreateAutoMLJobV2</a> and <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeAutoMLJobV2.html\">DescribeAutoMLJobV2</a> are new versions of <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateAutoMLJob.html\">CreateAutoMLJob</a> and <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeAutoMLJob.html\">DescribeAutoMLJob</a> which offer backward compatibility.</p> <p> <code>CreateAutoMLJobV2</code> can manage tabular problem types identical to those of its previous version <code>CreateAutoMLJob</code>, as well as time-series forecasting, non-tabular problem types such as image or text classification, and text generation (LLMs fine-tuning).</p> <p>Find guidelines about how to migrate a <code>CreateAutoMLJob</code> to <code>CreateAutoMLJobV2</code> in <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/autopilot-automate-model-development-create-experiment.html#autopilot-create-experiment-api-migrate-v1-v2\">Migrate a CreateAutoMLJob to CreateAutoMLJobV2</a>.</p> </note> <p>For the list of available problem types supported by <code>CreateAutoMLJobV2</code>, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_AutoMLProblemTypeConfig.html\">AutoMLProblemTypeConfig</a>.</p> <p>You can find the best-performing model after you run an AutoML job V2 by calling <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeAutoMLJobV2.html\">DescribeAutoMLJobV2</a>.</p>"
     },
     "CreateCluster":{
       "name":"CreateCluster",
@@ -363,7 +363,22 @@
         {"shape":"ResourceInUse"},
         {"shape":"ResourceLimitExceeded"}
       ],
-      "documentation":"<p>Create a hub.</p> <note> <p>Hub APIs are only callable through SageMaker Studio.</p> </note>"
+      "documentation":"<p>Create a hub.</p>"
+    },
+    "CreateHubContentReference":{
+      "name":"CreateHubContentReference",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateHubContentReferenceRequest"},
+      "output":{"shape":"CreateHubContentReferenceResponse"},
+      "errors":[
+        {"shape":"ResourceNotFound"},
+        {"shape":"ResourceInUse"},
+        {"shape":"ResourceLimitExceeded"}
+      ],
+      "documentation":"<p>Create a hub content reference in order to add a model in the JumpStart public hub to a private hub.</p>"
     },
     "CreateHumanTaskUi":{
       "name":"CreateHumanTaskUi",
@@ -640,6 +655,20 @@
         {"shape":"ResourceLimitExceeded"}
       ],
       "documentation":"<p>Creates a lifecycle configuration that you can associate with a notebook instance. A <i>lifecycle configuration</i> is a collection of shell scripts that run when you create or start a notebook instance.</p> <p>Each lifecycle configuration script has a limit of 16384 characters.</p> <p>The value of the <code>$PATH</code> environment variable that is available to both scripts is <code>/sbin:bin:/usr/sbin:/usr/bin</code>.</p> <p>View Amazon CloudWatch Logs for notebook instance lifecycle configurations in log group <code>/aws/sagemaker/NotebookInstances</code> in log stream <code>[notebook-instance-name]/[LifecycleConfigHook]</code>.</p> <p>Lifecycle configuration scripts cannot run for longer than 5 minutes. If a script runs for longer than 5 minutes, it fails and the notebook instance is not created or started.</p> <p>For information about notebook instance lifestyle configurations, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/notebook-lifecycle-config.html\">Step 2.1: (Optional) Customize a Notebook Instance</a>.</p>"
+    },
+    "CreateOptimizationJob":{
+      "name":"CreateOptimizationJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateOptimizationJobRequest"},
+      "output":{"shape":"CreateOptimizationJobResponse"},
+      "errors":[
+        {"shape":"ResourceInUse"},
+        {"shape":"ResourceLimitExceeded"}
+      ],
+      "documentation":"<p>Creates a job that optimizes a model for inference performance. To create the job, you provide the location of a source model, and you provide the settings for the optimization techniques that you want the job to apply. When the job completes successfully, SageMaker uploads the new optimized model to the output destination that you specify.</p> <p>For more information about how to use this action, and about the supported optimization techniques, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/model-optimize.html\">Optimize model inference with Amazon SageMaker</a>.</p>"
     },
     "CreatePipeline":{
       "name":"CreatePipeline",
@@ -1095,7 +1124,7 @@
         {"shape":"ResourceInUse"},
         {"shape":"ResourceNotFound"}
       ],
-      "documentation":"<p>Delete a hub.</p> <note> <p>Hub APIs are only callable through SageMaker Studio.</p> </note>"
+      "documentation":"<p>Delete a hub.</p>"
     },
     "DeleteHubContent":{
       "name":"DeleteHubContent",
@@ -1108,7 +1137,19 @@
         {"shape":"ResourceInUse"},
         {"shape":"ResourceNotFound"}
       ],
-      "documentation":"<p>Delete the contents of a hub.</p> <note> <p>Hub APIs are only callable through SageMaker Studio.</p> </note>"
+      "documentation":"<p>Delete the contents of a hub.</p>"
+    },
+    "DeleteHubContentReference":{
+      "name":"DeleteHubContentReference",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteHubContentReferenceRequest"},
+      "errors":[
+        {"shape":"ResourceNotFound"}
+      ],
+      "documentation":"<p>Delete a hub content reference in order to remove a model from a private hub.</p>"
     },
     "DeleteHumanTaskUi":{
       "name":"DeleteHumanTaskUi",
@@ -1316,6 +1357,18 @@
       },
       "input":{"shape":"DeleteNotebookInstanceLifecycleConfigInput"},
       "documentation":"<p>Deletes a notebook instance lifecycle configuration.</p>"
+    },
+    "DeleteOptimizationJob":{
+      "name":"DeleteOptimizationJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteOptimizationJobRequest"},
+      "errors":[
+        {"shape":"ResourceNotFound"}
+      ],
+      "documentation":"<p>Deletes an optimization job.</p>"
     },
     "DeletePipeline":{
       "name":"DeletePipeline",
@@ -1761,7 +1814,7 @@
       "errors":[
         {"shape":"ResourceNotFound"}
       ],
-      "documentation":"<p>Describe a hub.</p> <note> <p>Hub APIs are only callable through SageMaker Studio.</p> </note>"
+      "documentation":"<p>Describes a hub.</p>"
     },
     "DescribeHubContent":{
       "name":"DescribeHubContent",
@@ -1774,7 +1827,7 @@
       "errors":[
         {"shape":"ResourceNotFound"}
       ],
-      "documentation":"<p>Describe the content of a hub.</p> <note> <p>Hub APIs are only callable through SageMaker Studio.</p> </note>"
+      "documentation":"<p>Describe the content of a hub.</p>"
     },
     "DescribeHumanTaskUi":{
       "name":"DescribeHumanTaskUi",
@@ -2030,6 +2083,19 @@
       "input":{"shape":"DescribeNotebookInstanceLifecycleConfigInput"},
       "output":{"shape":"DescribeNotebookInstanceLifecycleConfigOutput"},
       "documentation":"<p>Returns a description of a notebook instance lifecycle configuration.</p> <p>For information about notebook instance lifestyle configurations, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/notebook-lifecycle-config.html\">Step 2.1: (Optional) Customize a Notebook Instance</a>.</p>"
+    },
+    "DescribeOptimizationJob":{
+      "name":"DescribeOptimizationJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeOptimizationJobRequest"},
+      "output":{"shape":"DescribeOptimizationJobResponse"},
+      "errors":[
+        {"shape":"ResourceNotFound"}
+      ],
+      "documentation":"<p>Provides the properties of the specified optimization job.</p>"
     },
     "DescribePipeline":{
       "name":"DescribePipeline",
@@ -2327,7 +2393,7 @@
         {"shape":"ResourceLimitExceeded"},
         {"shape":"ResourceNotFound"}
       ],
-      "documentation":"<p>Import hub content.</p> <note> <p>Hub APIs are only callable through SageMaker Studio.</p> </note>"
+      "documentation":"<p>Import hub content.</p>"
     },
     "ListActions":{
       "name":"ListActions",
@@ -2611,7 +2677,7 @@
       "errors":[
         {"shape":"ResourceNotFound"}
       ],
-      "documentation":"<p>List hub content versions.</p> <note> <p>Hub APIs are only callable through SageMaker Studio.</p> </note>"
+      "documentation":"<p>List hub content versions.</p>"
     },
     "ListHubContents":{
       "name":"ListHubContents",
@@ -2624,7 +2690,7 @@
       "errors":[
         {"shape":"ResourceNotFound"}
       ],
-      "documentation":"<p>List the contents of a hub.</p> <note> <p>Hub APIs are only callable through SageMaker Studio.</p> </note>"
+      "documentation":"<p>List the contents of a hub.</p>"
     },
     "ListHubs":{
       "name":"ListHubs",
@@ -2634,7 +2700,7 @@
       },
       "input":{"shape":"ListHubsRequest"},
       "output":{"shape":"ListHubsResponse"},
-      "documentation":"<p>List all existing hubs.</p> <note> <p>Hub APIs are only callable through SageMaker Studio.</p> </note>"
+      "documentation":"<p>List all existing hubs.</p>"
     },
     "ListHumanTaskUis":{
       "name":"ListHumanTaskUis",
@@ -2933,6 +2999,16 @@
       "input":{"shape":"ListNotebookInstancesInput"},
       "output":{"shape":"ListNotebookInstancesOutput"},
       "documentation":"<p>Returns a list of the SageMaker notebook instances in the requester's account in an Amazon Web Services Region. </p>"
+    },
+    "ListOptimizationJobs":{
+      "name":"ListOptimizationJobs",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListOptimizationJobsRequest"},
+      "output":{"shape":"ListOptimizationJobsResponse"},
+      "documentation":"<p>Lists the optimization jobs in your account and their properties.</p>"
     },
     "ListPipelineExecutionSteps":{
       "name":"ListPipelineExecutionSteps",
@@ -3464,6 +3540,18 @@
       "input":{"shape":"StopNotebookInstanceInput"},
       "documentation":"<p>Terminates the ML compute instance. Before terminating the instance, SageMaker disconnects the ML storage volume from it. SageMaker preserves the ML storage volume. SageMaker stops charging you for the ML compute instance when you call <code>StopNotebookInstance</code>.</p> <p>To access data on the ML storage volume for a notebook instance that has been terminated, call the <code>StartNotebookInstance</code> API. <code>StartNotebookInstance</code> launches another ML compute instance, configures it, and attaches the preserved ML storage volume so you can continue your work. </p>"
     },
+    "StopOptimizationJob":{
+      "name":"StopOptimizationJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StopOptimizationJobRequest"},
+      "errors":[
+        {"shape":"ResourceNotFound"}
+      ],
+      "documentation":"<p>Ends a running inference optimization job.</p>"
+    },
     "StopPipelineExecution":{
       "name":"StopPipelineExecution",
       "http":{
@@ -3724,7 +3812,7 @@
       "errors":[
         {"shape":"ResourceNotFound"}
       ],
-      "documentation":"<p>Update a hub.</p> <note> <p>Hub APIs are only callable through SageMaker Studio.</p> </note>"
+      "documentation":"<p>Update a hub.</p>"
     },
     "UpdateImage":{
       "name":"UpdateImage",
@@ -4226,6 +4314,33 @@
       "max":15,
       "min":1
     },
+    "AdditionalModelChannelName":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[A-Za-z0-9\\.\\-_]+"
+    },
+    "AdditionalModelDataSource":{
+      "type":"structure",
+      "required":[
+        "ChannelName",
+        "S3DataSource"
+      ],
+      "members":{
+        "ChannelName":{
+          "shape":"AdditionalModelChannelName",
+          "documentation":"<p>A custom name for this <code>AdditionalModelDataSource</code> object.</p>"
+        },
+        "S3DataSource":{"shape":"S3ModelDataSource"}
+      },
+      "documentation":"<p>Data sources that are available to your model in addition to the one that you specify for <code>ModelDataSource</code> when you use the <code>CreateModel</code> action.</p>"
+    },
+    "AdditionalModelDataSources":{
+      "type":"list",
+      "member":{"shape":"AdditionalModelDataSource"},
+      "max":5,
+      "min":0
+    },
     "AdditionalS3DataSource":{
       "type":"structure",
       "required":[
@@ -4320,7 +4435,7 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"^arn:aws(-cn|-us-gov)?:sagemaker:[a-z0-9\\-]{9,16}:[0-9]{12}:algorithm/[\\S]{1,2048}$"
+      "pattern":"^arn:aws(-cn|-us-gov|-iso-f)?:sagemaker:[a-z0-9\\-]{9,16}:[0-9]{12}:algorithm/[\\S]{1,2048}$"
     },
     "AlgorithmImage":{
       "type":"string",
@@ -4502,6 +4617,20 @@
       },
       "documentation":"<p>Specifies configurations for one or more training jobs that SageMaker runs to test the algorithm.</p>"
     },
+    "AmazonQSettings":{
+      "type":"structure",
+      "members":{
+        "Status":{
+          "shape":"FeatureStatus",
+          "documentation":"<p>Whether Amazon Q has been enabled within the domain.</p>"
+        },
+        "QProfileArn":{
+          "shape":"QProfileArn",
+          "documentation":"<p>The ARN of the Amazon Q profile used within the domain.</p>"
+        }
+      },
+      "documentation":"<p>A collection of settings that configure the Amazon Q experience within the domain.</p>"
+    },
     "AnnotationConsolidationConfig":{
       "type":"structure",
       "required":["AnnotationConsolidationLambdaArn"],
@@ -4677,6 +4806,14 @@
         "ml.g6.16xlarge",
         "ml.g6.24xlarge",
         "ml.g6.48xlarge",
+        "ml.g6e.xlarge",
+        "ml.g6e.2xlarge",
+        "ml.g6e.4xlarge",
+        "ml.g6e.8xlarge",
+        "ml.g6e.12xlarge",
+        "ml.g6e.16xlarge",
+        "ml.g6e.24xlarge",
+        "ml.g6e.48xlarge",
         "ml.geospatial.interactive",
         "ml.p4d.24xlarge",
         "ml.p4de.24xlarge",
@@ -4766,6 +4903,16 @@
         "ml.r6id.24xlarge",
         "ml.r6id.32xlarge"
       ]
+    },
+    "AppLifecycleManagement":{
+      "type":"structure",
+      "members":{
+        "IdleSettings":{
+          "shape":"IdleSettings",
+          "documentation":"<p>Settings related to idle shutdown of Studio applications.</p>"
+        }
+      },
+      "documentation":"<p>Settings that are used to configure and manage the lifecycle of Amazon SageMaker Studio applications.</p>"
     },
     "AppList":{
       "type":"list",
@@ -5043,6 +5190,11 @@
         "CreatedBy":{"shape":"UserContext"}
       },
       "documentation":"<p>Lists a summary of the properties of an association. An association is an entity that links other lineage or experiment entities. An example would be an association between a training job and a model.</p>"
+    },
+    "AssumableRoleArns":{
+      "type":"list",
+      "member":{"shape":"RoleArn"},
+      "max":5
     },
     "AsyncInferenceClientConfig":{
       "type":"structure",
@@ -5410,6 +5562,16 @@
         "training",
         "validation"
       ]
+    },
+    "AutoMLComputeConfig":{
+      "type":"structure",
+      "members":{
+        "EmrServerlessComputeConfig":{
+          "shape":"EmrServerlessComputeConfig",
+          "documentation":"<p>The configuration for using <a href=\"https://docs.aws.amazon.com/emr/latest/EMR-Serverless-UserGuide/emr-serverless.html\"> EMR Serverless</a> to run the AutoML job V2.</p> <p>To allow your AutoML job V2 to automatically initiate a remote job on EMR Serverless when additional compute resources are needed to process large datasets, you need to provide an <code>EmrServerlessComputeConfig</code> object, which includes an <code>ExecutionRoleARN</code> attribute, to the <code>AutoMLComputeConfig</code> of the AutoML job V2 input request.</p> <p>By seamlessly transitioning to EMR Serverless when required, the AutoML job can handle datasets that would otherwise exceed the initially provisioned resources, without any manual intervention from you. </p> <p>EMR Serverless is available for the tabular and time series problem types. We recommend setting up this option for tabular datasets larger than 5 GB and time series datasets larger than 30 GB.</p>"
+        }
+      },
+      "documentation":"<note> <p>This data type is intended for use exclusively by SageMaker Canvas and cannot be used in other contexts at the moment.</p> </note> <p>Specifies the compute configuration for an AutoML job V2.</p>"
     },
     "AutoMLContainerDefinition":{
       "type":"structure",
@@ -5782,7 +5944,7 @@
         },
         "S3OutputPath":{
           "shape":"S3Uri",
-          "documentation":"<p>The Amazon S3 output path. Must be 128 characters or less.</p>"
+          "documentation":"<p>The Amazon S3 output path. Must be 512 characters or less.</p>"
         }
       },
       "documentation":"<p>The output data configuration.</p>"
@@ -5931,6 +6093,14 @@
       "enum":[
         "Ascending",
         "Descending"
+      ]
+    },
+    "AutoMountHomeEFS":{
+      "type":"string",
+      "enum":[
+        "Enabled",
+        "Disabled",
+        "DefaultAsDomain"
       ]
     },
     "AutoParameter":{
@@ -6404,6 +6574,10 @@
         "GenerativeAiSettings":{
           "shape":"GenerativeAiSettings",
           "documentation":"<p>The generative AI settings for the SageMaker Canvas application.</p>"
+        },
+        "EmrServerlessSettings":{
+          "shape":"EmrServerlessSettings",
+          "documentation":"<p>The settings for running Amazon EMR Serverless data processing jobs in SageMaker Canvas.</p>"
         }
       },
       "documentation":"<p>The SageMaker Canvas application settings.</p>"
@@ -7055,7 +7229,7 @@
           "documentation":"<p>The size in gigabytes (GB) of the additional EBS volume to be attached to the instances in the SageMaker HyperPod cluster instance group. The additional EBS volume is attached to each instance within the SageMaker HyperPod cluster instance group and mounted to <code>/opt/sagemaker</code>.</p>"
         }
       },
-      "documentation":"<p>Defines the configuration for attaching an additional Amazon Elastic Block Store (EBS) volume to each instance of the SageMaker HyperPod cluster instance group.</p>"
+      "documentation":"<p>Defines the configuration for attaching an additional Amazon Elastic Block Store (EBS) volume to each instance of the SageMaker HyperPod cluster instance group. To learn more, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod-release-notes.html#sagemaker-hyperpod-release-notes-20240620\">SageMaker HyperPod release notes: June 20, 2024</a>.</p>"
     },
     "ClusterEbsVolumeSizeInGB":{
       "type":"integer",
@@ -7064,7 +7238,7 @@
     },
     "ClusterInstanceCount":{
       "type":"integer",
-      "min":1
+      "min":0
     },
     "ClusterInstanceGroupDetails":{
       "type":"structure",
@@ -7100,6 +7274,10 @@
         "InstanceStorageConfigs":{
           "shape":"ClusterInstanceStorageConfigs",
           "documentation":"<p>The additional storage configurations for the instances in the SageMaker HyperPod cluster instance group.</p>"
+        },
+        "OnStartDeepHealthChecks":{
+          "shape":"OnStartDeepHealthChecks",
+          "documentation":"<p>A flag indicating whether deep health checks should be performed when the cluster instance group is created or updated.</p>"
         }
       },
       "documentation":"<p>Details of an instance group in a SageMaker HyperPod cluster.</p>"
@@ -7151,6 +7329,10 @@
         "InstanceStorageConfigs":{
           "shape":"ClusterInstanceStorageConfigs",
           "documentation":"<p>Specifies the additional storage configurations for the instances in the SageMaker HyperPod cluster instance group.</p>"
+        },
+        "OnStartDeepHealthChecks":{
+          "shape":"OnStartDeepHealthChecks",
+          "documentation":"<p>A flag indicating whether deep health checks should be performed when the cluster instance group is created or updated.</p>"
         }
       },
       "documentation":"<p>The specifications of an instance group that you need to define.</p>"
@@ -7158,7 +7340,7 @@
     "ClusterInstanceGroupSpecifications":{
       "type":"list",
       "member":{"shape":"ClusterInstanceGroupSpecification"},
-      "max":20,
+      "max":100,
       "min":1
     },
     "ClusterInstancePlacement":{
@@ -7182,7 +7364,8 @@
         "Failure",
         "Pending",
         "ShuttingDown",
-        "SystemUpdating"
+        "SystemUpdating",
+        "DeepHealthCheckInProgress"
       ]
     },
     "ClusterInstanceStatusDetails":{
@@ -7208,7 +7391,7 @@
           "documentation":"<p>Defines the configuration for attaching additional Amazon Elastic Block Store (EBS) volumes to the instances in the SageMaker HyperPod cluster instance group. The additional EBS volume is attached to each instance within the SageMaker HyperPod cluster instance group and mounted to <code>/opt/sagemaker</code>.</p>"
         }
       },
-      "documentation":"<p>Defines the configuration for attaching additional storage to the instances in the SageMaker HyperPod cluster instance group.</p>",
+      "documentation":"<p>Defines the configuration for attaching additional storage to the instances in the SageMaker HyperPod cluster instance group. To learn more, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod-release-notes.html#sagemaker-hyperpod-release-notes-20240620\">SageMaker HyperPod release notes: June 20, 2024</a>.</p>",
       "union":true
     },
     "ClusterInstanceStorageConfigs":{
@@ -7350,6 +7533,13 @@
       "min":1,
       "pattern":"^i-[a-f0-9]{8}(?:[a-f0-9]{9})?$"
     },
+    "ClusterNodeRecovery":{
+      "type":"string",
+      "enum":[
+        "Automatic",
+        "None"
+      ]
+    },
     "ClusterNodeSummaries":{
       "type":"list",
       "member":{"shape":"ClusterNodeSummary"}
@@ -7390,6 +7580,28 @@
     "ClusterNonNegativeInstanceCount":{
       "type":"integer",
       "min":0
+    },
+    "ClusterOrchestrator":{
+      "type":"structure",
+      "required":["Eks"],
+      "members":{
+        "Eks":{
+          "shape":"ClusterOrchestratorEksConfig",
+          "documentation":"<p>The Amazon EKS cluster used as the orchestrator for the SageMaker HyperPod cluster.</p>"
+        }
+      },
+      "documentation":"<p>The type of orchestrator used for the SageMaker HyperPod cluster.</p>"
+    },
+    "ClusterOrchestratorEksConfig":{
+      "type":"structure",
+      "required":["ClusterArn"],
+      "members":{
+        "ClusterArn":{
+          "shape":"EksClusterArn",
+          "documentation":"<p>The Amazon Resource Name (ARN) of the Amazon EKS cluster associated with the SageMaker HyperPod cluster.</p>"
+        }
+      },
+      "documentation":"<p>The configuration settings for the Amazon EKS cluster used as the orchestrator for the SageMaker HyperPod cluster.</p>"
     },
     "ClusterPrivateDnsHostname":{
       "type":"string",
@@ -7474,6 +7686,14 @@
         "LifecycleConfigArns":{
           "shape":"LifecycleConfigArns",
           "documentation":"<p>The Amazon Resource Name (ARN) of the Code Editor application lifecycle configuration.</p>"
+        },
+        "AppLifecycleManagement":{
+          "shape":"AppLifecycleManagement",
+          "documentation":"<p>Settings that are used to configure and manage the lifecycle of CodeEditor applications.</p>"
+        },
+        "BuiltInLifecycleConfigArn":{
+          "shape":"StudioLifecycleConfigArn",
+          "documentation":"<p>The lifecycle configuration that runs before the default lifecycle configuration. It can override changes made in the default lifecycle configuration.</p>"
         }
       },
       "documentation":"<p>The Code Editor application settings.</p> <p>For more information about Code Editor, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/code-editor.html\">Get started with Code Editor in Amazon SageMaker</a>.</p>"
@@ -7498,7 +7718,7 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"^arn:aws(-cn|-us-gov)?:sagemaker:[a-z0-9\\-]{9,16}:[0-9]{12}:code-repository/[\\S]{1,2048}$"
+      "pattern":"^arn:aws(-cn|-us-gov|-iso-f)?:sagemaker:[a-z0-9\\-]{9,16}:[0-9]{12}:code-repository/[\\S]{1,2048}$"
     },
     "CodeRepositoryContains":{
       "type":"string",
@@ -7864,9 +8084,13 @@
           "shape":"ModelDataSource",
           "documentation":"<p>Specifies the location of ML model data to deploy.</p> <note> <p>Currently you cannot use <code>ModelDataSource</code> in conjunction with SageMaker batch transform, SageMaker serverless endpoints, SageMaker multi-model endpoints, and SageMaker Marketplace.</p> </note>"
         },
+        "AdditionalModelDataSources":{
+          "shape":"AdditionalModelDataSources",
+          "documentation":"<p>Data sources that are available to your model in addition to the one that you specify for <code>ModelDataSource</code> when you use the <code>CreateModel</code> action.</p>"
+        },
         "Environment":{
           "shape":"EnvironmentMap",
-          "documentation":"<p>The environment variables to set in the Docker container.</p> <p>The maximum length of each key and value in the <code>Environment</code> map is 1024 bytes. The maximum length of all keys and values in the map, combined, is 32 KB. If you pass multiple containers to a <code>CreateModel</code> request, then the maximum length of all of their maps, combined, is also 32 KB.</p>"
+          "documentation":"<p>The environment variables to set in the Docker container. Don't include any sensitive data in your environment variables.</p> <p>The maximum length of each key and value in the <code>Environment</code> map is 1024 bytes. The maximum length of all keys and values in the map, combined, is 32 KB. If you pass multiple containers to a <code>CreateModel</code> request, then the maximum length of all of their maps, combined, is also 32 KB.</p>"
         },
         "ModelPackageName":{
           "shape":"VersionedArnOrName",
@@ -8410,6 +8634,10 @@
         "DataSplitConfig":{
           "shape":"AutoMLDataSplitConfig",
           "documentation":"<p>This structure specifies how to split the data into train and validation datasets.</p> <p>The validation and training datasets must contain the same headers. For jobs created by calling <code>CreateAutoMLJob</code>, the validation dataset must be less than 2 GB in size.</p> <note> <p>This attribute must not be set for the time-series forecasting problem type, as Autopilot automatically splits the input dataset into training and validation sets.</p> </note>"
+        },
+        "AutoMLComputeConfig":{
+          "shape":"AutoMLComputeConfig",
+          "documentation":"<p>Specifies the compute configuration for the AutoML job V2.</p>"
         }
       }
     },
@@ -8442,6 +8670,14 @@
         "Tags":{
           "shape":"TagList",
           "documentation":"<p>Custom tags for managing the SageMaker HyperPod cluster as an Amazon Web Services resource. You can add tags to your cluster in the same way you add them in other Amazon Web Services services that support tagging. To learn more about tagging Amazon Web Services resources in general, see <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/tagging.html\">Tagging Amazon Web Services Resources User Guide</a>.</p>"
+        },
+        "Orchestrator":{
+          "shape":"ClusterOrchestrator",
+          "documentation":"<p>The type of orchestrator to use for the SageMaker HyperPod cluster. Currently, the only supported value is <code>\"eks\"</code>, which is to use an Amazon Elastic Kubernetes Service (EKS) cluster as the orchestrator.</p>"
+        },
+        "NodeRecovery":{
+          "shape":"ClusterNodeRecovery",
+          "documentation":"<p>The node recovery mode for the SageMaker HyperPod cluster. When set to <code>Automatic</code>, SageMaker HyperPod will automatically reboot or replace faulty nodes when issues are detected. When set to <code>None</code>, cluster administrators will need to manually manage any faulty cluster instances.</p>"
         }
       }
     },
@@ -8724,6 +8960,10 @@
         "AppSecurityGroupManagement":{
           "shape":"AppSecurityGroupManagement",
           "documentation":"<p>The entity that creates and manages the required security groups for inter-app communication in <code>VPCOnly</code> mode. Required when <code>CreateDomain.AppNetworkAccessType</code> is <code>VPCOnly</code> and <code>DomainSettings.RStudioServerProDomainSettings.DomainExecutionRoleArn</code> is provided. If setting up the domain for use with RStudio, this value must be set to <code>Service</code>.</p>"
+        },
+        "TagPropagation":{
+          "shape":"TagPropagation",
+          "documentation":"<p>Indicates whether custom tag propagation is supported for the domain. Defaults to <code>DISABLED</code>.</p>"
         },
         "DefaultSpaceSettings":{
           "shape":"DefaultSpaceSettings",
@@ -9069,6 +9309,52 @@
         "FlowDefinitionArn":{
           "shape":"FlowDefinitionArn",
           "documentation":"<p>The Amazon Resource Name (ARN) of the flow definition you create.</p>"
+        }
+      }
+    },
+    "CreateHubContentReferenceRequest":{
+      "type":"structure",
+      "required":[
+        "HubName",
+        "SageMakerPublicHubContentArn"
+      ],
+      "members":{
+        "HubName":{
+          "shape":"HubNameOrArn",
+          "documentation":"<p>The name of the hub to add the hub content reference to.</p>"
+        },
+        "SageMakerPublicHubContentArn":{
+          "shape":"SageMakerPublicHubContentArn",
+          "documentation":"<p>The ARN of the public hub content to reference.</p>"
+        },
+        "HubContentName":{
+          "shape":"HubContentName",
+          "documentation":"<p>The name of the hub content to reference.</p>"
+        },
+        "MinVersion":{
+          "shape":"HubContentVersion",
+          "documentation":"<p>The minimum version of the hub content to reference.</p>"
+        },
+        "Tags":{
+          "shape":"TagList",
+          "documentation":"<p>Any tags associated with the hub content to reference.</p>"
+        }
+      }
+    },
+    "CreateHubContentReferenceResponse":{
+      "type":"structure",
+      "required":[
+        "HubArn",
+        "HubContentArn"
+      ],
+      "members":{
+        "HubArn":{
+          "shape":"HubArn",
+          "documentation":"<p>The ARN of the hub that the hub content reference was added to.</p>"
+        },
+        "HubContentArn":{
+          "shape":"HubContentArn",
+          "documentation":"<p>The ARN of the hub content.</p>"
         }
       }
     },
@@ -10128,6 +10414,67 @@
         }
       }
     },
+    "CreateOptimizationJobRequest":{
+      "type":"structure",
+      "required":[
+        "OptimizationJobName",
+        "RoleArn",
+        "ModelSource",
+        "DeploymentInstanceType",
+        "OptimizationConfigs",
+        "OutputConfig",
+        "StoppingCondition"
+      ],
+      "members":{
+        "OptimizationJobName":{
+          "shape":"EntityName",
+          "documentation":"<p>A custom name for the new optimization job.</p>"
+        },
+        "RoleArn":{
+          "shape":"RoleArn",
+          "documentation":"<p>The Amazon Resource Name (ARN) of an IAM role that enables Amazon SageMaker to perform tasks on your behalf. </p> <p>During model optimization, Amazon SageMaker needs your permission to:</p> <ul> <li> <p>Read input data from an S3 bucket</p> </li> <li> <p>Write model artifacts to an S3 bucket</p> </li> <li> <p>Write logs to Amazon CloudWatch Logs</p> </li> <li> <p>Publish metrics to Amazon CloudWatch</p> </li> </ul> <p>You grant permissions for all of these tasks to an IAM role. To pass this role to Amazon SageMaker, the caller of this API must have the <code>iam:PassRole</code> permission. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-roles.html\">Amazon SageMaker Roles.</a> </p>"
+        },
+        "ModelSource":{
+          "shape":"OptimizationJobModelSource",
+          "documentation":"<p>The location of the source model to optimize with an optimization job.</p>"
+        },
+        "DeploymentInstanceType":{
+          "shape":"OptimizationJobDeploymentInstanceType",
+          "documentation":"<p>The type of instance that hosts the optimized model that you create with the optimization job.</p>"
+        },
+        "OptimizationEnvironment":{
+          "shape":"OptimizationJobEnvironmentVariables",
+          "documentation":"<p>The environment variables to set in the model container.</p>"
+        },
+        "OptimizationConfigs":{
+          "shape":"OptimizationConfigs",
+          "documentation":"<p>Settings for each of the optimization techniques that the job applies.</p>"
+        },
+        "OutputConfig":{
+          "shape":"OptimizationJobOutputConfig",
+          "documentation":"<p>Details for where to store the optimized model that you create with the optimization job.</p>"
+        },
+        "StoppingCondition":{"shape":"StoppingCondition"},
+        "Tags":{
+          "shape":"TagList",
+          "documentation":"<p>A list of key-value pairs associated with the optimization job. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging Amazon Web Services resources</a> in the <i>Amazon Web Services General Reference Guide</i>.</p>"
+        },
+        "VpcConfig":{
+          "shape":"OptimizationVpcConfig",
+          "documentation":"<p>A VPC in Amazon VPC that your optimized model has access to.</p>"
+        }
+      }
+    },
+    "CreateOptimizationJobResponse":{
+      "type":"structure",
+      "required":["OptimizationJobArn"],
+      "members":{
+        "OptimizationJobArn":{
+          "shape":"OptimizationJobArn",
+          "documentation":"<p>The Amazon Resource Name (ARN) of the optimization job.</p>"
+        }
+      }
+    },
     "CreatePipelineRequest":{
       "type":"structure",
       "required":[
@@ -10608,7 +10955,7 @@
         },
         "Environment":{
           "shape":"TransformEnvironmentMap",
-          "documentation":"<p>The environment variables to set in the Docker container. We support up to 16 key and values entries in the map.</p>"
+          "documentation":"<p>The environment variables to set in the Docker container. Don't include any sensitive data in your environment variables. We support up to 16 key and values entries in the map.</p>"
         },
         "TransformInput":{
           "shape":"TransformInput",
@@ -11341,6 +11688,13 @@
       "max":20,
       "min":0
     },
+    "DeepHealthCheckType":{
+      "type":"string",
+      "enum":[
+        "InstanceStress",
+        "InstanceConnectivity"
+      ]
+    },
     "DefaultEbsStorageSettings":{
       "type":"structure",
       "required":[
@@ -11707,6 +12061,28 @@
       "members":{
       }
     },
+    "DeleteHubContentReferenceRequest":{
+      "type":"structure",
+      "required":[
+        "HubName",
+        "HubContentType",
+        "HubContentName"
+      ],
+      "members":{
+        "HubName":{
+          "shape":"HubNameOrArn",
+          "documentation":"<p>The name of the hub to delete the hub content reference from.</p>"
+        },
+        "HubContentType":{
+          "shape":"HubContentType",
+          "documentation":"<p>The type of hub content reference to delete. The only supported type of hub content reference to delete is <code>ModelReference</code>.</p>"
+        },
+        "HubContentName":{
+          "shape":"HubContentName",
+          "documentation":"<p>The name of the hub content to delete.</p>"
+        }
+      }
+    },
     "DeleteHubContentRequest":{
       "type":"structure",
       "required":[
@@ -11717,7 +12093,7 @@
       ],
       "members":{
         "HubName":{
-          "shape":"HubName",
+          "shape":"HubNameOrArn",
           "documentation":"<p>The name of the hub that you want to delete content in.</p>"
         },
         "HubContentType":{
@@ -11739,7 +12115,7 @@
       "required":["HubName"],
       "members":{
         "HubName":{
-          "shape":"HubName",
+          "shape":"HubNameOrArn",
           "documentation":"<p>The name of the hub to delete.</p>"
         }
       }
@@ -11963,6 +12339,16 @@
         "NotebookInstanceLifecycleConfigName":{
           "shape":"NotebookInstanceLifecycleConfigName",
           "documentation":"<p>The name of the lifecycle configuration to delete.</p>"
+        }
+      }
+    },
+    "DeleteOptimizationJobRequest":{
+      "type":"structure",
+      "required":["OptimizationJobName"],
+      "members":{
+        "OptimizationJobName":{
+          "shape":"EntityName",
+          "documentation":"<p>The name that you assigned to the optimization job.</p>"
         }
       }
     },
@@ -12544,6 +12930,10 @@
         "ResourceSpec":{
           "shape":"ResourceSpec",
           "documentation":"<p>The instance type and the Amazon Resource Name (ARN) of the SageMaker image created on the instance.</p>"
+        },
+        "BuiltInLifecycleConfigArn":{
+          "shape":"StudioLifecycleConfigArn",
+          "documentation":"<p>The lifecycle configuration that runs before the default lifecycle configuration</p>"
         }
       }
     },
@@ -12815,6 +13205,10 @@
         "SecurityConfig":{
           "shape":"AutoMLSecurityConfig",
           "documentation":"<p>Returns the security configuration for traffic encryption or Amazon VPC settings.</p>"
+        },
+        "AutoMLComputeConfig":{
+          "shape":"AutoMLComputeConfig",
+          "documentation":"<p>The compute configuration used for the AutoML job V2.</p>"
         }
       }
     },
@@ -12887,7 +13281,15 @@
           "shape":"ClusterInstanceGroupDetailsList",
           "documentation":"<p>The instance groups of the SageMaker HyperPod cluster.</p>"
         },
-        "VpcConfig":{"shape":"VpcConfig"}
+        "VpcConfig":{"shape":"VpcConfig"},
+        "Orchestrator":{
+          "shape":"ClusterOrchestrator",
+          "documentation":"<p>The type of orchestrator used for the SageMaker HyperPod cluster. </p>"
+        },
+        "NodeRecovery":{
+          "shape":"ClusterNodeRecovery",
+          "documentation":"<p>The node recovery mode configured for the SageMaker HyperPod cluster.</p>"
+        }
       }
     },
     "DescribeCodeRepositoryInput":{
@@ -13371,6 +13773,10 @@
         "AppSecurityGroupManagement":{
           "shape":"AppSecurityGroupManagement",
           "documentation":"<p>The entity that creates and manages the required security groups for inter-app communication in <code>VPCOnly</code> mode. Required when <code>CreateDomain.AppNetworkAccessType</code> is <code>VPCOnly</code> and <code>DomainSettings.RStudioServerProDomainSettings.DomainExecutionRoleArn</code> is provided.</p>"
+        },
+        "TagPropagation":{
+          "shape":"TagPropagation",
+          "documentation":"<p>Indicates whether custom tag propagation is supported for the domain.</p>"
         },
         "DefaultSpaceSettings":{
           "shape":"DefaultSpaceSettings",
@@ -13952,7 +14358,7 @@
       ],
       "members":{
         "HubName":{
-          "shape":"HubName",
+          "shape":"HubNameOrArn",
           "documentation":"<p>The name of the hub that contains the content to describe.</p>"
         },
         "HubContentType":{
@@ -14028,6 +14434,18 @@
           "shape":"HubContentDocument",
           "documentation":"<p>The hub content document that describes information about the hub content such as type, associated containers, scripts, and more.</p>"
         },
+        "SageMakerPublicHubContentArn":{
+          "shape":"SageMakerPublicHubContentArn",
+          "documentation":"<p>The ARN of the public hub content.</p>"
+        },
+        "ReferenceMinVersion":{
+          "shape":"ReferenceMinVersion",
+          "documentation":"<p>The minimum version of the hub content.</p>"
+        },
+        "SupportStatus":{
+          "shape":"HubContentSupportStatus",
+          "documentation":"<p>The support status of the hub content.</p>"
+        },
         "HubContentSearchKeywords":{
           "shape":"HubContentSearchKeywordList",
           "documentation":"<p>The searchable keywords for the hub content.</p>"
@@ -14055,7 +14473,7 @@
       "required":["HubName"],
       "members":{
         "HubName":{
-          "shape":"HubName",
+          "shape":"HubNameOrArn",
           "documentation":"<p>The name of the hub to describe.</p>"
         }
       }
@@ -15574,6 +15992,99 @@
         }
       }
     },
+    "DescribeOptimizationJobRequest":{
+      "type":"structure",
+      "required":["OptimizationJobName"],
+      "members":{
+        "OptimizationJobName":{
+          "shape":"EntityName",
+          "documentation":"<p>The name that you assigned to the optimization job.</p>"
+        }
+      }
+    },
+    "DescribeOptimizationJobResponse":{
+      "type":"structure",
+      "required":[
+        "OptimizationJobArn",
+        "OptimizationJobStatus",
+        "CreationTime",
+        "LastModifiedTime",
+        "OptimizationJobName",
+        "ModelSource",
+        "DeploymentInstanceType",
+        "OptimizationConfigs",
+        "OutputConfig",
+        "RoleArn",
+        "StoppingCondition"
+      ],
+      "members":{
+        "OptimizationJobArn":{
+          "shape":"OptimizationJobArn",
+          "documentation":"<p>The Amazon Resource Name (ARN) of the optimization job.</p>"
+        },
+        "OptimizationJobStatus":{
+          "shape":"OptimizationJobStatus",
+          "documentation":"<p>The current status of the optimization job.</p>"
+        },
+        "OptimizationStartTime":{
+          "shape":"Timestamp",
+          "documentation":"<p>The time when the optimization job started.</p>"
+        },
+        "OptimizationEndTime":{
+          "shape":"Timestamp",
+          "documentation":"<p>The time when the optimization job finished processing.</p>"
+        },
+        "CreationTime":{
+          "shape":"CreationTime",
+          "documentation":"<p>The time when you created the optimization job.</p>"
+        },
+        "LastModifiedTime":{
+          "shape":"LastModifiedTime",
+          "documentation":"<p>The time when the optimization job was last updated.</p>"
+        },
+        "FailureReason":{
+          "shape":"FailureReason",
+          "documentation":"<p>If the optimization job status is <code>FAILED</code>, the reason for the failure.</p>"
+        },
+        "OptimizationJobName":{
+          "shape":"EntityName",
+          "documentation":"<p>The name that you assigned to the optimization job.</p>"
+        },
+        "ModelSource":{
+          "shape":"OptimizationJobModelSource",
+          "documentation":"<p>The location of the source model to optimize with an optimization job.</p>"
+        },
+        "OptimizationEnvironment":{
+          "shape":"OptimizationJobEnvironmentVariables",
+          "documentation":"<p>The environment variables to set in the model container.</p>"
+        },
+        "DeploymentInstanceType":{
+          "shape":"OptimizationJobDeploymentInstanceType",
+          "documentation":"<p>The type of instance that hosts the optimized model that you create with the optimization job.</p>"
+        },
+        "OptimizationConfigs":{
+          "shape":"OptimizationConfigs",
+          "documentation":"<p>Settings for each of the optimization techniques that the job applies.</p>"
+        },
+        "OutputConfig":{
+          "shape":"OptimizationJobOutputConfig",
+          "documentation":"<p>Details for where to store the optimized model that you create with the optimization job.</p>"
+        },
+        "OptimizationOutput":{
+          "shape":"OptimizationOutput",
+          "documentation":"<p>Output values produced by an optimization job.</p>"
+        },
+        "RoleArn":{
+          "shape":"RoleArn",
+          "documentation":"<p>The ARN of the IAM role that you assigned to the optimization job.</p>"
+        },
+        "StoppingCondition":{"shape":"StoppingCondition"},
+        "VpcConfig":{
+          "shape":"OptimizationVpcConfig",
+          "documentation":"<p>A VPC in Amazon VPC that your optimized model has access to.</p>"
+        }
+      }
+    },
     "DescribePipelineDefinitionForExecutionRequest":{
       "type":"structure",
       "required":["PipelineExecutionArn"],
@@ -17036,6 +17547,10 @@
         "DockerSettings":{
           "shape":"DockerSettings",
           "documentation":"<p>A collection of settings that configure the domain's Docker interaction.</p>"
+        },
+        "AmazonQSettings":{
+          "shape":"AmazonQSettings",
+          "documentation":"<p>A collection of settings that configure the Amazon Q experience within the domain. The <code>AuthMode</code> that you use to create the domain must be <code>SSO</code>.</p>"
         }
       },
       "documentation":"<p>A collection of settings that apply to the <code>SageMaker Domain</code>. These settings are specified through the <code>CreateDomain</code> API call.</p>"
@@ -17058,6 +17573,10 @@
         "DockerSettings":{
           "shape":"DockerSettings",
           "documentation":"<p>A collection of settings that configure the domain's Docker interaction.</p>"
+        },
+        "AmazonQSettings":{
+          "shape":"AmazonQSettings",
+          "documentation":"<p>A collection of settings that configure the Amazon Q experience within the domain.</p>"
         }
       },
       "documentation":"<p>A collection of <code>Domain</code> configuration settings to update.</p>"
@@ -17621,6 +18140,51 @@
       "max":10,
       "pattern":"\\d+"
     },
+    "EksClusterArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"^arn:aws[a-z\\-]*:eks:[a-z0-9\\-]*:[0-9]{12}:cluster\\/[0-9A-Za-z][A-Za-z0-9\\-_]{0,99}$"
+    },
+    "EmrServerlessComputeConfig":{
+      "type":"structure",
+      "required":["ExecutionRoleARN"],
+      "members":{
+        "ExecutionRoleARN":{
+          "shape":"RoleArn",
+          "documentation":"<p>The ARN of the IAM role granting the AutoML job V2 the necessary permissions access policies to list, connect to, or manage EMR Serverless jobs. For detailed information about the required permissions of this role, see \"How to configure AutoML to initiate a remote job on EMR Serverless for large datasets\" in <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/autopilot-automate-model-development-create-experiment.html\">Create a regression or classification job for tabular data using the AutoML API</a> or <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/autopilot-create-experiment-timeseries-forecasting.html#timeseries-forecasting-api-optional-params\">Create an AutoML job for time-series forecasting using the API</a>.</p>"
+        }
+      },
+      "documentation":"<note> <p>This data type is intended for use exclusively by SageMaker Canvas and cannot be used in other contexts at the moment.</p> </note> <p>Specifies the compute configuration for the EMR Serverless job.</p>"
+    },
+    "EmrServerlessSettings":{
+      "type":"structure",
+      "members":{
+        "ExecutionRoleArn":{
+          "shape":"RoleArn",
+          "documentation":"<p>The Amazon Resource Name (ARN) of the Amazon Web Services IAM role that is assumed for running Amazon EMR Serverless jobs in SageMaker Canvas. This role should have the necessary permissions to read and write data attached and a trust relationship with EMR Serverless.</p>"
+        },
+        "Status":{
+          "shape":"FeatureStatus",
+          "documentation":"<p>Describes whether Amazon EMR Serverless job capabilities are enabled or disabled in the SageMaker Canvas application.</p>"
+        }
+      },
+      "documentation":"<p>The settings for running Amazon EMR Serverless jobs in SageMaker Canvas.</p>"
+    },
+    "EmrSettings":{
+      "type":"structure",
+      "members":{
+        "AssumableRoleArns":{
+          "shape":"AssumableRoleArns",
+          "documentation":"<p>An array of Amazon Resource Names (ARNs) of the IAM roles that the execution role of SageMaker can assume for performing operations or tasks related to Amazon EMR clusters or Amazon EMR Serverless applications. These roles define the permissions and access policies required when performing Amazon EMR-related operations, such as listing, connecting to, or terminating Amazon EMR clusters or Amazon EMR Serverless applications. They are typically used in cross-account access scenarios, where the Amazon EMR resources (clusters or serverless applications) are located in a different Amazon Web Services account than the SageMaker domain.</p>"
+        },
+        "ExecutionRoleArns":{
+          "shape":"ExecutionRoleArns",
+          "documentation":"<p>An array of Amazon Resource Names (ARNs) of the IAM roles used by the Amazon EMR cluster instances or job execution environments to access other Amazon Web Services services and resources needed during the runtime of your Amazon EMR or Amazon EMR Serverless workloads, such as Amazon S3 for data access, Amazon CloudWatch for logging, or other Amazon Web Services services based on the particular workload requirements.</p>"
+        }
+      },
+      "documentation":"<p>The configuration parameters that specify the IAM roles assumed by the execution role of SageMaker (assumable roles) and the cluster instances or job execution environments (execution roles or runtime roles) to manage and access resources required for running Amazon EMR clusters or Amazon EMR Serverless applications.</p>"
+    },
     "EnableCapture":{"type":"boolean"},
     "EnableInfraCheck":{"type":"boolean"},
     "EnableIotRoleAlias":{"type":"boolean"},
@@ -17730,6 +18294,16 @@
         "Name",
         "CreationTime"
       ]
+    },
+    "EndpointConfigStepMetadata":{
+      "type":"structure",
+      "members":{
+        "Arn":{
+          "shape":"EndpointConfigArn",
+          "documentation":"<p>The Amazon Resource Name (ARN) of the endpoint configuration used in the step.</p>"
+        }
+      },
+      "documentation":"<p>Metadata for an endpoint configuration step.</p>"
     },
     "EndpointConfigSummary":{
       "type":"structure",
@@ -17949,6 +18523,16 @@
         "UpdateRollbackFailed"
       ]
     },
+    "EndpointStepMetadata":{
+      "type":"structure",
+      "members":{
+        "Arn":{
+          "shape":"EndpointArn",
+          "documentation":"<p>The Amazon Resource Name (ARN) of the endpoint in the step.</p>"
+        }
+      },
+      "documentation":"<p>Metadata for an endpoint step.</p>"
+    },
     "EndpointSummary":{
       "type":"structure",
       "required":[
@@ -18060,6 +18644,11 @@
     "ExcludeFeaturesAttribute":{
       "type":"string",
       "max":100
+    },
+    "ExecutionRoleArns":{
+      "type":"list",
+      "member":{"shape":"RoleArn"},
+      "max":5
     },
     "ExecutionRoleIdentityConfig":{
       "type":"string",
@@ -19197,6 +19786,37 @@
       "max":10,
       "min":1
     },
+    "HiddenAppTypesList":{
+      "type":"list",
+      "member":{"shape":"AppType"}
+    },
+    "HiddenInstanceTypesList":{
+      "type":"list",
+      "member":{"shape":"AppInstanceType"}
+    },
+    "HiddenMlToolsList":{
+      "type":"list",
+      "member":{"shape":"MlTools"}
+    },
+    "HiddenSageMakerImage":{
+      "type":"structure",
+      "members":{
+        "SageMakerImageName":{
+          "shape":"SageMakerImageName",
+          "documentation":"<p> The SageMaker image name that you are hiding from the Studio user interface. </p>"
+        },
+        "VersionAliases":{
+          "shape":"VersionAliasesList",
+          "documentation":"<p> The version aliases you are hiding from the Studio user interface. </p>"
+        }
+      },
+      "documentation":"<p>The SageMaker images that are hidden from the Studio user interface. You must specify the SageMaker image name and version aliases.</p>"
+    },
+    "HiddenSageMakerImageVersionAliasesList":{
+      "type":"list",
+      "member":{"shape":"HiddenSageMakerImage"},
+      "max":5
+    },
     "HolidayConfig":{
       "type":"list",
       "member":{"shape":"HolidayConfigAttributes"},
@@ -19285,6 +19905,10 @@
           "shape":"HubContentArn",
           "documentation":"<p>The Amazon Resource Name (ARN) of the hub content.</p>"
         },
+        "SageMakerPublicHubContentArn":{
+          "shape":"SageMakerPublicHubContentArn",
+          "documentation":"<p>The ARN of the public hub content.</p>"
+        },
         "HubContentVersion":{
           "shape":"HubContentVersion",
           "documentation":"<p>The version of the hub content.</p>"
@@ -19305,6 +19929,10 @@
           "shape":"HubContentDescription",
           "documentation":"<p>A description of the hub content.</p>"
         },
+        "SupportStatus":{
+          "shape":"HubContentSupportStatus",
+          "documentation":"<p>The support status of the hub content.</p>"
+        },
         "HubContentSearchKeywords":{
           "shape":"HubContentSearchKeywordList",
           "documentation":"<p>The searchable keywords for the hub content.</p>"
@@ -19316,6 +19944,10 @@
         "CreationTime":{
           "shape":"Timestamp",
           "documentation":"<p>The date and time that the hub content was created.</p>"
+        },
+        "OriginalCreationTime":{
+          "shape":"Timestamp",
+          "documentation":"<p>The date and time when the hub content was originally created, before any updates or revisions.</p>"
         }
       },
       "documentation":"<p>Information about hub content.</p>"
@@ -19326,8 +19958,7 @@
     },
     "HubContentMarkdown":{
       "type":"string",
-      "max":65535,
-      "pattern":".*"
+      "max":65535
     },
     "HubContentName":{
       "type":"string",
@@ -19357,11 +19988,19 @@
         "DeleteFailed"
       ]
     },
+    "HubContentSupportStatus":{
+      "type":"string",
+      "enum":[
+        "Supported",
+        "Deprecated"
+      ]
+    },
     "HubContentType":{
       "type":"string",
       "enum":[
         "Model",
-        "Notebook"
+        "Notebook",
+        "ModelReference"
       ]
     },
     "HubContentVersion":{
@@ -19433,6 +20072,10 @@
       "type":"string",
       "max":63,
       "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
+    },
+    "HubNameOrArn":{
+      "type":"string",
+      "pattern":"^(arn:[a-z0-9-\\.]{1,63}:sagemaker:\\w+(?:-\\w+)+:(\\d{12}|aws):hub\\/)?[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}$"
     },
     "HubS3StorageConfig":{
       "type":"structure",
@@ -19564,12 +20207,10 @@
       "required":[
         "WorkteamArn",
         "UiConfig",
-        "PreHumanTaskLambdaArn",
         "TaskTitle",
         "TaskDescription",
         "NumberOfHumanWorkersPerDataObject",
-        "TaskTimeLimitInSeconds",
-        "AnnotationConsolidationConfig"
+        "TaskTimeLimitInSeconds"
       ],
       "members":{
         "WorkteamArn":{
@@ -20363,6 +21004,33 @@
       "member":{"shape":"IdentityProviderOAuthSetting"},
       "max":20
     },
+    "IdleSettings":{
+      "type":"structure",
+      "members":{
+        "LifecycleManagement":{
+          "shape":"LifecycleManagement",
+          "documentation":"<p>Indicates whether idle shutdown is activated for the application type.</p>"
+        },
+        "IdleTimeoutInMinutes":{
+          "shape":"IdleTimeoutInMinutes",
+          "documentation":"<p>The time that SageMaker waits after the application becomes idle before shutting it down.</p>"
+        },
+        "MinIdleTimeoutInMinutes":{
+          "shape":"IdleTimeoutInMinutes",
+          "documentation":"<p>The minimum value in minutes that custom idle shutdown can be set to by the user.</p>"
+        },
+        "MaxIdleTimeoutInMinutes":{
+          "shape":"IdleTimeoutInMinutes",
+          "documentation":"<p>The maximum value in minutes that custom idle shutdown can be set to by the user.</p>"
+        }
+      },
+      "documentation":"<p>Settings related to idle shutdown of Studio applications.</p>"
+    },
+    "IdleTimeoutInMinutes":{
+      "type":"integer",
+      "max":525600,
+      "min":60
+    },
     "Image":{
       "type":"structure",
       "required":[
@@ -20411,7 +21079,7 @@
     "ImageArn":{
       "type":"string",
       "max":256,
-      "pattern":"^arn:aws(-[\\w]+)*:sagemaker:.+:[0-9]{12}:image/[a-z0-9]([-.]?[a-z0-9])*$"
+      "pattern":"^arn:aws(-[\\w]+)*:sagemaker:.+:[0-9]{12}:image/[a-zA-Z0-9]([-.]?[a-zA-Z0-9])*$"
     },
     "ImageBaseImage":{
       "type":"string",
@@ -20568,6 +21236,12 @@
       "min":1,
       "pattern":"(^\\d+$)|(^\\d+.\\d+$)|(^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$)"
     },
+    "ImageVersionAliasPattern":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)$"
+    },
     "ImageVersionArn":{
       "type":"string",
       "max":256,
@@ -20637,7 +21311,7 @@
           "documentation":"<p>The version of the hub content schema to import.</p>"
         },
         "HubName":{
-          "shape":"HubName",
+          "shape":"HubNameOrArn",
           "documentation":"<p>The name of the hub to import content into.</p>"
         },
         "HubContentDisplayName":{
@@ -21061,6 +21735,17 @@
       "type":"string",
       "enum":["ShadowMode"]
     },
+    "InferenceHubAccessConfig":{
+      "type":"structure",
+      "required":["HubContentArn"],
+      "members":{
+        "HubContentArn":{
+          "shape":"HubContentArn",
+          "documentation":"<p>The ARN of the hub content for which deployment access is allowed.</p>"
+        }
+      },
+      "documentation":"<p>Configuration information specifying which hub contents have accessible deployment options.</p>"
+    },
     "InferenceImage":{
       "type":"string",
       "max":256
@@ -21086,7 +21771,6 @@
     "InferenceRecommendation":{
       "type":"structure",
       "required":[
-        "Metrics",
         "EndpointConfiguration",
         "ModelConfiguration"
       ],
@@ -21696,6 +22380,18 @@
         "CodeRepositories":{
           "shape":"CodeRepositories",
           "documentation":"<p>A list of Git repositories that SageMaker automatically displays to users for cloning in the JupyterLab application.</p>"
+        },
+        "AppLifecycleManagement":{
+          "shape":"AppLifecycleManagement",
+          "documentation":"<p>Indicates whether idle shutdown is activated for JupyterLab applications.</p>"
+        },
+        "EmrSettings":{
+          "shape":"EmrSettings",
+          "documentation":"<p>The configuration parameters that specify the IAM roles assumed by the execution role of SageMaker (assumable roles) and the cluster instances or job execution environments (execution roles or runtime roles) to manage and access resources required for running Amazon EMR clusters or Amazon EMR Serverless applications.</p>"
+        },
+        "BuiltInLifecycleConfigArn":{
+          "shape":"StudioLifecycleConfigArn",
+          "documentation":"<p>The lifecycle configuration that runs before the default lifecycle configuration. It can override changes made in the default lifecycle configuration.</p>"
         }
       },
       "documentation":"<p>The settings for the JupyterLab application.</p>"
@@ -22075,8 +22771,7 @@
         "LastModifiedTime",
         "LabelingJobStatus",
         "LabelCounters",
-        "WorkteamArn",
-        "PreHumanTaskLambdaArn"
+        "WorkteamArn"
       ],
       "members":{
         "LabelingJobName":{
@@ -22184,6 +22879,13 @@
     "LifecycleConfigArns":{
       "type":"list",
       "member":{"shape":"StudioLifecycleConfigArn"}
+    },
+    "LifecycleManagement":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
     },
     "LineageEntityParameters":{
       "type":"map",
@@ -23552,7 +24254,7 @@
       ],
       "members":{
         "HubName":{
-          "shape":"HubName",
+          "shape":"HubNameOrArn",
           "documentation":"<p>The name of the hub to list the content versions of.</p>"
         },
         "HubContentType":{
@@ -23619,7 +24321,7 @@
       ],
       "members":{
         "HubName":{
-          "shape":"HubName",
+          "shape":"HubNameOrArn",
           "documentation":"<p>The name of the hub to list the contents of.</p>"
         },
         "HubContentType":{
@@ -25258,6 +25960,78 @@
         }
       }
     },
+    "ListOptimizationJobsRequest":{
+      "type":"structure",
+      "members":{
+        "NextToken":{
+          "shape":"NextToken",
+          "documentation":"<p>A token that you use to get the next set of results following a truncated response. If the response to the previous request was truncated, that response provides the value for this token.</p>"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "documentation":"<p>The maximum number of optimization jobs to return in the response. The default is 50.</p>",
+          "box":true
+        },
+        "CreationTimeAfter":{
+          "shape":"CreationTime",
+          "documentation":"<p>Filters the results to only those optimization jobs that were created after the specified time.</p>"
+        },
+        "CreationTimeBefore":{
+          "shape":"CreationTime",
+          "documentation":"<p>Filters the results to only those optimization jobs that were created before the specified time.</p>"
+        },
+        "LastModifiedTimeAfter":{
+          "shape":"LastModifiedTime",
+          "documentation":"<p>Filters the results to only those optimization jobs that were updated after the specified time.</p>"
+        },
+        "LastModifiedTimeBefore":{
+          "shape":"LastModifiedTime",
+          "documentation":"<p>Filters the results to only those optimization jobs that were updated before the specified time.</p>"
+        },
+        "OptimizationContains":{
+          "shape":"NameContains",
+          "documentation":"<p>Filters the results to only those optimization jobs that apply the specified optimization techniques. You can specify either <code>Quantization</code> or <code>Compilation</code>.</p>"
+        },
+        "NameContains":{
+          "shape":"NameContains",
+          "documentation":"<p>Filters the results to only those optimization jobs with a name that contains the specified string.</p>"
+        },
+        "StatusEquals":{
+          "shape":"OptimizationJobStatus",
+          "documentation":"<p>Filters the results to only those optimization jobs with the specified status.</p>"
+        },
+        "SortBy":{
+          "shape":"ListOptimizationJobsSortBy",
+          "documentation":"<p>The field by which to sort the optimization jobs in the response. The default is <code>CreationTime</code> </p>"
+        },
+        "SortOrder":{
+          "shape":"SortOrder",
+          "documentation":"<p>The sort order for results. The default is <code>Ascending</code> </p>"
+        }
+      }
+    },
+    "ListOptimizationJobsResponse":{
+      "type":"structure",
+      "required":["OptimizationJobSummaries"],
+      "members":{
+        "OptimizationJobSummaries":{
+          "shape":"OptimizationJobSummaries",
+          "documentation":"<p>A list of optimization jobs and their properties that matches any of the filters you specified in the request.</p>"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "documentation":"<p>The token to use in a subsequent request to get the next set of results following a truncated response.</p>"
+        }
+      }
+    },
+    "ListOptimizationJobsSortBy":{
+      "type":"string",
+      "enum":[
+        "Name",
+        "CreationTime",
+        "Status"
+      ]
+    },
     "ListPipelineExecutionStepsRequest":{
       "type":"structure",
       "members":{
@@ -26496,6 +27270,26 @@
       "max":1,
       "pattern":"1|2"
     },
+    "MlTools":{
+      "type":"string",
+      "enum":[
+        "DataWrangler",
+        "FeatureStore",
+        "EmrClusters",
+        "AutoMl",
+        "Experiments",
+        "Training",
+        "ModelEvaluation",
+        "Pipelines",
+        "Models",
+        "JumpStart",
+        "InferenceRecommender",
+        "Endpoints",
+        "Projects",
+        "InferenceOptimization",
+        "PerformanceEvaluation"
+      ]
+    },
     "MlflowVersion":{
       "type":"string",
       "max":16,
@@ -26944,6 +27738,20 @@
         }
       },
       "documentation":"<p>Configures the timeout and maximum number of retries for processing a transform job invocation.</p>"
+    },
+    "ModelCompilationConfig":{
+      "type":"structure",
+      "members":{
+        "Image":{
+          "shape":"OptimizationContainerImage",
+          "documentation":"<p>The URI of an LMI DLC in Amazon ECR. SageMaker uses this image to run the optimization.</p>"
+        },
+        "OverrideEnvironment":{
+          "shape":"OptimizationJobEnvironmentVariables",
+          "documentation":"<p>Environment variables that override the default ones in the model container.</p>"
+        }
+      },
+      "documentation":"<p>Settings for the model compilation technique that's applied by a model optimization job.</p>"
     },
     "ModelCompressionType":{
       "type":"string",
@@ -27532,7 +28340,7 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"^arn:aws(-cn|-us-gov)?:sagemaker:[a-z0-9\\-]{9,16}:[0-9]{12}:model-package/[\\S]{1,2048}$"
+      "pattern":"^arn:aws(-cn|-us-gov|-iso-f)?:sagemaker:[a-z0-9\\-]{9,16}:[0-9]{12}:model-package/[\\S]{1,2048}$"
     },
     "ModelPackageArnList":{
       "type":"list",
@@ -27642,7 +28450,7 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"^arn:aws(-cn|-us-gov)?:sagemaker:[a-z0-9\\-]{9,16}:[0-9]{12}:model-package-group/[\\S]{1,2048}$"
+      "pattern":"^arn:aws(-cn|-us-gov|-iso-f)?:sagemaker:[a-z0-9\\-]{9,16}:[0-9]{12}:model-package-group/[\\S]{1,2048}$"
     },
     "ModelPackageGroupSortBy":{
       "type":"string",
@@ -27968,6 +28776,20 @@
         }
       },
       "documentation":"<p>The input for the model quality monitoring job. Currently endpoints are supported for input for model quality monitoring jobs.</p>"
+    },
+    "ModelQuantizationConfig":{
+      "type":"structure",
+      "members":{
+        "Image":{
+          "shape":"OptimizationContainerImage",
+          "documentation":"<p>The URI of an LMI DLC in Amazon ECR. SageMaker uses this image to run the optimization.</p>"
+        },
+        "OverrideEnvironment":{
+          "shape":"OptimizationJobEnvironmentVariables",
+          "documentation":"<p>Environment variables that override the default ones in the model container.</p>"
+        }
+      },
+      "documentation":"<p>Settings for the model quantization technique that's applied by a model optimization job.</p>"
     },
     "ModelRegisterSettings":{
       "type":"structure",
@@ -29385,6 +30207,12 @@
       },
       "documentation":"<p>A list of user groups that exist in your OIDC Identity Provider (IdP). One to ten groups can be used to create a single private work team. When you add a user group to the list of <code>Groups</code>, you can add that user group to one or more private work teams. If you add a user group to a private work team, all workers in that user group are added to the work team.</p>"
     },
+    "OnStartDeepHealthChecks":{
+      "type":"list",
+      "member":{"shape":"DeepHealthCheckType"},
+      "max":2,
+      "min":1
+    },
     "OnlineStoreConfig":{
       "type":"structure",
       "members":{
@@ -29442,6 +30270,244 @@
         "NotExists",
         "In"
       ]
+    },
+    "OptimizationConfig":{
+      "type":"structure",
+      "members":{
+        "ModelQuantizationConfig":{
+          "shape":"ModelQuantizationConfig",
+          "documentation":"<p>Settings for the model quantization technique that's applied by a model optimization job.</p>"
+        },
+        "ModelCompilationConfig":{
+          "shape":"ModelCompilationConfig",
+          "documentation":"<p>Settings for the model compilation technique that's applied by a model optimization job.</p>"
+        }
+      },
+      "documentation":"<p>Settings for an optimization technique that you apply with a model optimization job.</p>",
+      "union":true
+    },
+    "OptimizationConfigs":{
+      "type":"list",
+      "member":{"shape":"OptimizationConfig"},
+      "max":10
+    },
+    "OptimizationContainerImage":{
+      "type":"string",
+      "max":255,
+      "pattern":"[\\S]+"
+    },
+    "OptimizationJobArn":{
+      "type":"string",
+      "max":256,
+      "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:optimization-job/.*"
+    },
+    "OptimizationJobDeploymentInstanceType":{
+      "type":"string",
+      "enum":[
+        "ml.p4d.24xlarge",
+        "ml.p4de.24xlarge",
+        "ml.p5.48xlarge",
+        "ml.g5.xlarge",
+        "ml.g5.2xlarge",
+        "ml.g5.4xlarge",
+        "ml.g5.8xlarge",
+        "ml.g5.12xlarge",
+        "ml.g5.16xlarge",
+        "ml.g5.24xlarge",
+        "ml.g5.48xlarge",
+        "ml.g6.xlarge",
+        "ml.g6.2xlarge",
+        "ml.g6.4xlarge",
+        "ml.g6.8xlarge",
+        "ml.g6.12xlarge",
+        "ml.g6.16xlarge",
+        "ml.g6.24xlarge",
+        "ml.g6.48xlarge",
+        "ml.inf2.xlarge",
+        "ml.inf2.8xlarge",
+        "ml.inf2.24xlarge",
+        "ml.inf2.48xlarge",
+        "ml.trn1.2xlarge",
+        "ml.trn1.32xlarge",
+        "ml.trn1n.32xlarge"
+      ]
+    },
+    "OptimizationJobEnvironmentVariables":{
+      "type":"map",
+      "key":{"shape":"NonEmptyString256"},
+      "value":{"shape":"String256"},
+      "max":25
+    },
+    "OptimizationJobModelSource":{
+      "type":"structure",
+      "members":{
+        "S3":{
+          "shape":"OptimizationJobModelSourceS3",
+          "documentation":"<p>The Amazon S3 location of a source model to optimize with an optimization job.</p>"
+        }
+      },
+      "documentation":"<p>The location of the source model to optimize with an optimization job.</p>"
+    },
+    "OptimizationJobModelSourceS3":{
+      "type":"structure",
+      "members":{
+        "S3Uri":{
+          "shape":"S3Uri",
+          "documentation":"<p>An Amazon S3 URI that locates a source model to optimize with an optimization job.</p>"
+        },
+        "ModelAccessConfig":{
+          "shape":"OptimizationModelAccessConfig",
+          "documentation":"<p>The access configuration settings for the source ML model for an optimization job, where you can accept the model end-user license agreement (EULA).</p>"
+        }
+      },
+      "documentation":"<p>The Amazon S3 location of a source model to optimize with an optimization job.</p>"
+    },
+    "OptimizationJobOutputConfig":{
+      "type":"structure",
+      "required":["S3OutputLocation"],
+      "members":{
+        "KmsKeyId":{
+          "shape":"KmsKeyId",
+          "documentation":"<p>The Amazon Resource Name (ARN) of a key in Amazon Web Services KMS. SageMaker uses they key to encrypt the artifacts of the optimized model when SageMaker uploads the model to Amazon S3.</p>"
+        },
+        "S3OutputLocation":{
+          "shape":"S3Uri",
+          "documentation":"<p>The Amazon S3 URI for where to store the optimized model that you create with an optimization job.</p>"
+        }
+      },
+      "documentation":"<p>Details for where to store the optimized model that you create with the optimization job.</p>"
+    },
+    "OptimizationJobStatus":{
+      "type":"string",
+      "enum":[
+        "INPROGRESS",
+        "COMPLETED",
+        "FAILED",
+        "STARTING",
+        "STOPPING",
+        "STOPPED"
+      ]
+    },
+    "OptimizationJobSummaries":{
+      "type":"list",
+      "member":{"shape":"OptimizationJobSummary"}
+    },
+    "OptimizationJobSummary":{
+      "type":"structure",
+      "required":[
+        "OptimizationJobName",
+        "OptimizationJobArn",
+        "CreationTime",
+        "OptimizationJobStatus",
+        "DeploymentInstanceType",
+        "OptimizationTypes"
+      ],
+      "members":{
+        "OptimizationJobName":{
+          "shape":"EntityName",
+          "documentation":"<p>The name that you assigned to the optimization job.</p>"
+        },
+        "OptimizationJobArn":{
+          "shape":"OptimizationJobArn",
+          "documentation":"<p>The Amazon Resource Name (ARN) of the optimization job.</p>"
+        },
+        "CreationTime":{
+          "shape":"CreationTime",
+          "documentation":"<p>The time when you created the optimization job.</p>"
+        },
+        "OptimizationJobStatus":{
+          "shape":"OptimizationJobStatus",
+          "documentation":"<p>The current status of the optimization job.</p>"
+        },
+        "OptimizationStartTime":{
+          "shape":"Timestamp",
+          "documentation":"<p>The time when the optimization job started.</p>"
+        },
+        "OptimizationEndTime":{
+          "shape":"Timestamp",
+          "documentation":"<p>The time when the optimization job finished processing.</p>"
+        },
+        "LastModifiedTime":{
+          "shape":"LastModifiedTime",
+          "documentation":"<p>The time when the optimization job was last updated.</p>"
+        },
+        "DeploymentInstanceType":{
+          "shape":"OptimizationJobDeploymentInstanceType",
+          "documentation":"<p>The type of instance that hosts the optimized model that you create with the optimization job.</p>"
+        },
+        "OptimizationTypes":{
+          "shape":"OptimizationTypes",
+          "documentation":"<p>The optimization techniques that are applied by the optimization job.</p>"
+        }
+      },
+      "documentation":"<p>Summarizes an optimization job by providing some of its key properties.</p>"
+    },
+    "OptimizationModelAcceptEula":{"type":"boolean"},
+    "OptimizationModelAccessConfig":{
+      "type":"structure",
+      "required":["AcceptEula"],
+      "members":{
+        "AcceptEula":{
+          "shape":"OptimizationModelAcceptEula",
+          "documentation":"<p>Specifies agreement to the model end-user license agreement (EULA). The <code>AcceptEula</code> value must be explicitly defined as <code>True</code> in order to accept the EULA that this model requires. You are responsible for reviewing and complying with any applicable license terms and making sure they are acceptable for your use case before downloading or using a model.</p>"
+        }
+      },
+      "documentation":"<p>The access configuration settings for the source ML model for an optimization job, where you can accept the model end-user license agreement (EULA).</p>"
+    },
+    "OptimizationOutput":{
+      "type":"structure",
+      "members":{
+        "RecommendedInferenceImage":{
+          "shape":"OptimizationContainerImage",
+          "documentation":"<p>The image that SageMaker recommends that you use to host the optimized model that you created with an optimization job.</p>"
+        }
+      },
+      "documentation":"<p>Output values produced by an optimization job.</p>"
+    },
+    "OptimizationType":{"type":"string"},
+    "OptimizationTypes":{
+      "type":"list",
+      "member":{"shape":"OptimizationType"}
+    },
+    "OptimizationVpcConfig":{
+      "type":"structure",
+      "required":[
+        "SecurityGroupIds",
+        "Subnets"
+      ],
+      "members":{
+        "SecurityGroupIds":{
+          "shape":"OptimizationVpcSecurityGroupIds",
+          "documentation":"<p>The VPC security group IDs, in the form <code>sg-xxxxxxxx</code>. Specify the security groups for the VPC that is specified in the <code>Subnets</code> field.</p>"
+        },
+        "Subnets":{
+          "shape":"OptimizationVpcSubnets",
+          "documentation":"<p>The ID of the subnets in the VPC to which you want to connect your optimized model.</p>"
+        }
+      },
+      "documentation":"<p>A VPC in Amazon VPC that's accessible to an optimized that you create with an optimization job. You can control access to and from your resources by configuring a VPC. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/infrastructure-give-access.html\">Give SageMaker Access to Resources in your Amazon VPC</a>. </p>"
+    },
+    "OptimizationVpcSecurityGroupId":{
+      "type":"string",
+      "max":32,
+      "pattern":"[-0-9a-zA-Z]+"
+    },
+    "OptimizationVpcSecurityGroupIds":{
+      "type":"list",
+      "member":{"shape":"OptimizationVpcSecurityGroupId"},
+      "max":5,
+      "min":1
+    },
+    "OptimizationVpcSubnetId":{
+      "type":"string",
+      "max":32,
+      "pattern":"[-0-9a-zA-Z]+"
+    },
+    "OptimizationVpcSubnets":{
+      "type":"list",
+      "member":{"shape":"OptimizationVpcSubnetId"},
+      "max":16,
+      "min":1
     },
     "OptionalDouble":{"type":"double"},
     "OptionalInteger":{"type":"integer"},
@@ -30102,6 +31168,14 @@
         "AutoMLJob":{
           "shape":"AutoMLJobStepMetadata",
           "documentation":"<p>The Amazon Resource Name (ARN) of the AutoML job that was run by this step.</p>"
+        },
+        "Endpoint":{
+          "shape":"EndpointStepMetadata",
+          "documentation":"<p>The endpoint that was invoked during this step execution.</p>"
+        },
+        "EndpointConfig":{
+          "shape":"EndpointConfigStepMetadata",
+          "documentation":"<p>The endpoint configuration used to create an endpoint during this step execution.</p>"
         }
       },
       "documentation":"<p>Metadata for a step execution.</p>"
@@ -30390,7 +31464,23 @@
         "ml.g4dn.4xlarge",
         "ml.g4dn.8xlarge",
         "ml.g4dn.12xlarge",
-        "ml.g4dn.16xlarge"
+        "ml.g4dn.16xlarge",
+        "ml.g5.xlarge",
+        "ml.g5.2xlarge",
+        "ml.g5.4xlarge",
+        "ml.g5.8xlarge",
+        "ml.g5.16xlarge",
+        "ml.g5.12xlarge",
+        "ml.g5.24xlarge",
+        "ml.g5.48xlarge",
+        "ml.r5d.large",
+        "ml.r5d.xlarge",
+        "ml.r5d.2xlarge",
+        "ml.r5d.4xlarge",
+        "ml.r5d.8xlarge",
+        "ml.r5d.12xlarge",
+        "ml.r5d.16xlarge",
+        "ml.r5d.24xlarge"
       ]
     },
     "ProcessingJob":{
@@ -30679,7 +31769,6 @@
       "type":"structure",
       "required":[
         "S3Uri",
-        "LocalPath",
         "S3UploadMode"
       ],
       "members":{
@@ -30799,7 +31888,7 @@
         },
         "InferenceAmiVersion":{
           "shape":"ProductionVariantInferenceAmiVersion",
-          "documentation":"<p>Specifies an option from a collection of preconfigured Amazon Machine Image (AMI) images. Each image is configured by Amazon Web Services with a set of software and driver versions. Amazon Web Services optimizes these configurations for different machine learning workloads.</p> <p>By selecting an AMI version, you can ensure that your inference environment is compatible with specific software requirements, such as CUDA driver versions, Linux kernel versions, or Amazon Web Services Neuron driver versions.</p>"
+          "documentation":"<p>Specifies an option from a collection of preconfigured Amazon Machine Image (AMI) images. Each image is configured by Amazon Web Services with a set of software and driver versions. Amazon Web Services optimizes these configurations for different machine learning workloads.</p> <p>By selecting an AMI version, you can ensure that your inference environment is compatible with specific software requirements, such as CUDA driver versions, Linux kernel versions, or Amazon Web Services Neuron driver versions.</p> <p>The AMI version names, and their configurations, are the following:</p> <dl> <dt>al2-ami-sagemaker-inference-gpu-2</dt> <dd> <ul> <li> <p>Accelerator: GPU</p> </li> <li> <p>NVIDIA driver version: 535.54.03</p> </li> <li> <p>CUDA driver version: 12.2</p> </li> <li> <p>Supported instance types: ml.g4dn.*, ml.g5.*, ml.g6.*, ml.p3.*, ml.p4d.*, ml.p4de.*, ml.p5.*</p> </li> </ul> </dd> </dl>"
         }
       },
       "documentation":"<p> Identifies a model that you want to host and the resources chosen to deploy for hosting it. If you are deploying multiple models, tell SageMaker how to distribute traffic among the models by specifying variant weights. For more information on production variants, check <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/model-ab-testing.html\"> Production variants</a>. </p>"
@@ -31382,7 +32471,7 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"^arn:aws(-cn|-us-gov)?:sagemaker:[a-z0-9\\-]{9,16}:[0-9]{12}:project/[\\S]{1,2048}$"
+      "pattern":"^arn:aws(-cn|-us-gov|-iso-f)?:sagemaker:[a-z0-9\\-]{9,16}:[0-9]{12}:project/[\\S]{1,2048}$"
     },
     "ProjectEntityName":{
       "type":"string",
@@ -31566,6 +32655,10 @@
           "documentation":"<p>The Amazon Resource Name (ARN) of the model package group.</p>"
         }
       }
+    },
+    "QProfileArn":{
+      "type":"string",
+      "pattern":"^arn:[-.a-z0-9]{1,63}:codewhisperer:([-.a-z0-9]{0,63}:){2}([a-zA-Z0-9-_:/]){1,1023}$"
     },
     "QualityCheckStepMetadata":{
       "type":"structure",
@@ -32170,12 +33263,6 @@
     },
     "RecommendationMetrics":{
       "type":"structure",
-      "required":[
-        "CostPerHour",
-        "CostPerInference",
-        "MaxInvocations",
-        "ModelLatency"
-      ],
       "members":{
         "CostPerHour":{
           "shape":"Float",
@@ -32307,6 +33394,12 @@
       "max":128,
       "min":1,
       "pattern":".*"
+    },
+    "ReferenceMinVersion":{
+      "type":"string",
+      "max":14,
+      "min":5,
+      "pattern":"^\\d{1,4}.\\d{1,4}.\\d{1,4}$"
     },
     "RegisterDevicesRequest":{
       "type":"structure",
@@ -32902,6 +33995,14 @@
         "ModelAccessConfig":{
           "shape":"ModelAccessConfig",
           "documentation":"<p>Specifies the access configuration file for the ML model. You can explicitly accept the model end-user license agreement (EULA) within the <code>ModelAccessConfig</code>. You are responsible for reviewing and complying with any applicable license terms and making sure they are acceptable for your use case before downloading or using a model.</p>"
+        },
+        "HubAccessConfig":{
+          "shape":"InferenceHubAccessConfig",
+          "documentation":"<p>Configuration information for hub access.</p>"
+        },
+        "ManifestS3Uri":{
+          "shape":"S3ModelUri",
+          "documentation":"<p>The Amazon S3 URI of the manifest file. The manifest file is a CSV file that stores the artifact locations.</p>"
         }
       },
       "documentation":"<p>Specifies the S3 location of ML model data to deploy.</p>"
@@ -32957,6 +34058,10 @@
       "max":1024,
       "pattern":"^(https|s3)://([^/]+)/?(.*)$"
     },
+    "SageMakerImageName":{
+      "type":"string",
+      "enum":["sagemaker_distribution"]
+    },
     "SageMakerImageVersionAlias":{
       "type":"string",
       "max":128,
@@ -32966,6 +34071,11 @@
     "SageMakerImageVersionAliases":{
       "type":"list",
       "member":{"shape":"SageMakerImageVersionAlias"}
+    },
+    "SageMakerPublicHubContentArn":{
+      "type":"string",
+      "max":255,
+      "pattern":"^arn:[a-z0-9-\\.]{1,63}:sagemaker:\\w+(?:-\\w+)+:aws:hub-content\\/[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}\\/Model\\/[a-zA-Z0-9](-*[a-zA-Z0-9]){0,63}$"
     },
     "SagemakerServicecatalogStatus":{
       "type":"string",
@@ -33712,6 +34822,16 @@
       "min":1,
       "pattern":".*"
     },
+    "SpaceAppLifecycleManagement":{
+      "type":"structure",
+      "members":{
+        "IdleSettings":{
+          "shape":"SpaceIdleSettings",
+          "documentation":"<p>Settings related to idle shutdown of Studio applications.</p>"
+        }
+      },
+      "documentation":"<p>Settings that are used to configure and manage the lifecycle of Amazon SageMaker Studio applications in a space.</p>"
+    },
     "SpaceArn":{
       "type":"string",
       "max":256,
@@ -33720,7 +34840,11 @@
     "SpaceCodeEditorAppSettings":{
       "type":"structure",
       "members":{
-        "DefaultResourceSpec":{"shape":"ResourceSpec"}
+        "DefaultResourceSpec":{"shape":"ResourceSpec"},
+        "AppLifecycleManagement":{
+          "shape":"SpaceAppLifecycleManagement",
+          "documentation":"<p>Settings that are used to configure and manage the lifecycle of CodeEditor applications in a space.</p>"
+        }
       },
       "documentation":"<p>The application settings for a Code Editor space.</p>"
     },
@@ -33771,6 +34895,16 @@
       "max":16384,
       "min":5
     },
+    "SpaceIdleSettings":{
+      "type":"structure",
+      "members":{
+        "IdleTimeoutInMinutes":{
+          "shape":"IdleTimeoutInMinutes",
+          "documentation":"<p>The time that SageMaker waits after the application becomes idle before shutting it down.</p>"
+        }
+      },
+      "documentation":"<p>Settings related to idle shutdown of Studio applications in a space.</p>"
+    },
     "SpaceJupyterLabAppSettings":{
       "type":"structure",
       "members":{
@@ -33778,6 +34912,10 @@
         "CodeRepositories":{
           "shape":"CodeRepositories",
           "documentation":"<p>A list of Git repositories that SageMaker automatically displays to users for cloning in the JupyterLab application.</p>"
+        },
+        "AppLifecycleManagement":{
+          "shape":"SpaceAppLifecycleManagement",
+          "documentation":"<p>Settings that are used to configure and manage the lifecycle of JupyterLab applications in a space.</p>"
         }
       },
       "documentation":"<p>The settings for the JupyterLab application within a space.</p>"
@@ -34249,6 +35387,16 @@
         }
       }
     },
+    "StopOptimizationJobRequest":{
+      "type":"structure",
+      "required":["OptimizationJobName"],
+      "members":{
+        "OptimizationJobName":{
+          "shape":"EntityName",
+          "documentation":"<p>The name that you assigned to the optimization job.</p>"
+        }
+      }
+    },
     "StopPipelineExecutionRequest":{
       "type":"structure",
       "required":[
@@ -34322,7 +35470,7 @@
           "documentation":"<p>The maximum length of time, in seconds, that a training or compilation job can be pending before it is stopped.</p>"
         }
       },
-      "documentation":"<p>Specifies a limit to how long a model training job or model compilation job can run. It also specifies how long a managed spot training job has to complete. When the job reaches the time limit, SageMaker ends the training or compilation job. Use this API to cap model training costs.</p> <p>To stop a training job, SageMaker sends the algorithm the <code>SIGTERM</code> signal, which delays job termination for 120 seconds. Algorithms can use this 120-second window to save the model artifacts, so the results of training are not lost. </p> <p>The training algorithms provided by SageMaker automatically save the intermediate results of a model training job when possible. This attempt to save artifacts is only a best effort case as model might not be in a state from which it can be saved. For example, if training has just started, the model might not be ready to save. When saved, this intermediate data is a valid model artifact. You can use it to create a model with <code>CreateModel</code>.</p> <note> <p>The Neural Topic Model (NTM) currently does not support saving intermediate model artifacts. When training NTMs, make sure that the maximum runtime is sufficient for the training job to complete.</p> </note>"
+      "documentation":"<p>Specifies a limit to how long a job can run. When the job reaches the time limit, SageMaker ends the job. Use this API to cap costs.</p> <p>To stop a training job, SageMaker sends the algorithm the <code>SIGTERM</code> signal, which delays job termination for 120 seconds. Algorithms can use this 120-second window to save the model artifacts, so the results of training are not lost. </p> <p>The training algorithms provided by SageMaker automatically save the intermediate results of a model training job when possible. This attempt to save artifacts is only a best effort case as model might not be in a state from which it can be saved. For example, if training has just started, the model might not be ready to save. When saved, this intermediate data is a valid model artifact. You can use it to create a model with <code>CreateModel</code>.</p> <note> <p>The Neural Topic Model (NTM) currently does not support saving intermediate model artifacts. When training NTMs, make sure that the maximum runtime is sufficient for the training job to complete.</p> </note>"
     },
     "StorageType":{
       "type":"string",
@@ -34383,7 +35531,7 @@
     "StudioLifecycleConfigArn":{
       "type":"string",
       "max":256,
-      "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:studio-lifecycle-config/.*"
+      "pattern":"^(arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:studio-lifecycle-config/.*|None)$"
     },
     "StudioLifecycleConfigContent":{
       "type":"string",
@@ -34440,6 +35588,28 @@
         "ENABLED",
         "DISABLED"
       ]
+    },
+    "StudioWebPortalSettings":{
+      "type":"structure",
+      "members":{
+        "HiddenMlTools":{
+          "shape":"HiddenMlToolsList",
+          "documentation":"<p>The machine learning tools that are hidden from the Studio left navigation pane.</p>"
+        },
+        "HiddenAppTypes":{
+          "shape":"HiddenAppTypesList",
+          "documentation":"<p>The <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/studio-updated-apps.html\">Applications supported in Studio</a> that are hidden from the Studio left navigation pane.</p>"
+        },
+        "HiddenInstanceTypes":{
+          "shape":"HiddenInstanceTypesList",
+          "documentation":"<p> The instance types you are hiding from the Studio user interface. </p>"
+        },
+        "HiddenSageMakerImageVersionAliases":{
+          "shape":"HiddenSageMakerImageVersionAliasesList",
+          "documentation":"<p> The version aliases you are hiding from the Studio user interface. </p>"
+        }
+      },
+      "documentation":"<p>Studio settings. If these settings are applied on a user level, they take priority over the settings applied on a domain level.</p>"
     },
     "SubnetId":{
       "type":"string",
@@ -34589,6 +35759,13 @@
       "member":{"shape":"Tag"},
       "max":50,
       "min":0
+    },
+    "TagPropagation":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
     },
     "TagValue":{
       "type":"string",
@@ -35326,7 +36503,27 @@
         "ml.c6i.12xlarge",
         "ml.c6i.16xlarge",
         "ml.c6i.24xlarge",
-        "ml.c6i.32xlarge"
+        "ml.c6i.32xlarge",
+        "ml.r5d.large",
+        "ml.r5d.xlarge",
+        "ml.r5d.2xlarge",
+        "ml.r5d.4xlarge",
+        "ml.r5d.8xlarge",
+        "ml.r5d.12xlarge",
+        "ml.r5d.16xlarge",
+        "ml.r5d.24xlarge",
+        "ml.t3.medium",
+        "ml.t3.large",
+        "ml.t3.xlarge",
+        "ml.t3.2xlarge",
+        "ml.r5.large",
+        "ml.r5.xlarge",
+        "ml.r5.2xlarge",
+        "ml.r5.4xlarge",
+        "ml.r5.8xlarge",
+        "ml.r5.12xlarge",
+        "ml.r5.16xlarge",
+        "ml.r5.24xlarge"
       ]
     },
     "TrainingInstanceTypes":{
@@ -36792,6 +37989,10 @@
         "InstanceGroups":{
           "shape":"ClusterInstanceGroupSpecifications",
           "documentation":"<p>Specify the instance groups to update.</p>"
+        },
+        "NodeRecovery":{
+          "shape":"ClusterNodeRecovery",
+          "documentation":"<p>The node recovery mode to be applied to the SageMaker HyperPod cluster.</p>"
         }
       }
     },
@@ -36957,6 +38158,10 @@
         "AppNetworkAccessType":{
           "shape":"AppNetworkAccessType",
           "documentation":"<p>Specifies the VPC used for non-EFS traffic.</p> <ul> <li> <p> <code>PublicInternetOnly</code> - Non-EFS traffic is through a VPC managed by Amazon SageMaker, which allows direct internet access.</p> </li> <li> <p> <code>VpcOnly</code> - All Studio traffic is through the specified VPC and subnets.</p> </li> </ul> <p>This configuration can only be modified if there are no apps in the <code>InService</code>, <code>Pending</code>, or <code>Deleting</code> state. The configuration cannot be updated if <code>DomainSettings.RStudioServerProDomainSettings.DomainExecutionRoleArn</code> is already set or <code>DomainSettings.RStudioServerProDomainSettings.DomainExecutionRoleArn</code> is provided as part of the same request.</p>"
+        },
+        "TagPropagation":{
+          "shape":"TagPropagation",
+          "documentation":"<p>Indicates whether custom tag propagation is supported for the domain. Defaults to <code>DISABLED</code>.</p>"
         }
       }
     },
@@ -37129,7 +38334,7 @@
       "required":["HubName"],
       "members":{
         "HubName":{
-          "shape":"HubName",
+          "shape":"HubNameOrArn",
           "documentation":"<p>The name of the hub to update.</p>"
         },
         "HubDescription":{
@@ -38130,6 +39335,14 @@
         "CustomFileSystemConfigs":{
           "shape":"CustomFileSystemConfigs",
           "documentation":"<p>The settings for assigning a custom file system to a user profile. Permitted users can access this file system in Amazon SageMaker Studio.</p>"
+        },
+        "StudioWebPortalSettings":{
+          "shape":"StudioWebPortalSettings",
+          "documentation":"<p>Studio settings. If these settings are applied on a user level, they take priority over the settings applied on a domain level.</p>"
+        },
+        "AutoMountHomeEFS":{
+          "shape":"AutoMountHomeEFS",
+          "documentation":"<p>Indicates whether auto-mounting of an EFS volume is supported for the user profile. The <code>DefaultAsDomain</code> value is only supported for user profiles. Do not use the <code>DefaultAsDomain</code> value when setting this parameter for a domain.</p>"
         }
       },
       "documentation":"<p>A collection of settings that apply to users in a domain. These settings are specified when the <code>CreateUserProfile</code> API is called, and as <code>DefaultUserSettings</code> when the <code>CreateDomain</code> API is called.</p> <p> <code>SecurityGroups</code> is aggregated when specified in both calls. For all other settings in <code>UserSettings</code>, the values specified in <code>CreateUserProfile</code> take precedence over those specified in <code>CreateDomain</code>.</p>"
@@ -38220,6 +39433,11 @@
         "TO_BE_ARCHIVED",
         "ARCHIVED"
       ]
+    },
+    "VersionAliasesList":{
+      "type":"list",
+      "member":{"shape":"ImageVersionAliasPattern"},
+      "max":20
     },
     "VersionId":{
       "type":"string",

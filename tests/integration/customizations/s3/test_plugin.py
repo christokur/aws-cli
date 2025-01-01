@@ -27,10 +27,10 @@ import socket
 import tempfile
 import copy
 
-from awscli.compat import six, urlopen
 from dateutil.tz import tzutc
 import pytest
 
+from awscli.compat import BytesIO, urlopen
 from awscli.testutils import unittest, get_stdout_encoding
 from awscli.testutils import skip_if_windows
 from awscli.testutils import aws as _aws
@@ -165,7 +165,10 @@ class BaseParameterizedS3ClientTest(BaseS3IntegrationTest):
 
 
 class TestMoveCommand(BaseParameterizedS3ClientTest):
-    def test_mv_local_to_s3(self, files, s3_utils, shared_bucket):
+    @pytest.mark.parametrize('s3_bucket', [
+        'shared_bucket', 'shared_dir_bucket'])
+    def test_mv_local_to_s3(self, s3_bucket, files, s3_utils, request):
+        shared_bucket = request.getfixturevalue(s3_bucket)
         full_path = files.create_file('foo.txt', 'this is foo.txt')
         p = aws('s3 mv %s s3://%s/foo.txt' % (full_path,
                                               shared_bucket))
@@ -176,9 +179,12 @@ class TestMoveCommand(BaseParameterizedS3ClientTest):
         s3_utils.assert_key_contents_equal(
             shared_bucket, 'foo.txt', 'this is foo.txt')
 
-    def test_mv_s3_to_local(self, files, s3_utils, shared_bucket):
+    @pytest.mark.parametrize('s3_bucket', [
+        'shared_bucket', 'shared_dir_bucket'])
+    def test_mv_s3_to_local(self, s3_bucket, files, s3_utils, request):
+        shared_bucket = request.getfixturevalue(s3_bucket)
         s3_utils.put_object(shared_bucket, 'foo.txt', 'this is foo.txt')
-        full_path = files.full_path('foo.txt')
+        full_path = files.full_path(f'{s3_bucket}_foo.txt')
         assert s3_utils.key_exists(shared_bucket, key_name='foo.txt')
         p = aws('s3 mv s3://%s/foo.txt %s' % (shared_bucket, full_path))
         self.assert_no_errors(p)
@@ -188,24 +194,34 @@ class TestMoveCommand(BaseParameterizedS3ClientTest):
         # The s3 file should not be there anymore.
         assert s3_utils.key_not_exists(shared_bucket, key_name='foo.txt')
 
-    def test_mv_s3_to_s3(self, s3_utils, shared_bucket, shared_copy_bucket):
-        from_bucket = shared_bucket
-        to_bucket = shared_copy_bucket
-        s3_utils.put_object(from_bucket, 'foo.txt', 'this is foo.txt')
+    @pytest.mark.parametrize('s3_bucket, copy_s3_bucket', [
+        ('shared_bucket', 'shared_copy_bucket'),
+        ('shared_bucket', 'shared_copy_dir_bucket'),
+        ('shared_dir_bucket', 'shared_copy_dir_bucket'),
+        ('shared_dir_bucket', 'shared_copy_bucket')])
+    def test_mv_s3_to_s3(self, s3_bucket, copy_s3_bucket, s3_utils, request):
+        from_bucket = request.getfixturevalue(s3_bucket)
+        to_bucket = request.getfixturevalue(copy_s3_bucket)
+        from_key = f'{s3_bucket}_foo.txt'
+        to_key = f'{copy_s3_bucket}_foo.txt'
+        s3_utils.put_object(from_bucket, from_key, 'this is foo.txt')
 
-        p = aws('s3 mv s3://%s/foo.txt s3://%s/foo.txt' % (from_bucket,
-                                                           to_bucket))
+        p = aws(
+            f"s3 mv s3://{from_bucket}/{from_key} s3://{to_bucket}/{to_key}"
+        )
+
         self.assert_no_errors(p)
-        contents = s3_utils.get_key_contents(to_bucket, 'foo.txt')
+        contents = s3_utils.get_key_contents(to_bucket, to_key)
         assert contents == 'this is foo.txt'
         # And verify that the object no longer exists in the from_bucket.
-        assert s3_utils.key_not_exists(from_bucket, key_name='foo.txt')
+        assert s3_utils.key_not_exists(from_bucket, key_name=from_key)
 
+    @pytest.mark.slow
     def test_mv_s3_to_s3_multipart(self, s3_utils, shared_bucket,
                                    shared_copy_bucket):
         from_bucket = shared_bucket
         to_bucket = shared_copy_bucket
-        file_contents = six.BytesIO(b'abcd' * (1024 * 1024 * 10))
+        file_contents = BytesIO(b'abcd' * (1024 * 1024 * 10))
         s3_utils.put_object(from_bucket, 'foo.txt', file_contents)
 
         p = aws('s3 mv s3://%s/foo.txt s3://%s/foo.txt' % (from_bucket,
@@ -220,7 +236,7 @@ class TestMoveCommand(BaseParameterizedS3ClientTest):
         from_bucket = shared_bucket
         to_bucket = shared_copy_bucket
 
-        large_file_contents = six.BytesIO(b'abcd' * (1024 * 1024 * 10))
+        large_file_contents = BytesIO(b'abcd' * (1024 * 1024 * 10))
         small_file_contents = 'small file contents'
         s3_utils.put_object(from_bucket, 'largefile', large_file_contents)
         s3_utils.put_object(from_bucket, 'smallfile', small_file_contents)
@@ -265,7 +281,7 @@ class TestMoveCommand(BaseParameterizedS3ClientTest):
 
     def test_mv_with_large_file(self, files, s3_utils, shared_bucket):
         # 40MB will force a multipart upload.
-        file_contents = six.BytesIO(b'abcd' * (1024 * 1024 * 10))
+        file_contents = BytesIO(b'abcd' * (1024 * 1024 * 10))
         foo_txt = files.create_file(
             'foo.txt', file_contents.getvalue().decode('utf-8'))
         p = aws('s3 mv %s s3://%s/foo.txt' % (foo_txt, shared_bucket))
@@ -303,7 +319,7 @@ class TestMoveCommand(BaseParameterizedS3ClientTest):
         # but a mv command doesn't make sense because a mv is just a
         # cp + an rm of the src file.  We should be consistent and
         # not allow large files to be mv'd onto themselves.
-        file_contents = six.BytesIO(b'a' * (1024 * 1024 * 10))
+        file_contents = BytesIO(b'a' * (1024 * 1024 * 10))
         s3_utils.put_object(shared_bucket, key_name='key.txt',
                             contents=file_contents)
         p = aws('s3 mv s3://%s/key.txt s3://%s/key.txt' %
@@ -332,7 +348,10 @@ class TestRm(BaseParameterizedS3ClientTest):
         # And verify it's gone.
         assert s3_utils.key_not_exists(shared_bucket, key_name='foo\r.txt')
 
-    def test_rm_with_page_size(self, s3_utils, shared_bucket):
+    @pytest.mark.parametrize('s3_bucket', [
+        'shared_bucket', 'shared_dir_bucket'])
+    def test_rm_with_page_size(self, s3_bucket, s3_utils, request):
+        shared_bucket = request.getfixturevalue(s3_bucket)
         s3_utils.put_object(shared_bucket, 'foo.txt', contents='hello world')
         s3_utils.put_object(shared_bucket, 'bar.txt', contents='hello world2')
         p = aws('s3 rm s3://%s/ --recursive --page-size 1' % shared_bucket)
@@ -343,13 +362,16 @@ class TestRm(BaseParameterizedS3ClientTest):
 
 
 class TestCp(BaseParameterizedS3ClientTest):
-    def test_cp_to_and_from_s3(self, files, s3_utils, shared_bucket):
+    @pytest.mark.parametrize('s3_bucket', [
+        'shared_bucket', 'shared_dir_bucket'])
+    def test_cp_to_and_from_s3(self, s3_bucket, files, s3_utils, request):
         # This tests the ability to put a single file in s3
         # move it to a different bucket.
         # and download the file locally
+        shared_bucket = request.getfixturevalue(s3_bucket)
 
         # copy file into bucket.
-        foo_txt = files.create_file('foo.txt', 'this is foo.txt')
+        foo_txt = files.create_file(f'{s3_bucket}_foo.txt', 'this is foo.txt')
         p = aws('s3 cp %s s3://%s/foo.txt' % (foo_txt, shared_bucket))
         self.assert_no_errors(p)
 
@@ -362,7 +384,7 @@ class TestCp(BaseParameterizedS3ClientTest):
         assert content_type == 'text/plain'
 
         # Make a new name for the file and copy it locally.
-        full_path = files.full_path('bar.txt')
+        full_path = files.full_path(f'{s3_bucket}_bar.txt')
         p = aws('s3 cp s3://%s/foo.txt %s' % (shared_bucket, full_path))
         self.assert_no_errors(p)
 
@@ -384,11 +406,12 @@ class TestCp(BaseParameterizedS3ClientTest):
         contents = s3_utils.get_key_contents(shared_bucket, key_name='foo.txt')
         assert contents == 'this is foo.txt'
 
+    @pytest.mark.slow
     def test_cp_s3_s3_multipart(self, s3_utils, shared_bucket,
                                 shared_copy_bucket):
         from_bucket = shared_bucket
         to_bucket = shared_copy_bucket
-        file_contents = six.BytesIO(b'abcd' * (1024 * 1024 * 10))
+        file_contents = BytesIO(b'abcd' * (1024 * 1024 * 10))
         s3_utils.put_object(from_bucket, 'foo.txt', file_contents)
 
         p = aws('s3 cp s3://%s/foo.txt s3://%s/foo.txt' %
@@ -410,7 +433,7 @@ class TestCp(BaseParameterizedS3ClientTest):
 
     def test_download_large_file(self, files, s3_utils, shared_bucket):
         # This will force a multipart download.
-        foo_contents = six.BytesIO(b'abcd' * (1024 * 1024 * 10))
+        foo_contents = BytesIO(b'abcd' * (1024 * 1024 * 10))
         s3_utils.put_object(shared_bucket, key_name='foo.txt',
                             contents=foo_contents)
         local_foo_txt = files.full_path('foo.txt')
@@ -421,7 +444,7 @@ class TestCp(BaseParameterizedS3ClientTest):
     @skip_if_windows('SIGINT not supported on Windows.')
     def test_download_ctrl_c_does_not_hang(self, files, s3_utils,
                                            shared_bucket):
-        foo_contents = six.BytesIO(b'abcd' * (1024 * 1024 * 40))
+        foo_contents = BytesIO(b'abcd' * (1024 * 1024 * 40))
         s3_utils.put_object(shared_bucket, key_name='foo.txt',
                             contents=foo_contents)
         local_foo_txt = files.full_path('foo.txt')
@@ -976,7 +999,7 @@ class TestUnableToWriteToFile(BaseParameterizedS3ClientTest):
         # which effectively disables the expect 100 continue logic.
         # This will result in a test error because we won't follow
         # the temporary redirect for the newly created bucket.
-        contents = six.BytesIO(b'a' * 10 * 1024 * 1024)
+        contents = BytesIO(b'a' * 10 * 1024 * 1024)
         s3_utils.put_object(shared_bucket, 'foo.txt',
                             contents=contents)
         os.chmod(files.rootdir, 0o444)
@@ -1123,7 +1146,10 @@ class TestLs(BaseS3IntegrationTest):
         # There should be no stdout if we can't find the bucket.
         assert p.stdout == ''
 
-    def test_ls_with_prefix(self, s3_utils, shared_bucket):
+    @pytest.mark.parametrize('s3_bucket', [
+        'shared_bucket', 'shared_dir_bucket'])
+    def test_ls_with_prefix(self, s3_bucket, s3_utils, request):
+        shared_bucket = request.getfixturevalue(s3_bucket)
         s3_utils.put_object(shared_bucket, 'foo.txt', 'contents')
         s3_utils.put_object(shared_bucket, 'foo', 'contents')
         s3_utils.put_object(shared_bucket, 'bar.txt', 'contents')
@@ -1134,7 +1160,10 @@ class TestLs(BaseS3IntegrationTest):
         assert '8 foo' in p.stdout
         assert '8 bar.txt' in p.stdout
 
-    def test_ls_recursive(self, s3_utils, shared_bucket):
+    @pytest.mark.parametrize('s3_bucket', [
+        'shared_bucket', 'shared_dir_bucket'])
+    def test_ls_recursive(self, s3_bucket, s3_utils, request):
+        shared_bucket = request.getfixturevalue(s3_bucket)
         s3_utils.put_object(shared_bucket, 'foo.txt', 'contents')
         s3_utils.put_object(shared_bucket, 'foo', 'contents')
         s3_utils.put_object(shared_bucket, 'bar.txt', 'contents')

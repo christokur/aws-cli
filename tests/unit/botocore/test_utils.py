@@ -15,6 +15,7 @@ import io
 import pytest
 
 from tests import create_session
+from tests import mock
 from tests import unittest
 from tests import RawResponse
 from tests import FreezeTime
@@ -22,13 +23,11 @@ from dateutil.tz import tzutc, tzoffset
 from contextlib import contextmanager
 import datetime
 import copy
-import mock
 import operator
 
 import botocore
 from botocore import xform_name
 from botocore.compat import OrderedDict, json
-from botocore.compat import six
 from botocore.awsrequest import AWSRequest, HeadersDict
 from botocore.awsrequest import AWSResponse
 from botocore.exceptions import InvalidExpressionError, ConfigNotFound
@@ -284,6 +283,45 @@ class TestTransformName(unittest.TestCase):
                          'create-stored-iscsi-volume')
         self.assertEqual(xform_name('sourceServerIDs', '-'),
                          'source-server-ids')
+        self.assertEqual(
+            xform_name('AssociateWhatsAppBusinessAccount', '-'),
+            'associate-whatsapp-business-account',
+        )
+        self.assertEqual(
+            xform_name('DeleteWhatsAppMessageMedia', '-'),
+            'delete-whatsapp-media-message',
+        )
+        self.assertEqual(
+            xform_name('DisassociateWhatsAppBusinessAccount', '-'),
+            'disassociate-whatsapp-business-account',
+        )
+        self.assertEqual(
+            xform_name('GetLinkedWhatsAppBusinessAccount', '-'),
+            'get-linked-whatsapp-business-account',
+        )
+        self.assertEqual(
+            xform_name('GetLinkedWhatsAppBusinessAccountPhoneNumber', '-'),
+            'get-linked-whatsapp-business-account-phone-number',
+        )
+        self.assertEqual(
+            xform_name('GetWhatsAppMessageMedia', '-'),
+            'get-whatsapp-message-media',
+        )
+        self.assertEqual(
+            xform_name('ListLinkedWhatsAppBusinessAccounts', '-'),
+            'list-linked-whatsapp-business-accounts',
+        )
+        self.assertEqual(
+            xform_name('PostWhatsAppMessageMedia', '-'),
+            'post-whatsapp-message-media',
+        )
+        self.assertEqual(
+            xform_name('PutWhatsAppBusinessAccountEventDestinations', '-'),
+            'put-whatsapp-business-account-event-destinations',
+        )
+        self.assertEqual(
+            xform_name('SendWhatsAppMessage', '-'), 'send-whatsapp-message'
+        )
 
     def test_special_case_ends_with_s(self):
         self.assertEqual(xform_name('GatewayARNs', '-'), 'gateway-arns')
@@ -760,17 +798,17 @@ class TestArgumentGenerator(unittest.TestCase):
 class TestChecksums(unittest.TestCase):
     def test_empty_hash(self):
         self.assertEqual(
-            calculate_sha256(six.BytesIO(b''), as_hex=True),
+            calculate_sha256(io.BytesIO(b''), as_hex=True),
             'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855')
 
     def test_as_hex(self):
         self.assertEqual(
-            calculate_sha256(six.BytesIO(b'hello world'), as_hex=True),
+            calculate_sha256(io.BytesIO(b'hello world'), as_hex=True),
             'b94d27b9934d3e08a52e52d7da7dabfac484efe37a5380ee9088f7ace2efcde9')
 
     def test_as_binary(self):
         self.assertEqual(
-            calculate_sha256(six.BytesIO(b'hello world'), as_hex=False),
+            calculate_sha256(io.BytesIO(b'hello world'), as_hex=False),
             (b"\xb9M'\xb9\x93M>\x08\xa5.R\xd7\xda}\xab\xfa\xc4\x84\xef"
              b"\xe3zS\x80\xee\x90\x88\xf7\xac\xe2\xef\xcd\xe9"))
 
@@ -782,30 +820,30 @@ class TestTreeHash(unittest.TestCase):
 
     def test_empty_tree_hash(self):
         self.assertEqual(
-            calculate_tree_hash(six.BytesIO(b'')),
+            calculate_tree_hash(io.BytesIO(b'')),
             'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855')
 
     def test_tree_hash_less_than_one_mb(self):
-        one_k = six.BytesIO(b'a' * 1024)
+        one_k = io.BytesIO(b'a' * 1024)
         self.assertEqual(
             calculate_tree_hash(one_k),
             '2edc986847e209b4016e141a6dc8716d3207350f416969382d431539bf292e4a')
 
     def test_tree_hash_exactly_one_mb(self):
         one_meg_bytestring = b'a' * (1 * 1024 * 1024)
-        one_meg = six.BytesIO(one_meg_bytestring)
+        one_meg = io.BytesIO(one_meg_bytestring)
         self.assertEqual(
             calculate_tree_hash(one_meg),
             '9bc1b2a288b26af7257a36277ae3816a7d4f16e89c1e7e77d0a5c48bad62b360')
 
     def test_tree_hash_multiple_of_one_mb(self):
-        four_mb = six.BytesIO(b'a' * (4 * 1024 * 1024))
+        four_mb = io.BytesIO(b'a' * (4 * 1024 * 1024))
         self.assertEqual(
             calculate_tree_hash(four_mb),
             '9491cb2ed1d4e7cd53215f4017c23ec4ad21d7050a1e6bb636c4f67e8cddb844')
 
     def test_tree_hash_offset_of_one_mb_multiple(self):
-        offset_four_mb = six.BytesIO(b'a' * (4 * 1024 * 1024) + b'a' * 20)
+        offset_four_mb = io.BytesIO(b'a' * (4 * 1024 * 1024) + b'a' * 20)
         self.assertEqual(
             calculate_tree_hash(offset_four_mb),
             '12f3cbd6101b981cde074039f6f728071da8879d6f632de8afc7cdf00661b08f')
@@ -1049,17 +1087,24 @@ class TestSwitchToVirtualHostStyle(unittest.TestCase):
                          'https://bucket.s3.amazonaws.com/key.txt')
 
 
-class TestSwitchToChunkedEncodingForNonSeekableObjects(unittest.TestCase):
-    def test_switch_to_chunked_encodeing_for_stream_like_object(self):
-        request = AWSRequest(
-            method='POST', headers={},
-            data=io.BufferedIOBase(b"some initial binary data"),
-            url='https://foo.amazonaws.com/bucket/key.txt'
-        )
-        prepared_request = request.prepare()
-        self.assertEqual(
-            prepared_request.headers, {'Transfer-Encoding': 'chunked'}
-        )
+def test_chunked_encoding_used_for_stream_like_object():
+    class BufferedStream(io.BufferedIOBase):
+        """Class to ensure seek/tell don't work, but read is implemented."""
+
+        def __init__(self, value):
+            self.value = io.BytesIO(value)
+
+        def read(self, size=-1):
+            return self.value.read(size)
+
+    request = AWSRequest(
+        method='POST',
+        headers={},
+        data=BufferedStream(b"some initial binary data"),
+        url='https://foo.amazonaws.com/bucket/key.txt',
+    )
+    prepared_request = request.prepare()
+    assert prepared_request.headers == {'Transfer-Encoding': 'chunked'}
 
 
 class TestInstanceCache(unittest.TestCase):

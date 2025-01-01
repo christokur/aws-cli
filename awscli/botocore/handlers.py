@@ -22,6 +22,7 @@ import logging
 import re
 import uuid
 import warnings
+from io import BytesIO
 
 import botocore
 import botocore.auth
@@ -34,7 +35,6 @@ from botocore.compat import (
     ensure_bytes,
     get_md5,
     json,
-    six,
     unquote,
     unquote_str,
     urlsplit,
@@ -218,7 +218,7 @@ def decode_console_output(parsed, **kwargs):
             # We're using 'replace' for errors because it is
             # possible that console output contains non string
             # chars we can't utf-8 decode.
-            value = base64.b64decode(six.b(parsed['Output'])).decode(
+            value = base64.b64decode(bytes(parsed['Output'], 'latin-1')).decode(
                 'utf-8', 'replace')
             parsed['Output'] = value
         except (ValueError, TypeError, AttributeError):
@@ -290,7 +290,7 @@ def _sse_md5(params, sse_member_prefix='SSECustomer'):
     sse_key_member = sse_member_prefix + 'Key'
     sse_md5_member = sse_member_prefix + 'KeyMD5'
     key_as_bytes = params[sse_key_member]
-    if isinstance(key_as_bytes, six.text_type):
+    if isinstance(key_as_bytes, str):
         key_as_bytes = key_as_bytes.encode('utf-8')
     key_md5_str = base64.b64encode(
         get_md5(key_as_bytes).digest()).decode('utf-8')
@@ -395,7 +395,7 @@ def handle_copy_source_param(params, **kwargs):
         # param validator take care of this.  It will
         # give a better error message.
         return
-    if isinstance(source, six.string_types):
+    if isinstance(source, str):
         params['CopySource'] = _quote_source_header(source)
     elif isinstance(source, dict):
         params['CopySource'] = _quote_source_header_from_dict(source)
@@ -543,7 +543,7 @@ def parse_get_bucket_location(parsed, http_response, **kwargs):
 
 def base64_encode_user_data(params, **kwargs):
     if 'UserData' in params:
-        if isinstance(params['UserData'], six.text_type):
+        if isinstance(params['UserData'], str):
             # Encode it to bytes if it is text.
             params['UserData'] = params['UserData'].encode('utf-8')
         params['UserData'] = base64.b64encode(
@@ -647,13 +647,13 @@ def add_glacier_checksums(params, **kwargs):
     request_dict = params
     headers = request_dict['headers']
     body = request_dict['body']
-    if isinstance(body, six.binary_type):
+    if isinstance(body, bytes):
         # If the user provided a bytes type instead of a file
         # like object, we're temporarily create a BytesIO object
         # so we can use the util functions to calculate the
         # checksums which assume file like objects.  Note that
         # we're not actually changing the body in the request_dict.
-        body = six.BytesIO(body)
+        body = BytesIO(body)
     starting_position = body.tell()
     if 'x-amz-content-sha256' not in headers:
         headers['x-amz-content-sha256'] = utils.calculate_sha256(
@@ -802,10 +802,10 @@ def _decode_list_object(top_level_keys, nested_keys, parsed, context):
 
 def convert_body_to_file_like_object(params, **kwargs):
     if 'Body' in params:
-        if isinstance(params['Body'], six.string_types):
-            params['Body'] = six.BytesIO(ensure_bytes(params['Body']))
-        elif isinstance(params['Body'], six.binary_type):
-            params['Body'] = six.BytesIO(params['Body'])
+        if isinstance(params['Body'], str):
+            params['Body'] = BytesIO(ensure_bytes(params['Body']))
+        elif isinstance(params['Body'], bytes):
+            params['Body'] = BytesIO(params['Body'])
 
 
 def _add_parameter_aliases(handler_list):
@@ -1056,6 +1056,69 @@ def customize_endpoint_resolver_builtins(
         builtins[EndpointResolverBuiltins.AWS_S3_FORCE_PATH_STYLE] = False
 
 
+def handle_expires_header(
+    operation_model, response_dict, customized_response_dict, **kwargs
+):
+    if _has_expires_shape(operation_model.output_shape):
+        if expires_value := response_dict.get('headers', {}).get('Expires'):
+            customized_response_dict['ExpiresString'] = expires_value
+            try:
+                utils.parse_timestamp(expires_value)
+            except (ValueError, RuntimeError):
+                logger.warning(
+                    f'Failed to parse the "Expires" member as a timestamp: {expires_value}. '
+                    f'The unparsed value is available in the response under "ExpiresString".'
+                )
+                del response_dict['headers']['Expires']
+
+
+def _has_expires_shape(shape):
+    if not shape:
+        return False
+    return any(
+        member_shape.name == 'Expires'
+        and member_shape.serialization.get('name') == 'Expires'
+        for member_shape in shape.members.values()
+    )
+
+
+def document_expires_shape(section, event_name, **kwargs):
+    # Updates the documentation for S3 operations that include the 'Expires' member
+    # in their response structure. Documents a synthetic member 'ExpiresString' and
+    # includes a deprecation notice for 'Expires'.
+    if 'response-example' in event_name:
+        if not section.has_section('structure-value'):
+            return
+        parent = section.get_section('structure-value')
+        if not parent.has_section('Expires'):
+            return
+        param_line = parent.get_section('Expires')
+        param_line.add_new_section('ExpiresString')
+        new_param_line = param_line.get_section('ExpiresString')
+        new_param_line.write("'ExpiresString': 'string',")
+        new_param_line.style.new_line()
+    elif 'response-params' in event_name:
+        if not section.has_section('Expires'):
+            return
+        param_section = section.get_section('Expires')
+        # Add a deprecation notice for the "Expires" param
+        doc_section = param_section.get_section('param-documentation')
+        doc_section.style.start_note()
+        doc_section.write(
+            'This member has been deprecated. Please use ``ExpiresString`` instead.'
+        )
+        doc_section.style.end_note()
+        # Document the "ExpiresString" param
+        new_param_section = param_section.add_new_section('ExpiresString')
+        new_param_section.style.new_paragraph()
+        new_param_section.write('- **ExpiresString** *(string) --*')
+        new_param_section.style.indent()
+        new_param_section.style.new_paragraph()
+        new_param_section.write(
+            'The raw, unparsed value of the ``Expires`` field.'
+        )
+
+
 # This is a list of (event_name, handler).
 # When a Session is created, everything in this list will be
 # automatically registered with that Session.
@@ -1079,7 +1142,7 @@ BUILTIN_HANDLERS = [
     ('after-call.ec2.GetConsoleOutput', decode_console_output),
     ('after-call.cloudformation.GetTemplate', json_decode_template_body),
     ('after-call.s3.GetBucketLocation', parse_get_bucket_location),
-
+    ('before-parse.s3.*', handle_expires_header),
     ('before-parameter-build', generate_idempotent_uuid),
 
     ('before-parameter-build.s3', validate_bucket_name),
@@ -1102,6 +1165,8 @@ BUILTIN_HANDLERS = [
     ('before-parameter-build.s3-control', remove_accid_host_prefix_from_model),
     ('docs.*.s3.CopyObject.complete-section', document_copy_source_form),
     ('docs.*.s3.UploadPartCopy.complete-section', document_copy_source_form),
+    ('docs.response-example.s3.*.complete-section', document_expires_shape),
+    ('docs.response-params.s3.*.complete-section', document_expires_shape),
     ('before-endpoint-resolution.s3', customize_endpoint_resolver_builtins),
 
     ('before-call.s3', add_expect_header),

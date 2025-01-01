@@ -3,9 +3,8 @@ name: Run tests
 
 on:
   push:
-    branches-ignore: [ v2 ]
   pull_request:
-    branches-ignore: [ master, v2 ]
+    branches-ignore: [ master ]
 
 jobs:
   build:
@@ -14,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.10", "3.11"]
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
         os: [ubuntu-latest, macOS-latest, windows-latest]
         # Python 3.8 and 3.9 do not run on m1 hardware which is now standard for
         # macOS-latest.

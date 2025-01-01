@@ -341,7 +341,7 @@
         {"shape":"AccountLimitExceededException"},
         {"shape":"ResourceAlreadyExistsException"}
       ],
-      "documentation":"<p> Imports the source repository credentials for an CodeBuild project that has its source code stored in a GitHub, GitHub Enterprise, or Bitbucket repository. </p>"
+      "documentation":"<p> Imports the source repository credentials for an CodeBuild project that has its source code stored in a GitHub, GitHub Enterprise, GitLab, GitLab Self Managed, or Bitbucket repository. </p>"
     },
     "InvalidateProjectCache":{
       "name":"InvalidateProjectCache",
@@ -735,7 +735,8 @@
         "OAUTH",
         "BASIC_AUTH",
         "PERSONAL_ACCESS_TOKEN",
-        "CODECONNECTIONS"
+        "CODECONNECTIONS",
+        "SECRETS_MANAGER"
       ]
     },
     "BatchDeleteBuildsInput":{
@@ -1591,7 +1592,7 @@
         },
         "environmentType":{
           "shape":"EnvironmentType",
-          "documentation":"<p>The environment type of the compute fleet.</p> <ul> <li> <p>The environment type <code>ARM_CONTAINER</code> is available only in regions US East (N. Virginia), US East (Ohio), US West (Oregon), EU (Ireland), Asia Pacific (Mumbai), Asia Pacific (Tokyo), Asia Pacific (Singapore), Asia Pacific (Sydney), EU (Frankfurt), and South America (São Paulo).</p> </li> <li> <p>The environment type <code>LINUX_CONTAINER</code> is available only in regions US East (N. Virginia), US East (Ohio), US West (Oregon), EU (Ireland), EU (Frankfurt), Asia Pacific (Tokyo), Asia Pacific (Singapore), Asia Pacific (Sydney), South America (São Paulo), and Asia Pacific (Mumbai).</p> </li> <li> <p>The environment type <code>LINUX_GPU_CONTAINER</code> is available only in regions US East (N. Virginia), US East (Ohio), US West (Oregon), EU (Ireland), EU (Frankfurt), Asia Pacific (Tokyo), and Asia Pacific (Sydney).</p> </li> <li> <p>The environment type <code>WINDOWS_SERVER_2019_CONTAINER</code> is available only in regions US East (N. Virginia), US East (Ohio), US West (Oregon), Asia Pacific (Sydney), Asia Pacific (Tokyo), Asia Pacific (Mumbai) and EU (Ireland).</p> </li> <li> <p>The environment type <code>WINDOWS_SERVER_2022_CONTAINER</code> is available only in regions US East (N. Virginia), US East (Ohio), US West (Oregon), EU (Ireland), EU (Frankfurt), Asia Pacific (Sydney), Asia Pacific (Singapore), Asia Pacific (Tokyo), South America (São Paulo) and Asia Pacific (Mumbai).</p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-compute-types.html\">Build environment compute types</a> in the <i>CodeBuild user guide</i>.</p>"
+          "documentation":"<p>The environment type of the compute fleet.</p> <ul> <li> <p>The environment type <code>ARM_CONTAINER</code> is available only in regions US East (N. Virginia), US East (Ohio), US West (Oregon), EU (Ireland), Asia Pacific (Mumbai), Asia Pacific (Tokyo), Asia Pacific (Singapore), Asia Pacific (Sydney), EU (Frankfurt), and South America (São Paulo).</p> </li> <li> <p>The environment type <code>LINUX_CONTAINER</code> is available only in regions US East (N. Virginia), US East (Ohio), US West (Oregon), EU (Ireland), EU (Frankfurt), Asia Pacific (Tokyo), Asia Pacific (Singapore), Asia Pacific (Sydney), South America (São Paulo), and Asia Pacific (Mumbai).</p> </li> <li> <p>The environment type <code>LINUX_GPU_CONTAINER</code> is available only in regions US East (N. Virginia), US East (Ohio), US West (Oregon), EU (Ireland), EU (Frankfurt), Asia Pacific (Tokyo), and Asia Pacific (Sydney).</p> </li> <li> <p>The environment type <code>MAC_ARM</code> is available for Medium fleets only in regions US East (N. Virginia), US East (Ohio), US West (Oregon), Asia Pacific (Sydney), and EU (Frankfurt)</p> </li> <li> <p>The environment type <code>MAC_ARM</code> is available for Large fleets only in regions US East (N. Virginia), US East (Ohio), US West (Oregon), and Asia Pacific (Sydney).</p> </li> <li> <p>The environment type <code>WINDOWS_SERVER_2019_CONTAINER</code> is available only in regions US East (N. Virginia), US East (Ohio), US West (Oregon), Asia Pacific (Sydney), Asia Pacific (Tokyo), Asia Pacific (Mumbai) and EU (Ireland).</p> </li> <li> <p>The environment type <code>WINDOWS_SERVER_2022_CONTAINER</code> is available only in regions US East (N. Virginia), US East (Ohio), US West (Oregon), EU (Ireland), EU (Frankfurt), Asia Pacific (Sydney), Asia Pacific (Singapore), Asia Pacific (Tokyo), South America (São Paulo) and Asia Pacific (Mumbai).</p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-compute-types.html\">Build environment compute types</a> in the <i>CodeBuild user guide</i>.</p>"
         },
         "computeType":{
           "shape":"ComputeType",
@@ -1606,6 +1607,14 @@
           "documentation":"<p>The compute fleet overflow behavior.</p> <ul> <li> <p>For overflow behavior <code>QUEUE</code>, your overflow builds need to wait on the existing fleet instance to become available.</p> </li> <li> <p>For overflow behavior <code>ON_DEMAND</code>, your overflow builds run on CodeBuild on-demand.</p> <note> <p>If you choose to set your overflow behavior to on-demand while creating a VPC-connected fleet, make sure that you add the required VPC permissions to your project service role. For more information, see <a href=\"https://docs.aws.amazon.com/codebuild/latest/userguide/auth-and-access-control-iam-identity-based-access-control.html#customer-managed-policies-example-create-vpc-network-interface\">Example policy statement to allow CodeBuild access to Amazon Web Services services required to create a VPC network interface</a>.</p> </note> </li> </ul>"
         },
         "vpcConfig":{"shape":"VpcConfig"},
+        "proxyConfiguration":{
+          "shape":"ProxyConfiguration",
+          "documentation":"<p>The proxy configuration of the compute fleet.</p>"
+        },
+        "imageId":{
+          "shape":"NonEmptyString",
+          "documentation":"<p>The Amazon Machine Image (AMI) of the compute fleet.</p>"
+        },
         "fleetServiceRole":{
           "shape":"NonEmptyString",
           "documentation":"<p>The service role associated with the compute fleet. For more information, see <a href=\"https://docs.aws.amazon.com/codebuild/latest/userguide/auth-and-access-control-iam-identity-based-access-control.html#customer-managed-policies-example-permission-policy-fleet-service-role.html\"> Allow a user to add a permission policy for a fleet service role</a> in the <i>CodeBuild User Guide</i>.</p>"
@@ -2111,7 +2120,8 @@
         "ARM_CONTAINER",
         "WINDOWS_SERVER_2019_CONTAINER",
         "LINUX_LAMBDA_CONTAINER",
-        "ARM_LAMBDA_CONTAINER"
+        "ARM_LAMBDA_CONTAINER",
+        "MAC_ARM"
       ]
     },
     "EnvironmentVariable":{
@@ -2211,7 +2221,7 @@
         },
         "environmentType":{
           "shape":"EnvironmentType",
-          "documentation":"<p>The environment type of the compute fleet.</p> <ul> <li> <p>The environment type <code>ARM_CONTAINER</code> is available only in regions US East (N. Virginia), US East (Ohio), US West (Oregon), EU (Ireland), Asia Pacific (Mumbai), Asia Pacific (Tokyo), Asia Pacific (Singapore), Asia Pacific (Sydney), EU (Frankfurt), and South America (São Paulo).</p> </li> <li> <p>The environment type <code>LINUX_CONTAINER</code> is available only in regions US East (N. Virginia), US East (Ohio), US West (Oregon), EU (Ireland), EU (Frankfurt), Asia Pacific (Tokyo), Asia Pacific (Singapore), Asia Pacific (Sydney), South America (São Paulo), and Asia Pacific (Mumbai).</p> </li> <li> <p>The environment type <code>LINUX_GPU_CONTAINER</code> is available only in regions US East (N. Virginia), US East (Ohio), US West (Oregon), EU (Ireland), EU (Frankfurt), Asia Pacific (Tokyo), and Asia Pacific (Sydney).</p> </li> <li> <p>The environment type <code>WINDOWS_SERVER_2019_CONTAINER</code> is available only in regions US East (N. Virginia), US East (Ohio), US West (Oregon), Asia Pacific (Sydney), Asia Pacific (Tokyo), Asia Pacific (Mumbai) and EU (Ireland).</p> </li> <li> <p>The environment type <code>WINDOWS_SERVER_2022_CONTAINER</code> is available only in regions US East (N. Virginia), US East (Ohio), US West (Oregon), EU (Ireland), EU (Frankfurt), Asia Pacific (Sydney), Asia Pacific (Singapore), Asia Pacific (Tokyo), South America (São Paulo) and Asia Pacific (Mumbai).</p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-compute-types.html\">Build environment compute types</a> in the <i>CodeBuild user guide</i>.</p>"
+          "documentation":"<p>The environment type of the compute fleet.</p> <ul> <li> <p>The environment type <code>ARM_CONTAINER</code> is available only in regions US East (N. Virginia), US East (Ohio), US West (Oregon), EU (Ireland), Asia Pacific (Mumbai), Asia Pacific (Tokyo), Asia Pacific (Singapore), Asia Pacific (Sydney), EU (Frankfurt), and South America (São Paulo).</p> </li> <li> <p>The environment type <code>LINUX_CONTAINER</code> is available only in regions US East (N. Virginia), US East (Ohio), US West (Oregon), EU (Ireland), EU (Frankfurt), Asia Pacific (Tokyo), Asia Pacific (Singapore), Asia Pacific (Sydney), South America (São Paulo), and Asia Pacific (Mumbai).</p> </li> <li> <p>The environment type <code>LINUX_GPU_CONTAINER</code> is available only in regions US East (N. Virginia), US East (Ohio), US West (Oregon), EU (Ireland), EU (Frankfurt), Asia Pacific (Tokyo), and Asia Pacific (Sydney).</p> </li> <li> <p>The environment type <code>MAC_ARM</code> is available for Medium fleets only in regions US East (N. Virginia), US East (Ohio), US West (Oregon), Asia Pacific (Sydney), and EU (Frankfurt)</p> </li> <li> <p>The environment type <code>MAC_ARM</code> is available for Large fleets only in regions US East (N. Virginia), US East (Ohio), US West (Oregon), and Asia Pacific (Sydney).</p> </li> <li> <p>The environment type <code>WINDOWS_SERVER_2019_CONTAINER</code> is available only in regions US East (N. Virginia), US East (Ohio), US West (Oregon), Asia Pacific (Sydney), Asia Pacific (Tokyo), Asia Pacific (Mumbai) and EU (Ireland).</p> </li> <li> <p>The environment type <code>WINDOWS_SERVER_2022_CONTAINER</code> is available only in regions US East (N. Virginia), US East (Ohio), US West (Oregon), EU (Ireland), EU (Frankfurt), Asia Pacific (Sydney), Asia Pacific (Singapore), Asia Pacific (Tokyo), South America (São Paulo) and Asia Pacific (Mumbai).</p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-compute-types.html\">Build environment compute types</a> in the <i>CodeBuild user guide</i>.</p>"
         },
         "computeType":{
           "shape":"ComputeType",
@@ -2226,6 +2236,14 @@
           "documentation":"<p>The compute fleet overflow behavior.</p> <ul> <li> <p>For overflow behavior <code>QUEUE</code>, your overflow builds need to wait on the existing fleet instance to become available.</p> </li> <li> <p>For overflow behavior <code>ON_DEMAND</code>, your overflow builds run on CodeBuild on-demand.</p> <note> <p>If you choose to set your overflow behavior to on-demand while creating a VPC-connected fleet, make sure that you add the required VPC permissions to your project service role. For more information, see <a href=\"https://docs.aws.amazon.com/codebuild/latest/userguide/auth-and-access-control-iam-identity-based-access-control.html#customer-managed-policies-example-create-vpc-network-interface\">Example policy statement to allow CodeBuild access to Amazon Web Services services required to create a VPC network interface</a>.</p> </note> </li> </ul>"
         },
         "vpcConfig":{"shape":"VpcConfig"},
+        "proxyConfiguration":{
+          "shape":"ProxyConfiguration",
+          "documentation":"<p>The proxy configuration of the compute fleet.</p>"
+        },
+        "imageId":{
+          "shape":"NonEmptyString",
+          "documentation":"<p>The Amazon Machine Image (AMI) of the compute fleet.</p>"
+        },
         "fleetServiceRole":{
           "shape":"NonEmptyString",
           "documentation":"<p>The service role associated with the compute fleet. For more information, see <a href=\"https://docs.aws.amazon.com/codebuild/latest/userguide/auth-and-access-control-iam-identity-based-access-control.html#customer-managed-policies-example-permission-policy-fleet-service-role.html\"> Allow a user to add a permission policy for a fleet service role</a> in the <i>CodeBuild User Guide</i>.</p>"
@@ -2252,7 +2270,9 @@
       "enum":[
         "CREATE_FAILED",
         "UPDATE_FAILED",
-        "ACTION_REQUIRED"
+        "ACTION_REQUIRED",
+        "PENDING_DELETION",
+        "INSUFFICIENT_CAPACITY"
       ]
     },
     "FleetName":{
@@ -2273,6 +2293,61 @@
         "QUEUE",
         "ON_DEMAND"
       ]
+    },
+    "FleetProxyRule":{
+      "type":"structure",
+      "required":[
+        "type",
+        "effect",
+        "entities"
+      ],
+      "members":{
+        "type":{
+          "shape":"FleetProxyRuleType",
+          "documentation":"<p>The type of proxy rule.</p>"
+        },
+        "effect":{
+          "shape":"FleetProxyRuleEffectType",
+          "documentation":"<p>The behavior of the proxy rule.</p>"
+        },
+        "entities":{
+          "shape":"FleetProxyRuleEntities",
+          "documentation":"<p>The destination of the proxy rule.</p>"
+        }
+      },
+      "documentation":"<p>Information about the proxy rule for your reserved capacity instances.</p>"
+    },
+    "FleetProxyRuleBehavior":{
+      "type":"string",
+      "enum":[
+        "ALLOW_ALL",
+        "DENY_ALL"
+      ]
+    },
+    "FleetProxyRuleEffectType":{
+      "type":"string",
+      "enum":[
+        "ALLOW",
+        "DENY"
+      ]
+    },
+    "FleetProxyRuleEntities":{
+      "type":"list",
+      "member":{"shape":"String"},
+      "max":100,
+      "min":1
+    },
+    "FleetProxyRuleType":{
+      "type":"string",
+      "enum":[
+        "DOMAIN",
+        "IP"
+      ]
+    },
+    "FleetProxyRules":{
+      "type":"list",
+      "member":{"shape":"FleetProxyRule"},
+      "max":100
     },
     "FleetScalingMetricType":{
       "type":"string",
@@ -2424,7 +2499,7 @@
         },
         "token":{
           "shape":"SensitiveNonEmptyString",
-          "documentation":"<p> For GitHub or GitHub Enterprise, this is the personal access token. For Bitbucket, this is either the access token or the app password. For the <code>authType</code> CODECONNECTIONS, this is the <code>connectionArn</code>.</p>"
+          "documentation":"<p> For GitHub or GitHub Enterprise, this is the personal access token. For Bitbucket, this is either the access token or the app password. For the <code>authType</code> CODECONNECTIONS, this is the <code>connectionArn</code>. For the <code>authType</code> SECRETS_MANAGER, this is the <code>secretArn</code>.</p>"
         },
         "serverType":{
           "shape":"ServerType",
@@ -2432,7 +2507,7 @@
         },
         "authType":{
           "shape":"AuthType",
-          "documentation":"<p> The type of authentication used to connect to a GitHub, GitHub Enterprise, GitLab, GitLab Self Managed, or Bitbucket repository. An OAUTH connection is not supported by the API and must be created using the CodeBuild console. Note that CODECONNECTIONS is only valid for GitLab and GitLab Self Managed.</p>"
+          "documentation":"<p> The type of authentication used to connect to a GitHub, GitHub Enterprise, GitLab, GitLab Self Managed, or Bitbucket repository. An OAUTH connection is not supported by the API and must be created using the CodeBuild console.</p>"
         },
         "shouldOverwrite":{
           "shape":"WrapperBoolean",
@@ -3391,7 +3466,7 @@
         },
         "auth":{
           "shape":"SourceAuth",
-          "documentation":"<p>Information about the authorization settings for CodeBuild to access the source code to be built.</p> <p>This information is for the CodeBuild console's use only. Your code should not get or set this information directly.</p>"
+          "documentation":"<p>Information about the authorization settings for CodeBuild to access the source code to be built.</p>"
         },
         "reportBuildStatus":{
           "shape":"WrapperBoolean",
@@ -3447,6 +3522,20 @@
     "Projects":{
       "type":"list",
       "member":{"shape":"Project"}
+    },
+    "ProxyConfiguration":{
+      "type":"structure",
+      "members":{
+        "defaultBehavior":{
+          "shape":"FleetProxyRuleBehavior",
+          "documentation":"<p>The default behavior of outgoing traffic.</p>"
+        },
+        "orderedProxyRules":{
+          "shape":"FleetProxyRules",
+          "documentation":"<p>An array of <code>FleetProxyRule</code> objects that represent the specified destination domains or IPs to allow or deny network access control to.</p>"
+        }
+      },
+      "documentation":"<p>Information about the proxy configurations that apply network access control to your reserved capacity instances.</p>"
     },
     "PutResourcePolicyInput":{
       "type":"structure",
@@ -3929,15 +4018,15 @@
       "members":{
         "name":{
           "shape":"String",
-          "documentation":"<p>The name of either the enterprise or organization that will send webhook events to CodeBuild, depending on if the webhook is a global or organization webhook respectively.</p>"
+          "documentation":"<p>The name of either the group, enterprise, or organization that will send webhook events to CodeBuild, depending on the type of webhook.</p>"
         },
         "domain":{
           "shape":"String",
-          "documentation":"<p>The domain of the GitHub Enterprise organization. Note that this parameter is only required if your project's source type is GITHUB_ENTERPRISE</p>"
+          "documentation":"<p>The domain of the GitHub Enterprise organization or the GitLab Self Managed group. Note that this parameter is only required if your project's source type is GITHUB_ENTERPRISE or GITLAB_SELF_MANAGED.</p>"
         },
         "scope":{
           "shape":"WebhookScopeType",
-          "documentation":"<p>The type of scope for a GitHub webhook.</p>"
+          "documentation":"<p>The type of scope for a GitHub or GitLab webhook.</p>"
         }
       },
       "documentation":"<p>Contains configuration information about the scope for a webhook. </p>"
@@ -3986,20 +4075,21 @@
       "members":{
         "type":{
           "shape":"SourceAuthType",
-          "documentation":"<p>The authorization type to use. Valid options are OAUTH or CODECONNECTIONS.</p>"
+          "documentation":"<p>The authorization type to use. Valid options are OAUTH, CODECONNECTIONS, or SECRETS_MANAGER.</p>"
         },
         "resource":{
           "shape":"String",
           "documentation":"<p>The resource value that applies to the specified authorization type.</p>"
         }
       },
-      "documentation":"<p>Information about the authorization settings for CodeBuild to access the source code to be built.</p> <p>This information is for the CodeBuild console's use only. Your code should not get or set this information directly.</p>"
+      "documentation":"<p>Information about the authorization settings for CodeBuild to access the source code to be built.</p>"
     },
     "SourceAuthType":{
       "type":"string",
       "enum":[
         "OAUTH",
-        "CODECONNECTIONS"
+        "CODECONNECTIONS",
+        "SECRETS_MANAGER"
       ]
     },
     "SourceCredentialsInfo":{
@@ -4015,11 +4105,11 @@
         },
         "authType":{
           "shape":"AuthType",
-          "documentation":"<p> The type of authentication used by the credentials. Valid options are OAUTH, BASIC_AUTH, PERSONAL_ACCESS_TOKEN, or CODECONNECTIONS. </p>"
+          "documentation":"<p> The type of authentication used by the credentials. Valid options are OAUTH, BASIC_AUTH, PERSONAL_ACCESS_TOKEN, CODECONNECTIONS, or SECRETS_MANAGER. </p>"
         },
         "resource":{
           "shape":"String",
-          "documentation":"<p>The connection ARN if your serverType type is GITLAB or GITLAB_SELF_MANAGED and your authType is CODECONNECTIONS.</p>"
+          "documentation":"<p>The connection ARN if your authType is CODECONNECTIONS or SECRETS_MANAGER.</p>"
         }
       },
       "documentation":"<p> Information about the credentials for a GitHub, GitHub Enterprise, GitLab, GitLab Self Managed, or Bitbucket repository. </p>"
@@ -4513,7 +4603,7 @@
         },
         "environmentType":{
           "shape":"EnvironmentType",
-          "documentation":"<p>The environment type of the compute fleet.</p> <ul> <li> <p>The environment type <code>ARM_CONTAINER</code> is available only in regions US East (N. Virginia), US East (Ohio), US West (Oregon), EU (Ireland), Asia Pacific (Mumbai), Asia Pacific (Tokyo), Asia Pacific (Singapore), Asia Pacific (Sydney), EU (Frankfurt), and South America (São Paulo).</p> </li> <li> <p>The environment type <code>LINUX_CONTAINER</code> is available only in regions US East (N. Virginia), US East (Ohio), US West (Oregon), EU (Ireland), EU (Frankfurt), Asia Pacific (Tokyo), Asia Pacific (Singapore), Asia Pacific (Sydney), South America (São Paulo), and Asia Pacific (Mumbai).</p> </li> <li> <p>The environment type <code>LINUX_GPU_CONTAINER</code> is available only in regions US East (N. Virginia), US East (Ohio), US West (Oregon), EU (Ireland), EU (Frankfurt), Asia Pacific (Tokyo), and Asia Pacific (Sydney).</p> </li> <li> <p>The environment type <code>WINDOWS_SERVER_2019_CONTAINER</code> is available only in regions US East (N. Virginia), US East (Ohio), US West (Oregon), Asia Pacific (Sydney), Asia Pacific (Tokyo), Asia Pacific (Mumbai) and EU (Ireland).</p> </li> <li> <p>The environment type <code>WINDOWS_SERVER_2022_CONTAINER</code> is available only in regions US East (N. Virginia), US East (Ohio), US West (Oregon), EU (Ireland), EU (Frankfurt), Asia Pacific (Sydney), Asia Pacific (Singapore), Asia Pacific (Tokyo), South America (São Paulo) and Asia Pacific (Mumbai).</p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-compute-types.html\">Build environment compute types</a> in the <i>CodeBuild user guide</i>.</p>"
+          "documentation":"<p>The environment type of the compute fleet.</p> <ul> <li> <p>The environment type <code>ARM_CONTAINER</code> is available only in regions US East (N. Virginia), US East (Ohio), US West (Oregon), EU (Ireland), Asia Pacific (Mumbai), Asia Pacific (Tokyo), Asia Pacific (Singapore), Asia Pacific (Sydney), EU (Frankfurt), and South America (São Paulo).</p> </li> <li> <p>The environment type <code>LINUX_CONTAINER</code> is available only in regions US East (N. Virginia), US East (Ohio), US West (Oregon), EU (Ireland), EU (Frankfurt), Asia Pacific (Tokyo), Asia Pacific (Singapore), Asia Pacific (Sydney), South America (São Paulo), and Asia Pacific (Mumbai).</p> </li> <li> <p>The environment type <code>LINUX_GPU_CONTAINER</code> is available only in regions US East (N. Virginia), US East (Ohio), US West (Oregon), EU (Ireland), EU (Frankfurt), Asia Pacific (Tokyo), and Asia Pacific (Sydney).</p> </li> <li> <p>The environment type <code>MAC_ARM</code> is available for Medium fleets only in regions US East (N. Virginia), US East (Ohio), US West (Oregon), Asia Pacific (Sydney), and EU (Frankfurt)</p> </li> <li> <p>The environment type <code>MAC_ARM</code> is available for Large fleets only in regions US East (N. Virginia), US East (Ohio), US West (Oregon), and Asia Pacific (Sydney).</p> </li> <li> <p>The environment type <code>WINDOWS_SERVER_2019_CONTAINER</code> is available only in regions US East (N. Virginia), US East (Ohio), US West (Oregon), Asia Pacific (Sydney), Asia Pacific (Tokyo), Asia Pacific (Mumbai) and EU (Ireland).</p> </li> <li> <p>The environment type <code>WINDOWS_SERVER_2022_CONTAINER</code> is available only in regions US East (N. Virginia), US East (Ohio), US West (Oregon), EU (Ireland), EU (Frankfurt), Asia Pacific (Sydney), Asia Pacific (Singapore), Asia Pacific (Tokyo), South America (São Paulo) and Asia Pacific (Mumbai).</p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-compute-types.html\">Build environment compute types</a> in the <i>CodeBuild user guide</i>.</p>"
         },
         "computeType":{
           "shape":"ComputeType",
@@ -4528,6 +4618,14 @@
           "documentation":"<p>The compute fleet overflow behavior.</p> <ul> <li> <p>For overflow behavior <code>QUEUE</code>, your overflow builds need to wait on the existing fleet instance to become available.</p> </li> <li> <p>For overflow behavior <code>ON_DEMAND</code>, your overflow builds run on CodeBuild on-demand.</p> <note> <p>If you choose to set your overflow behavior to on-demand while creating a VPC-connected fleet, make sure that you add the required VPC permissions to your project service role. For more information, see <a href=\"https://docs.aws.amazon.com/codebuild/latest/userguide/auth-and-access-control-iam-identity-based-access-control.html#customer-managed-policies-example-create-vpc-network-interface\">Example policy statement to allow CodeBuild access to Amazon Web Services services required to create a VPC network interface</a>.</p> </note> </li> </ul>"
         },
         "vpcConfig":{"shape":"VpcConfig"},
+        "proxyConfiguration":{
+          "shape":"ProxyConfiguration",
+          "documentation":"<p>The proxy configuration of the compute fleet.</p>"
+        },
+        "imageId":{
+          "shape":"NonEmptyString",
+          "documentation":"<p>The Amazon Machine Image (AMI) of the compute fleet.</p>"
+        },
         "fleetServiceRole":{
           "shape":"NonEmptyString",
           "documentation":"<p>The service role associated with the compute fleet. For more information, see <a href=\"https://docs.aws.amazon.com/codebuild/latest/userguide/auth-and-access-control-iam-identity-based-access-control.html#customer-managed-policies-example-permission-policy-fleet-service-role.html\"> Allow a user to add a permission policy for a fleet service role</a> in the <i>CodeBuild User Guide</i>.</p>"
@@ -4843,14 +4941,16 @@
         "COMMIT_MESSAGE",
         "WORKFLOW_NAME",
         "TAG_NAME",
-        "RELEASE_NAME"
+        "RELEASE_NAME",
+        "REPOSITORY_NAME"
       ]
     },
     "WebhookScopeType":{
       "type":"string",
       "enum":[
         "GITHUB_ORGANIZATION",
-        "GITHUB_GLOBAL"
+        "GITHUB_GLOBAL",
+        "GITLAB_GROUP"
       ]
     },
     "WrapperBoolean":{"type":"boolean"},

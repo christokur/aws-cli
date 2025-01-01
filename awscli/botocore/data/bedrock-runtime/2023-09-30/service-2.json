@@ -2,9 +2,10 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2023-09-30",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"bedrock-runtime",
-    "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"Amazon Bedrock Runtime",
     "serviceId":"Bedrock Runtime",
     "signatureVersion":"v4",
@@ -12,6 +13,25 @@
     "uid":"bedrock-runtime-2023-09-30"
   },
   "operations":{
+    "ApplyGuardrail":{
+      "name":"ApplyGuardrail",
+      "http":{
+        "method":"POST",
+        "requestUri":"/guardrail/{guardrailIdentifier}/version/{guardrailVersion}/apply",
+        "responseCode":200
+      },
+      "input":{"shape":"ApplyGuardrailRequest"},
+      "output":{"shape":"ApplyGuardrailResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ],
+      "documentation":"<p>The action to apply a guardrail.</p>"
+    },
     "Converse":{
       "name":"Converse",
       "http":{
@@ -27,11 +47,12 @@
         {"shape":"ThrottlingException"},
         {"shape":"ModelTimeoutException"},
         {"shape":"InternalServerException"},
+        {"shape":"ServiceUnavailableException"},
         {"shape":"ValidationException"},
         {"shape":"ModelNotReadyException"},
         {"shape":"ModelErrorException"}
       ],
-      "documentation":"<p>Sends messages to the specified Amazon Bedrock model. <code>Converse</code> provides a consistent interface that works with all models that support messages. This allows you to write code once and use it with different models. Should a model have unique inference parameters, you can also pass those unique parameters to the model.</p> <p>For information about the Converse API, see <i>Use the Converse API</i> in the <i>Amazon Bedrock User Guide</i>. To use a guardrail, see <i>Use a guardrail with the Converse API</i> in the <i>Amazon Bedrock User Guide</i>. To use a tool with a model, see <i>Tool use (Function calling)</i> in the <i>Amazon Bedrock User Guide</i> </p> <p>For example code, see <i>Converse API examples</i> in the <i>Amazon Bedrock User Guide</i>. </p> <p>This operation requires permission for the <code>bedrock:InvokeModel</code> action. </p>"
+      "documentation":"<p>Sends messages to the specified Amazon Bedrock model. <code>Converse</code> provides a consistent interface that works with all models that support messages. This allows you to write code once and use it with different models. If a model has unique inference parameters, you can also pass those unique parameters to the model.</p> <p>Amazon Bedrock doesn't store any text, images, or documents that you provide as content. The data is only used to generate the response.</p> <p>For information about the Converse API, see <i>Use the Converse API</i> in the <i>Amazon Bedrock User Guide</i>. To use a guardrail, see <i>Use a guardrail with the Converse API</i> in the <i>Amazon Bedrock User Guide</i>. To use a tool with a model, see <i>Tool use (Function calling)</i> in the <i>Amazon Bedrock User Guide</i> </p> <p>For example code, see <i>Converse API examples</i> in the <i>Amazon Bedrock User Guide</i>. </p> <p>This operation requires permission for the <code>bedrock:InvokeModel</code> action. </p>"
     },
     "ConverseStream":{
       "name":"ConverseStream",
@@ -48,11 +69,12 @@
         {"shape":"ThrottlingException"},
         {"shape":"ModelTimeoutException"},
         {"shape":"InternalServerException"},
+        {"shape":"ServiceUnavailableException"},
         {"shape":"ValidationException"},
         {"shape":"ModelNotReadyException"},
         {"shape":"ModelErrorException"}
       ],
-      "documentation":"<p>Sends messages to the specified Amazon Bedrock model and returns the response in a stream. <code>ConverseStream</code> provides a consistent API that works with all Amazon Bedrock models that support messages. This allows you to write code once and use it with different models. Should a model have unique inference parameters, you can also pass those unique parameters to the model. </p> <p>To find out if a model supports streaming, call <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GetFoundationModel.html\">GetFoundationModel</a> and check the <code>responseStreamingSupported</code> field in the response.</p> <p>For information about the Converse API, see <i>Use the Converse API</i> in the <i>Amazon Bedrock User Guide</i>. To use a guardrail, see <i>Use a guardrail with the Converse API</i> in the <i>Amazon Bedrock User Guide</i>. To use a tool with a model, see <i>Tool use (Function calling)</i> in the <i>Amazon Bedrock User Guide</i> </p> <p>For example code, see <i>Conversation streaming example</i> in the <i>Amazon Bedrock User Guide</i>. </p> <p>This operation requires permission for the <code>bedrock:InvokeModelWithResponseStream</code> action.</p>"
+      "documentation":"<p>Sends messages to the specified Amazon Bedrock model and returns the response in a stream. <code>ConverseStream</code> provides a consistent API that works with all Amazon Bedrock models that support messages. This allows you to write code once and use it with different models. Should a model have unique inference parameters, you can also pass those unique parameters to the model. </p> <p>To find out if a model supports streaming, call <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GetFoundationModel.html\">GetFoundationModel</a> and check the <code>responseStreamingSupported</code> field in the response.</p> <note> <p>The CLI doesn't support streaming operations in Amazon Bedrock, including <code>ConverseStream</code>.</p> </note> <p>Amazon Bedrock doesn't store any text, images, or documents that you provide as content. The data is only used to generate the response.</p> <p>For information about the Converse API, see <i>Use the Converse API</i> in the <i>Amazon Bedrock User Guide</i>. To use a guardrail, see <i>Use a guardrail with the Converse API</i> in the <i>Amazon Bedrock User Guide</i>. To use a tool with a model, see <i>Tool use (Function calling)</i> in the <i>Amazon Bedrock User Guide</i> </p> <p>For example code, see <i>Conversation streaming example</i> in the <i>Amazon Bedrock User Guide</i>. </p> <p>This operation requires permission for the <code>bedrock:InvokeModelWithResponseStream</code> action.</p>"
     },
     "InvokeModel":{
       "name":"InvokeModel",
@@ -69,6 +91,7 @@
         {"shape":"ThrottlingException"},
         {"shape":"ModelTimeoutException"},
         {"shape":"InternalServerException"},
+        {"shape":"ServiceUnavailableException"},
         {"shape":"ValidationException"},
         {"shape":"ModelNotReadyException"},
         {"shape":"ServiceQuotaExceededException"},
@@ -91,13 +114,14 @@
         {"shape":"ThrottlingException"},
         {"shape":"ModelTimeoutException"},
         {"shape":"InternalServerException"},
+        {"shape":"ServiceUnavailableException"},
         {"shape":"ModelStreamErrorException"},
         {"shape":"ValidationException"},
         {"shape":"ModelNotReadyException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ModelErrorException"}
       ],
-      "documentation":"<p>Invoke the specified Amazon Bedrock model to run inference using the prompt and inference parameters provided in the request body. The response is returned in a stream.</p> <p>To see if a model supports streaming, call <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GetFoundationModel.html\">GetFoundationModel</a> and check the <code>responseStreamingSupported</code> field in the response.</p> <note> <p>The CLI doesn't support <code>InvokeModelWithResponseStream</code>.</p> </note> <p>For example code, see <i>Invoke model with streaming code example</i> in the <i>Amazon Bedrock User Guide</i>. </p> <p>This operation requires permissions to perform the <code>bedrock:InvokeModelWithResponseStream</code> action. </p>"
+      "documentation":"<p>Invoke the specified Amazon Bedrock model to run inference using the prompt and inference parameters provided in the request body. The response is returned in a stream.</p> <p>To see if a model supports streaming, call <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GetFoundationModel.html\">GetFoundationModel</a> and check the <code>responseStreamingSupported</code> field in the response.</p> <note> <p>The CLI doesn't support streaming operations in Amazon Bedrock, including <code>InvokeModelWithResponseStream</code>.</p> </note> <p>For example code, see <i>Invoke model with streaming code example</i> in the <i>Amazon Bedrock User Guide</i>. </p> <p>This operation requires permissions to perform the <code>bedrock:InvokeModelWithResponseStream</code> action. </p>"
     }
   },
   "shapes":{
@@ -118,6 +142,68 @@
       "members":{
       },
       "documentation":"<p>The model must request at least one tool (no text is generated). For example, <code>{\"any\" : {}}</code>.</p>"
+    },
+    "ApplyGuardrailRequest":{
+      "type":"structure",
+      "required":[
+        "guardrailIdentifier",
+        "guardrailVersion",
+        "source",
+        "content"
+      ],
+      "members":{
+        "guardrailIdentifier":{
+          "shape":"GuardrailIdentifier",
+          "documentation":"<p>The guardrail identifier used in the request to apply the guardrail.</p>",
+          "location":"uri",
+          "locationName":"guardrailIdentifier"
+        },
+        "guardrailVersion":{
+          "shape":"GuardrailVersion",
+          "documentation":"<p>The guardrail version used in the request to apply the guardrail.</p>",
+          "location":"uri",
+          "locationName":"guardrailVersion"
+        },
+        "source":{
+          "shape":"GuardrailContentSource",
+          "documentation":"<p>The source of data used in the request to apply the guardrail.</p>"
+        },
+        "content":{
+          "shape":"GuardrailContentBlockList",
+          "documentation":"<p>The content details used in the request to apply the guardrail.</p>"
+        }
+      }
+    },
+    "ApplyGuardrailResponse":{
+      "type":"structure",
+      "required":[
+        "usage",
+        "action",
+        "outputs",
+        "assessments"
+      ],
+      "members":{
+        "usage":{
+          "shape":"GuardrailUsage",
+          "documentation":"<p>The usage details in the response from the guardrail.</p>"
+        },
+        "action":{
+          "shape":"GuardrailAction",
+          "documentation":"<p>The action taken in the response from the guardrail.</p>"
+        },
+        "outputs":{
+          "shape":"GuardrailOutputContentList",
+          "documentation":"<p>The output details in the response from the guardrail.</p>"
+        },
+        "assessments":{
+          "shape":"GuardrailAssessmentList",
+          "documentation":"<p>The assessment details in the response from the guardrail.</p>"
+        },
+        "guardrailCoverage":{
+          "shape":"GuardrailCoverage",
+          "documentation":"<p>The guardrail coverage details in the apply guardrail response.</p>"
+        }
+      }
     },
     "AutoToolChoice":{
       "type":"structure",
@@ -142,9 +228,13 @@
           "shape":"ImageBlock",
           "documentation":"<p>Image to include in the message. </p> <note> <p>This field is only supported by Anthropic Claude 3 models.</p> </note>"
         },
+        "document":{
+          "shape":"DocumentBlock",
+          "documentation":"<p>A document to include in the message.</p>"
+        },
         "toolUse":{
           "shape":"ToolUseBlock",
-          "documentation":"<p>Information about a tool use request from a model. </p>"
+          "documentation":"<p>Information about a tool use request from a model.</p>"
         },
         "toolResult":{
           "shape":"ToolResultBlock",
@@ -155,7 +245,7 @@
           "documentation":"<p>Contains the content to assess with the guardrail. If you don't specify <code>guardContent</code> in a call to the Converse API, the guardrail (if passed in the Converse API) assesses the entire message.</p> <p>For more information, see <i>Use a guardrail with the Converse API</i> in the <i>Amazon Bedrock User Guide</i>. <pre><code> &lt;/p&gt; </code></pre>"
         }
       },
-      "documentation":"<p>A block of content for a message that you pass to, or receive from, a model with the Converse API (<a>Converse</a> and <a>ConverseStream</a>).</p>",
+      "documentation":"<p>A block of content for a message that you pass to, or receive from, a model with the <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_Converse.html\">Converse</a> or <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_ConverseStream.html\">ConverseStream</a> API operations.</p>",
       "union":true
     },
     "ContentBlockDelta":{
@@ -249,7 +339,7 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:(([0-9]{12}:custom-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}/[a-z0-9]{12})|(:foundation-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|([0-9]{12}:provisioned-model/[a-z0-9]{12})))|([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|(([0-9a-zA-Z][_-]?)+)"
+      "pattern":"(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:(([0-9]{12}:custom-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}/[a-z0-9]{12})|(:foundation-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|([0-9]{12}:imported-model/[a-z0-9]{12})|([0-9]{12}:provisioned-model/[a-z0-9]{12})))|([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|(([0-9a-zA-Z][_-]?)+)|(arn:aws(|-us-gov|-cn|-iso|-iso-b):bedrock:(|[0-9a-z-]{1,20}):(|[0-9]{12}):(model-gateway|inference-profile)/[a-zA-Z0-9-:.]+)|([a-zA-Z0-9-:.]+)"
     },
     "ConverseMetrics":{
       "type":"structure",
@@ -282,7 +372,7 @@
       "members":{
         "modelId":{
           "shape":"ConversationalModelId",
-          "documentation":"<p>The identifier for the model that you want to call.</p> <p>The <code>modelId</code> to provide depends on the type of model that you use:</p> <ul> <li> <p>If you use a base model, specify the model ID or its ARN. For a list of model IDs for base models, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids.html#model-ids-arns\">Amazon Bedrock base model IDs (on-demand throughput)</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use a provisioned model, specify the ARN of the Provisioned Throughput. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-thru-use.html\">Run inference using a Provisioned Throughput</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use a custom model, first purchase Provisioned Throughput for it. Then specify the ARN of the resulting provisioned model. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-use.html\">Use a custom model in Amazon Bedrock</a> in the Amazon Bedrock User Guide.</p> </li> </ul>",
+          "documentation":"<p>The identifier for the model that you want to call.</p> <p>The <code>modelId</code> to provide depends on the type of model or throughput that you use:</p> <ul> <li> <p>If you use a base model, specify the model ID or its ARN. For a list of model IDs for base models, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids.html#model-ids-arns\">Amazon Bedrock base model IDs (on-demand throughput)</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use an inference profile, specify the inference profile ID or its ARN. For a list of inference profile IDs, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference-support.html\">Supported Regions and models for cross-region inference</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use a provisioned model, specify the ARN of the Provisioned Throughput. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-thru-use.html\">Run inference using a Provisioned Throughput</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use a custom model, first purchase Provisioned Throughput for it. Then specify the ARN of the resulting provisioned model. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-use.html\">Use a custom model in Amazon Bedrock</a> in the Amazon Bedrock User Guide.</p> </li> </ul> <p>The Converse API doesn't support <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html\">imported models</a>.</p>",
           "location":"uri",
           "locationName":"modelId"
         },
@@ -379,7 +469,7 @@
         },
         "trace":{
           "shape":"ConverseStreamTrace",
-          "documentation":"<p>The trace object in the response from <a>ConverseStream</a> that contains information about the guardrail behavior.</p>"
+          "documentation":"<p>The trace object in the response from <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_ConverseStream.html\">ConverseStream</a> that contains information about the guardrail behavior.</p>"
         }
       },
       "documentation":"<p>A conversation stream metadata event.</p>",
@@ -438,6 +528,10 @@
         "throttlingException":{
           "shape":"ThrottlingException",
           "documentation":"<p>The number of requests exceeds the limit. Resubmit your request later.</p>"
+        },
+        "serviceUnavailableException":{
+          "shape":"ServiceUnavailableException",
+          "documentation":"<p>The service isn't currently available. Try again later.</p>"
         }
       },
       "documentation":"<p>The messages output stream</p>",
@@ -452,7 +546,7 @@
       "members":{
         "modelId":{
           "shape":"ConversationalModelId",
-          "documentation":"<p>The ID for the model.</p> <p>The <code>modelId</code> to provide depends on the type of model that you use:</p> <ul> <li> <p>If you use a base model, specify the model ID or its ARN. For a list of model IDs for base models, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids.html#model-ids-arns\">Amazon Bedrock base model IDs (on-demand throughput)</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use a provisioned model, specify the ARN of the Provisioned Throughput. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-thru-use.html\">Run inference using a Provisioned Throughput</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use a custom model, first purchase Provisioned Throughput for it. Then specify the ARN of the resulting provisioned model. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-use.html\">Use a custom model in Amazon Bedrock</a> in the Amazon Bedrock User Guide.</p> </li> </ul>",
+          "documentation":"<p>The ID for the model.</p> <p>The <code>modelId</code> to provide depends on the type of model or throughput that you use:</p> <ul> <li> <p>If you use a base model, specify the model ID or its ARN. For a list of model IDs for base models, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids.html#model-ids-arns\">Amazon Bedrock base model IDs (on-demand throughput)</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use an inference profile, specify the inference profile ID or its ARN. For a list of inference profile IDs, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference-support.html\">Supported Regions and models for cross-region inference</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use a provisioned model, specify the ARN of the Provisioned Throughput. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-thru-use.html\">Run inference using a Provisioned Throughput</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use a custom model, first purchase Provisioned Throughput for it. Then specify the ARN of the resulting provisioned model. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-use.html\">Use a custom model in Amazon Bedrock</a> in the Amazon Bedrock User Guide.</p> </li> </ul> <p>The Converse API doesn't support <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html\">imported models</a>.</p>",
           "location":"uri",
           "locationName":"modelId"
         },
@@ -515,7 +609,7 @@
           "documentation":"<p>The guardrail trace object. </p>"
         }
       },
-      "documentation":"<p>The trace object in a response from <a>ConverseStream</a>. Currently, you can only trace guardrails.</p>"
+      "documentation":"<p>The trace object in a response from <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_ConverseStream.html\">ConverseStream</a>. Currently, you can only trace guardrails.</p>"
     },
     "ConverseTrace":{
       "type":"structure",
@@ -525,13 +619,77 @@
           "documentation":"<p>The guardrail trace object. </p>"
         }
       },
-      "documentation":"<p>The trace object in a response from <a>Converse</a>. Currently, you can only trace guardrails.</p>"
+      "documentation":"<p>The trace object in a response from <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_Converse.html\">Converse</a>. Currently, you can only trace guardrails.</p>"
     },
     "Document":{
       "type":"structure",
       "members":{
       },
       "document":true
+    },
+    "DocumentBlock":{
+      "type":"structure",
+      "required":[
+        "format",
+        "name",
+        "source"
+      ],
+      "members":{
+        "format":{
+          "shape":"DocumentFormat",
+          "documentation":"<p>The format of a document, or its extension.</p>"
+        },
+        "name":{
+          "shape":"DocumentBlockNameString",
+          "documentation":"<p>A name for the document. The name can only contain the following characters:</p> <ul> <li> <p>Alphanumeric characters</p> </li> <li> <p>Whitespace characters (no more than one in a row)</p> </li> <li> <p>Hyphens</p> </li> <li> <p>Parentheses</p> </li> <li> <p>Square brackets</p> </li> </ul> <note> <p>This field is vulnerable to prompt injections, because the model might inadvertently interpret it as instructions. Therefore, we recommend that you specify a neutral name.</p> </note>"
+        },
+        "source":{
+          "shape":"DocumentSource",
+          "documentation":"<p>Contains the content of the document.</p>"
+        }
+      },
+      "documentation":"<p>A document to include in a message.</p>"
+    },
+    "DocumentBlockNameString":{
+      "type":"string",
+      "max":200,
+      "min":1
+    },
+    "DocumentFormat":{
+      "type":"string",
+      "enum":[
+        "pdf",
+        "csv",
+        "doc",
+        "docx",
+        "xls",
+        "xlsx",
+        "html",
+        "txt",
+        "md"
+      ]
+    },
+    "DocumentSource":{
+      "type":"structure",
+      "members":{
+        "bytes":{
+          "shape":"DocumentSourceBytesBlob",
+          "documentation":"<p>The raw bytes for the document. If you use an Amazon Web Services SDK, you don't need to encode the bytes in base64.</p>"
+        }
+      },
+      "documentation":"<p>Contains the content of a document.</p>",
+      "union":true
+    },
+    "DocumentSourceBytesBlob":{
+      "type":"blob",
+      "min":1
+    },
+    "GuardrailAction":{
+      "type":"string",
+      "enum":[
+        "NONE",
+        "GUARDRAIL_INTERVENED"
+      ]
     },
     "GuardrailAssessment":{
       "type":"structure",
@@ -551,6 +709,14 @@
         "sensitiveInformationPolicy":{
           "shape":"GuardrailSensitiveInformationPolicyAssessment",
           "documentation":"<p>The sensitive information policy.</p>"
+        },
+        "contextualGroundingPolicy":{
+          "shape":"GuardrailContextualGroundingPolicyAssessment",
+          "documentation":"<p>The contextual grounding policy used for the guardrail assessment.</p>"
+        },
+        "invocationMetrics":{
+          "shape":"GuardrailInvocationMetrics",
+          "documentation":"<p>The invocation metrics for the guardrail assessment.</p>"
         }
       },
       "documentation":"<p>A behavior assessment of the guardrail policies used in a call to the Converse API. </p>"
@@ -589,7 +755,22 @@
           "documentation":"<p>The trace behavior for the guardrail.</p>"
         }
       },
-      "documentation":"<p>Configuration information for a guardrail that you use with the <a>Converse</a> action.</p>"
+      "documentation":"<p>Configuration information for a guardrail that you use with the <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_Converse.html\">Converse</a> operation.</p>"
+    },
+    "GuardrailContentBlock":{
+      "type":"structure",
+      "members":{
+        "text":{
+          "shape":"GuardrailTextBlock",
+          "documentation":"<p>Text within content block to be evaluated by the guardrail.</p>"
+        }
+      },
+      "documentation":"<p>The content block to be evaluated by the guardrail.</p>",
+      "union":true
+    },
+    "GuardrailContentBlockList":{
+      "type":"list",
+      "member":{"shape":"GuardrailContentBlock"}
     },
     "GuardrailContentFilter":{
       "type":"structure",
@@ -606,6 +787,10 @@
         "confidence":{
           "shape":"GuardrailContentFilterConfidence",
           "documentation":"<p>The guardrail confidence.</p>"
+        },
+        "filterStrength":{
+          "shape":"GuardrailContentFilterStrength",
+          "documentation":"<p>The filter strength setting for the guardrail content filter.</p>"
         },
         "action":{
           "shape":"GuardrailContentPolicyAction",
@@ -626,6 +811,15 @@
     "GuardrailContentFilterList":{
       "type":"list",
       "member":{"shape":"GuardrailContentFilter"}
+    },
+    "GuardrailContentFilterStrength":{
+      "type":"string",
+      "enum":[
+        "NONE",
+        "LOW",
+        "MEDIUM",
+        "HIGH"
+      ]
     },
     "GuardrailContentFilterType":{
       "type":"string",
@@ -653,6 +847,101 @@
       },
       "documentation":"<p>An assessment of a content policy for a guardrail.</p>"
     },
+    "GuardrailContentPolicyUnitsProcessed":{
+      "type":"integer",
+      "box":true
+    },
+    "GuardrailContentQualifier":{
+      "type":"string",
+      "enum":[
+        "grounding_source",
+        "query",
+        "guard_content"
+      ]
+    },
+    "GuardrailContentQualifierList":{
+      "type":"list",
+      "member":{"shape":"GuardrailContentQualifier"}
+    },
+    "GuardrailContentSource":{
+      "type":"string",
+      "enum":[
+        "INPUT",
+        "OUTPUT"
+      ]
+    },
+    "GuardrailContextualGroundingFilter":{
+      "type":"structure",
+      "required":[
+        "type",
+        "threshold",
+        "score",
+        "action"
+      ],
+      "members":{
+        "type":{
+          "shape":"GuardrailContextualGroundingFilterType",
+          "documentation":"<p>The contextual grounding filter type.</p>"
+        },
+        "threshold":{
+          "shape":"GuardrailContextualGroundingFilterThresholdDouble",
+          "documentation":"<p>The threshold used by contextual grounding filter to determine whether the content is grounded or not.</p>"
+        },
+        "score":{
+          "shape":"GuardrailContextualGroundingFilterScoreDouble",
+          "documentation":"<p>The score generated by contextual grounding filter.</p>"
+        },
+        "action":{
+          "shape":"GuardrailContextualGroundingPolicyAction",
+          "documentation":"<p>The action performed by the guardrails contextual grounding filter.</p>"
+        }
+      },
+      "documentation":"<p>The details for the guardrails contextual grounding filter.</p>"
+    },
+    "GuardrailContextualGroundingFilterScoreDouble":{
+      "type":"double",
+      "box":true,
+      "max":1,
+      "min":0
+    },
+    "GuardrailContextualGroundingFilterThresholdDouble":{
+      "type":"double",
+      "box":true,
+      "max":1,
+      "min":0
+    },
+    "GuardrailContextualGroundingFilterType":{
+      "type":"string",
+      "enum":[
+        "GROUNDING",
+        "RELEVANCE"
+      ]
+    },
+    "GuardrailContextualGroundingFilters":{
+      "type":"list",
+      "member":{"shape":"GuardrailContextualGroundingFilter"}
+    },
+    "GuardrailContextualGroundingPolicyAction":{
+      "type":"string",
+      "enum":[
+        "BLOCKED",
+        "NONE"
+      ]
+    },
+    "GuardrailContextualGroundingPolicyAssessment":{
+      "type":"structure",
+      "members":{
+        "filters":{
+          "shape":"GuardrailContextualGroundingFilters",
+          "documentation":"<p>The filter details for the guardrails contextual grounding filter.</p>"
+        }
+      },
+      "documentation":"<p>The policy assessment details for the guardrails contextual grounding filter.</p>"
+    },
+    "GuardrailContextualGroundingPolicyUnitsProcessed":{
+      "type":"integer",
+      "box":true
+    },
     "GuardrailConverseContentBlock":{
       "type":"structure",
       "members":{
@@ -661,8 +950,20 @@
           "documentation":"<p>The text to guard.</p>"
         }
       },
-      "documentation":"<p/> <p>A content block for selective guarding with the Converse API (<a>Converse</a> and <a>ConverseStream</a>). </p>",
+      "documentation":"<p/> <p>A content block for selective guarding with the <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_Converse.html\">Converse</a> or <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_ConverseStream.html\">ConverseStream</a> API operations. </p>",
       "union":true
+    },
+    "GuardrailConverseContentQualifier":{
+      "type":"string",
+      "enum":[
+        "grounding_source",
+        "query",
+        "guard_content"
+      ]
+    },
+    "GuardrailConverseContentQualifierList":{
+      "type":"list",
+      "member":{"shape":"GuardrailConverseContentQualifier"}
     },
     "GuardrailConverseTextBlock":{
       "type":"structure",
@@ -671,9 +972,23 @@
         "text":{
           "shape":"String",
           "documentation":"<p>The text that you want to guard.</p>"
+        },
+        "qualifiers":{
+          "shape":"GuardrailConverseContentQualifierList",
+          "documentation":"<p>The qualifier details for the guardrails contextual grounding filter.</p>"
         }
       },
       "documentation":"<p>A text block that contains text that you want to assess with a guardrail. For more information, see <a>GuardrailConverseContentBlock</a>.</p>"
+    },
+    "GuardrailCoverage":{
+      "type":"structure",
+      "members":{
+        "textCharacters":{
+          "shape":"GuardrailTextCharactersCoverage",
+          "documentation":"<p>The text characters of the guardrail coverage details.</p>"
+        }
+      },
+      "documentation":"<p>The action of the guardrail coverage details.</p>"
     },
     "GuardrailCustomWord":{
       "type":"structure",
@@ -702,6 +1017,24 @@
       "max":2048,
       "min":0,
       "pattern":"(([a-z0-9]+)|(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:guardrail/[a-z0-9]+))"
+    },
+    "GuardrailInvocationMetrics":{
+      "type":"structure",
+      "members":{
+        "guardrailProcessingLatency":{
+          "shape":"GuardrailProcessingLatency",
+          "documentation":"<p>The processing latency details for the guardrail invocation metrics.</p>"
+        },
+        "usage":{
+          "shape":"GuardrailUsage",
+          "documentation":"<p>The usage details for the guardrail invocation metrics.</p>"
+        },
+        "guardrailCoverage":{
+          "shape":"GuardrailCoverage",
+          "documentation":"<p>The coverage details for the guardrail invocation metrics.</p>"
+        }
+      },
+      "documentation":"<p>The invocation metrics for the guardrail.</p>"
     },
     "GuardrailManagedWord":{
       "type":"structure",
@@ -733,6 +1066,20 @@
     "GuardrailManagedWordType":{
       "type":"string",
       "enum":["PROFANITY"]
+    },
+    "GuardrailOutputContent":{
+      "type":"structure",
+      "members":{
+        "text":{
+          "shape":"GuardrailOutputText",
+          "documentation":"<p>The specific text for the output content produced by the guardrail.</p>"
+        }
+      },
+      "documentation":"<p>The output content produced by the guardrail.</p>"
+    },
+    "GuardrailOutputContentList":{
+      "type":"list",
+      "member":{"shape":"GuardrailOutputContent"}
     },
     "GuardrailOutputText":{"type":"string"},
     "GuardrailPiiEntityFilter":{
@@ -798,6 +1145,10 @@
         "VEHICLE_IDENTIFICATION_NUMBER"
       ]
     },
+    "GuardrailProcessingLatency":{
+      "type":"long",
+      "box":true
+    },
     "GuardrailRegexFilter":{
       "type":"structure",
       "required":["action"],
@@ -850,6 +1201,14 @@
       },
       "documentation":"<p>The assessment for aPersonally Identifiable Information (PII) policy. </p>"
     },
+    "GuardrailSensitiveInformationPolicyFreeUnitsProcessed":{
+      "type":"integer",
+      "box":true
+    },
+    "GuardrailSensitiveInformationPolicyUnitsProcessed":{
+      "type":"integer",
+      "box":true
+    },
     "GuardrailStreamConfiguration":{
       "type":"structure",
       "required":[
@@ -882,6 +1241,35 @@
         "sync",
         "async"
       ]
+    },
+    "GuardrailTextBlock":{
+      "type":"structure",
+      "required":["text"],
+      "members":{
+        "text":{
+          "shape":"String",
+          "documentation":"<p>The input text details to be evaluated by the guardrail.</p>"
+        },
+        "qualifiers":{
+          "shape":"GuardrailContentQualifierList",
+          "documentation":"<p>The qualifiers describing the text block.</p>"
+        }
+      },
+      "documentation":"<p>The text block to be evaluated by the guardrail.</p>"
+    },
+    "GuardrailTextCharactersCoverage":{
+      "type":"structure",
+      "members":{
+        "guarded":{
+          "shape":"TextCharactersGuarded",
+          "documentation":"<p>The text characters that were guarded by the guardrail coverage.</p>"
+        },
+        "total":{
+          "shape":"TextCharactersTotal",
+          "documentation":"<p>The total text characters by the guardrail coverage.</p>"
+        }
+      },
+      "documentation":"<p>The guardrail coverage for the text characters.</p>"
     },
     "GuardrailTopic":{
       "type":"structure",
@@ -925,6 +1313,10 @@
       },
       "documentation":"<p>A behavior assessment of a topic policy.</p>"
     },
+    "GuardrailTopicPolicyUnitsProcessed":{
+      "type":"integer",
+      "box":true
+    },
     "GuardrailTopicType":{
       "type":"string",
       "enum":["DENY"]
@@ -954,6 +1346,44 @@
       },
       "documentation":"<p>A Top level guardrail trace object. For more information, see <a>ConverseTrace</a>.</p>"
     },
+    "GuardrailUsage":{
+      "type":"structure",
+      "required":[
+        "topicPolicyUnits",
+        "contentPolicyUnits",
+        "wordPolicyUnits",
+        "sensitiveInformationPolicyUnits",
+        "sensitiveInformationPolicyFreeUnits",
+        "contextualGroundingPolicyUnits"
+      ],
+      "members":{
+        "topicPolicyUnits":{
+          "shape":"GuardrailTopicPolicyUnitsProcessed",
+          "documentation":"<p>The topic policy units processed by the guardrail.</p>"
+        },
+        "contentPolicyUnits":{
+          "shape":"GuardrailContentPolicyUnitsProcessed",
+          "documentation":"<p>The content policy units processed by the guardrail.</p>"
+        },
+        "wordPolicyUnits":{
+          "shape":"GuardrailWordPolicyUnitsProcessed",
+          "documentation":"<p>The word policy units processed by the guardrail.</p>"
+        },
+        "sensitiveInformationPolicyUnits":{
+          "shape":"GuardrailSensitiveInformationPolicyUnitsProcessed",
+          "documentation":"<p>The sensitive information policy units processed by the guardrail.</p>"
+        },
+        "sensitiveInformationPolicyFreeUnits":{
+          "shape":"GuardrailSensitiveInformationPolicyFreeUnitsProcessed",
+          "documentation":"<p>The sensitive information policy free units processed by the guardrail.</p>"
+        },
+        "contextualGroundingPolicyUnits":{
+          "shape":"GuardrailContextualGroundingPolicyUnitsProcessed",
+          "documentation":"<p>The contextual grounding policy units processed by the guardrail.</p>"
+        }
+      },
+      "documentation":"<p>The details on the use of the guardrail.</p>"
+    },
     "GuardrailVersion":{
       "type":"string",
       "pattern":"(([1-9][0-9]{0,7})|(DRAFT))"
@@ -979,6 +1409,10 @@
         }
       },
       "documentation":"<p>The word policy assessment.</p>"
+    },
+    "GuardrailWordPolicyUnitsProcessed":{
+      "type":"integer",
+      "box":true
     },
     "ImageBlock":{
       "type":"structure",
@@ -1012,7 +1446,7 @@
       "members":{
         "bytes":{
           "shape":"ImageSourceBytesBlob",
-          "documentation":"<p>The raw image bytes for the image. If you use an AWS SDK, you don't need to base64 encode the image bytes.</p>"
+          "documentation":"<p>The raw image bytes for the image. If you use an AWS SDK, you don't need to encode the image bytes in base64.</p>"
         }
       },
       "documentation":"<p>The source for an image.</p>",
@@ -1081,7 +1515,7 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:(([0-9]{12}:custom-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}/[a-z0-9]{12})|(:foundation-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|([0-9]{12}:provisioned-model/[a-z0-9]{12})))|([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|(([0-9a-zA-Z][_-]?)+)"
+      "pattern":"(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:(([0-9]{12}:custom-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}/[a-z0-9]{12})|(:foundation-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|([0-9]{12}:imported-model/[a-z0-9]{12})|([0-9]{12}:provisioned-model/[a-z0-9]{12})))|([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|(([0-9a-zA-Z][_-]?)+)|(arn:aws(|-us-gov|-cn|-iso|-iso-b):bedrock:(|[0-9a-z-]{1,20}):(|[0-9]{12}):(model-gateway|inference-profile)/[a-zA-Z0-9-:.]+)|([a-zA-Z0-9-:.]+)"
     },
     "InvokeModelRequest":{
       "type":"structure",
@@ -1108,7 +1542,7 @@
         },
         "modelId":{
           "shape":"InvokeModelIdentifier",
-          "documentation":"<p>The unique identifier of the model to invoke to run inference.</p> <p>The <code>modelId</code> to provide depends on the type of model that you use:</p> <ul> <li> <p>If you use a base model, specify the model ID or its ARN. For a list of model IDs for base models, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids.html#model-ids-arns\">Amazon Bedrock base model IDs (on-demand throughput)</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use a provisioned model, specify the ARN of the Provisioned Throughput. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-thru-use.html\">Run inference using a Provisioned Throughput</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use a custom model, first purchase Provisioned Throughput for it. Then specify the ARN of the resulting provisioned model. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-use.html\">Use a custom model in Amazon Bedrock</a> in the Amazon Bedrock User Guide.</p> </li> </ul>",
+          "documentation":"<p>The unique identifier of the model to invoke to run inference.</p> <p>The <code>modelId</code> to provide depends on the type of model that you use:</p> <ul> <li> <p>If you use a base model, specify the model ID or its ARN. For a list of model IDs for base models, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids.html#model-ids-arns\">Amazon Bedrock base model IDs (on-demand throughput)</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use a provisioned model, specify the ARN of the Provisioned Throughput. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-thru-use.html\">Run inference using a Provisioned Throughput</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use a custom model, first purchase Provisioned Throughput for it. Then specify the ARN of the resulting provisioned model. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-use.html\">Use a custom model in Amazon Bedrock</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use an <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html\">imported model</a>, specify the ARN of the imported model. You can get the model ARN from a successful call to <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_CreateModelImportJob.html\">CreateModelImportJob</a> or from the Imported models page in the Amazon Bedrock console.</p> </li> </ul>",
           "location":"uri",
           "locationName":"modelId"
         },
@@ -1178,7 +1612,7 @@
         },
         "modelId":{
           "shape":"InvokeModelIdentifier",
-          "documentation":"<p>The unique identifier of the model to invoke to run inference.</p> <p>The <code>modelId</code> to provide depends on the type of model that you use:</p> <ul> <li> <p>If you use a base model, specify the model ID or its ARN. For a list of model IDs for base models, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids.html#model-ids-arns\">Amazon Bedrock base model IDs (on-demand throughput)</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use a provisioned model, specify the ARN of the Provisioned Throughput. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-thru-use.html\">Run inference using a Provisioned Throughput</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use a custom model, first purchase Provisioned Throughput for it. Then specify the ARN of the resulting provisioned model. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-use.html\">Use a custom model in Amazon Bedrock</a> in the Amazon Bedrock User Guide.</p> </li> </ul>",
+          "documentation":"<p>The unique identifier of the model to invoke to run inference.</p> <p>The <code>modelId</code> to provide depends on the type of model that you use:</p> <ul> <li> <p>If you use a base model, specify the model ID or its ARN. For a list of model IDs for base models, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids.html#model-ids-arns\">Amazon Bedrock base model IDs (on-demand throughput)</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use a provisioned model, specify the ARN of the Provisioned Throughput. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-thru-use.html\">Run inference using a Provisioned Throughput</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use a custom model, first purchase Provisioned Throughput for it. Then specify the ARN of the resulting provisioned model. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-use.html\">Use a custom model in Amazon Bedrock</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use an <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html\">imported model</a>, specify the ARN of the imported model. You can get the model ARN from a successful call to <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_CreateModelImportJob.html\">CreateModelImportJob</a> or from the Imported models page in the Amazon Bedrock console.</p> </li> </ul>",
           "location":"uri",
           "locationName":"modelId"
         },
@@ -1240,7 +1674,7 @@
         },
         "content":{
           "shape":"ContentBlocks",
-          "documentation":"<p>The message content.</p>"
+          "documentation":"<p>The message content. Note the following restrictions:</p> <ul> <li> <p>You can include up to 20 images. Each image's size, height, and width must be no more than 3.75 MB, 8000 px, and 8000 px, respectively.</p> </li> <li> <p>You can include up to five documents. Each document's size must be no more than 4.5 MB.</p> </li> <li> <p>If you include a <code>ContentBlock</code> with a <code>document</code> field in the array, you must also include a <code>ContentBlock</code> with a <code>text</code> field.</p> </li> <li> <p>You can only include images and documents if the <code>role</code> is <code>user</code>.</p> </li> </ul>"
         }
       },
       "documentation":"<p>A message input, or returned from, a call to <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_Converse.html\">Converse</a> or <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_ConverseStream.html\">ConverseStream</a>.</p>"
@@ -1303,12 +1737,13 @@
       "members":{
         "message":{"shape":"NonBlankString"}
       },
-      "documentation":"<p>The model specified in the request is not ready to serve inference requests.</p>",
+      "documentation":"<p>The model specified in the request is not ready to serve inference requests. The AWS SDK will automatically retry the operation up to 5 times. For information about configuring automatic retries, see <a href=\"https://docs.aws.amazon.com/sdkref/latest/guide/feature-retry-behavior.html\">Retry behavior</a> in the <i>AWS SDKs and Tools</i> reference guide.</p>",
       "error":{
         "httpStatusCode":429,
         "senderFault":true
       },
-      "exception":true
+      "exception":true,
+      "retryable":{"throttling":false}
     },
     "ModelOutputs":{
       "type":"list",
@@ -1410,12 +1845,13 @@
         },
         "throttlingException":{
           "shape":"ThrottlingException",
-          "documentation":"<p>The number or frequency of requests exceeds the limit. Resubmit your request later.</p>"
+          "documentation":"<p>Your request was throttled because of service-wide limitations. Resubmit your request later or in a different region. You can also purchase <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html\">Provisioned Throughput</a> to increase the rate or number of tokens you can process.</p>"
         },
         "modelTimeoutException":{
           "shape":"ModelTimeoutException",
           "documentation":"<p>The request took too long to process. Processing time exceeded the model timeout length.</p>"
-        }
+        },
+        "serviceUnavailableException":{"shape":"ServiceUnavailableException"}
       },
       "documentation":"<p>Definition of content in the response stream.</p>",
       "eventstream":true
@@ -1425,12 +1861,22 @@
       "members":{
         "message":{"shape":"NonBlankString"}
       },
-      "documentation":"<p>The number of requests exceeds the service quota. Resubmit your request later.</p>",
+      "documentation":"<p>Your request exceeds the service quota for your account. You can view your quotas at <a href=\"https://docs.aws.amazon.com/servicequotas/latest/userguide/gs-request-quota.html\">Viewing service quotas</a>. You can resubmit your request later.</p>",
       "error":{
         "httpStatusCode":400,
         "senderFault":true
       },
       "exception":true
+    },
+    "ServiceUnavailableException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"NonBlankString"}
+      },
+      "documentation":"<p>The service isn't currently available. Try again later.</p>",
+      "error":{"httpStatusCode":503},
+      "exception":true,
+      "fault":true
     },
     "SpecificToolChoice":{
       "type":"structure",
@@ -1470,7 +1916,7 @@
         },
         "guardContent":{
           "shape":"GuardrailConverseContentBlock",
-          "documentation":"<p>A content block to assess with the guardrail. Use with the Converse API (<a>Converse</a> and <a>ConverseStream</a>). </p> <p>For more information, see <i>Use a guardrail with the Converse API</i> in the <i>Amazon Bedrock User Guide</i>.</p>"
+          "documentation":"<p>A content block to assess with the guardrail. Use with the <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_Converse.html\">Converse</a> or <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_ConverseStream.html\">ConverseStream</a> API operations. </p> <p>For more information, see <i>Use a guardrail with the Converse API</i> in the <i>Amazon Bedrock User Guide</i>.</p>"
         }
       },
       "documentation":"<p>A system content block.</p>",
@@ -1480,12 +1926,20 @@
       "type":"list",
       "member":{"shape":"SystemContentBlock"}
     },
+    "TextCharactersGuarded":{
+      "type":"integer",
+      "box":true
+    },
+    "TextCharactersTotal":{
+      "type":"integer",
+      "box":true
+    },
     "ThrottlingException":{
       "type":"structure",
       "members":{
         "message":{"shape":"NonBlankString"}
       },
-      "documentation":"<p>The number of requests exceeds the limit. Resubmit your request later.</p>",
+      "documentation":"<p>Your request was throttled because of service-wide limitations. Resubmit your request later or in a different region. You can also purchase <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html\">Provisioned Throughput</a> to increase the rate or number of tokens you can process.</p>",
       "error":{
         "httpStatusCode":429,
         "senderFault":true
@@ -1538,7 +1992,7 @@
           "documentation":"<p>The specfication for the tool.</p>"
         }
       },
-      "documentation":"<p>Information about a tool that you can use with the Converse API. </p>",
+      "documentation":"<p>Information about a tool that you can use with the Converse API. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/tool-use.html\">Tool use (function calling)</a> in the Amazon Bedrock User Guide.</p>",
       "union":true
     },
     "ToolChoice":{
@@ -1573,7 +2027,7 @@
           "documentation":"<p>If supported by model, forces the model to request a tool.</p>"
         }
       },
-      "documentation":"<p>Configuration information for the tools that you pass to a model.</p> <note> <p>This field is only supported by Anthropic Claude 3, Cohere Command R, Cohere Command R+, and Mistral Large models.</p> </note>"
+      "documentation":"<p>Configuration information for the tools that you pass to a model. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/tool-use.html\">Tool use (function calling)</a> in the Amazon Bedrock User Guide.</p> <note> <p>This field is only supported by Anthropic Claude 3, Cohere Command R, Cohere Command R+, and Mistral Large models.</p> </note>"
     },
     "ToolConfigurationToolsList":{
       "type":"list",
@@ -1633,6 +2087,10 @@
         "image":{
           "shape":"ImageBlock",
           "documentation":"<p>A tool result that is an image.</p> <note> <p>This field is only supported by Anthropic Claude 3 models.</p> </note>"
+        },
+        "document":{
+          "shape":"DocumentBlock",
+          "documentation":"<p>A tool result that is a document.</p>"
         }
       },
       "documentation":"<p>The tool result content block.</p>",
