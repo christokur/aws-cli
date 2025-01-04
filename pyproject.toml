@@ -67,9 +67,7 @@ include = [
     "Makefile.in",
     "exe/**/*",
 ]
-# end of cli sdist tool section
 # end flit
-
 [tool.black]
 line-length = 80
 target-version = ['py38', 'py39', 'py310', 'py311']
@@ -331,4 +329,5 @@ accent = "yellow"
 toggle = { icon = "material/lightbulb-outline", name = "Switch to dark mode" }
 
 [tool.cruft]
-skip= ["CODEOWNERS","docs/TODO.md","README.md","Makefile",".gitignore","poetry.toml","tests/__init__.py","tests/conftest.py",".python-version",".gitignore",".github/workflows/build-test-publish.yml",".bumpversion.cfg","pyproject.toml",]
+# NOTE: Putting these here for real will work with cruft BUT it will require TWO cruft runs to take effect.
+#skip= ["CODEOWNERS","docs/TODO.md","README.md","Makefile",".gitignore","poetry.toml","tests/__init__.py","tests/conftest.py",".python-version",".gitignore",".github/workflows/build-test-publish.yml",".bumpversion.cfg","pyproject.toml",]

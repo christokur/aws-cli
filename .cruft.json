@@ -1,7 +1,7 @@
 {
   "template": "git@github.com:SandsB2B/cookiecutter-b2b-project.git",
-  "commit": "d08b211af27e32369ff69a21de209c75b5e99c0c",
-  "checkout": "v0.25.48",
+  "commit": "a213cef1bcb2d532d767082fe10c0311b28dc7ba",
+  "checkout": "v0.25.51",
   "context": {
     "cookiecutter": {
       "authors": "{name = \"Amazon Web Services\"};",
@@ -15,7 +15,7 @@
       "readme": "README.rst",
       "version": "2.22.26.post4",
       "package_name": "awscli",
-      "packager": "flit",
+      "packager": "poetry",
       "dynamic": "",
       "poetry_version": "~1.8.5",
       "poetry_source_name": "codeartifact",
@@ -31,8 +31,8 @@
       "python_ci_versions": "3.10,3.11,3.12",
       "python_ci_build_version": "3.12",
       "python_requires": ">=3.10.8",
-      "python_toolbag_version": "~0.25.7",
-      "cruft_skip": "CODEOWNERS,docs/TODO.md,README.md,Makefile,.gitignore,poetry.toml,tests/__init__.py,tests/conftest.py,.python-version,.gitignore,.github/workflows/build-test-publish.yml,.bumpversion.cfg,pyproject.toml",
+      "python_toolbag_version": "~0.26.1",
+      "cruft_skip": "CODEOWNERS,docs/TODO.md,README.md,Makefile,.gitignore,poetry.toml,tests/__init__.py,tests/conftest.py,.python-version,.gitignore,.github/workflows/build-test-publish.yml,.bumpversion.cfg",
       "src_path_prefix": "",
       "site_name": "Universal Command Line Environment for AWS.",
       "site_description": "Universal Command Line Environment for AWS.",
@@ -92,9 +92,9 @@
       "ruff_select": "",
       "gitignore_items": "",
       "_extensions": [
-        "toolbag.utils.template_expander.extensions.python_extension.PythonExtension",
+        "toolbag.utils.template_expander.extensions.PythonExtension",
         "toolbag.utils.template_expander.extensions.ExpandCookiecutterTemplateExtension",
-        "toolbag.utils.template_expander.extensions.PythonExtension"
+        "toolbag.utils.template_expander.extensions.python_extension.PythonExtension"
       ],
       "_notes": {
         "lists": "Lists have a special meaning for Cookiecutter so we are forced to wrap them in a map or express as a CSV string and split in the template.",
@@ -125,32 +125,31 @@
         "python-dateutil": ">=2.1,<=2.9.0",
         "jmespath": ">=0.7.1,<1.1.0",
         "urllib3": ">=1.25.4,<1.27",
-        "setuptools": "~=71.1.0; python_version >= '3.12'",
-        "packaging": "~=24.1; python_version >= '3.12'",
+        "setuptools": "{ version = '>=75.6.0', python = '>=3.12'}",
+        "packaging": "{ version = '~=24.1'; python_version >= '3.12' }",
         "zipp": "<3.21.0"
       },
       "poetry_dev_dependencies": {
         "poetry": "~1.8.5",
         "poethepoet": "~0.32.0",
-        "\"rpds-py\"": "==0.9.2",
-        "python-toolbag": "~0.25.3",
-        "rpds-py": "~0.9.2",
+        "python-toolbag": "~0.26.1",
         "tox": "==3.24.3",
         "build": "==0.7.0",
         "wheel": "==0.37.1",
-        "flit_core": ">=3.7.1,<3.8.1"
+        "flit_core": ">=3.7.1,<3.8.1",
+        "setuptools": ":remove:",
+        "packaging": ":remove:"
       },
       "poetry_localdev_dependencies": {
         "black": "{ version = '~24.2.0', extras = ['d']}",
-        "bump2version": "~1.0.2-beta6",
+        "bump2version": "~1.0.4-post2",
         "commitizen": "{ version = '~2.42.1' }",
-        "cruft": "2.12.0post17",
-        "gitlint": "{ version = '~0.19.1' }",
+        "cruft": "~=2.16.2.post1",
+        "gitlint": ":remove:",
         "isort": "{ version = '~5.13.2' }",
         "pre-commit": "{ version = '~2.21.0' }",
         "prompt-toolkit": "~3.0.38",
         "pyproject-fmt": "{ version = '~1.8.0' }",
-        "python-toolbag": ">=0.24.52",
         "ruff": ">=0.3.0",
         "semver": ">=3.0.0,<4.0.0"
       },
