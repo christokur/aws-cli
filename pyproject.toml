@@ -3,15 +3,15 @@ requires = [
     "flit_core>=3.9.0,<3.10",
 
 ]
-build-backend = ""pep517""
+build-backend = "pep517"
 backend-path = ["backends"]
 
 [tool.poetry]
 name = "aws-cli"
 version = "2.22.26.post4"
 description = "Universal Command Line Environment for AWS."
-authors = [ "{name = "Amazon Web Services"};" ]
-license = "{ file = "LICENSE.txt" }"
+authors = [ "{name = 'Amazon Web Services'};" ]
+license = "{ file = 'LICENSE.txt' }"
 readme = "README.rst"
 classifiers = [
     "Development Status :: 5 - Production/Stable",

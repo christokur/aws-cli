@@ -4,14 +4,14 @@
   "checkout": "v0.25.60",
   "context": {
     "cookiecutter": {
-      "authors": "{name = \"Amazon Web Services\"};",
+      "authors": "Amazon Web Services",
       "classifiers": "Development Status :: 5 - Production/Stable;Intended Audience :: Developers;Intended Audience :: System Administrators;Natural Language :: English;License :: OSI Approved :: Apache Software License;Programming Language :: Python;Programming Language :: Python :: 3",
       "full_name": "Christo De Lange",
       "email": "christo.delange@sands.com",
       "github_username": "christokur",
       "project_name": "aws-cli",
       "description": "Universal Command Line Environment for AWS.",
-      "license_text": "{ file = \"LICENSE.txt\" }",
+      "license_text": "{ file = 'LICENSE.txt' }",
       "readme": "README.rst",
       "version": "2.22.26.post4",
       "package_name": "awscli",
