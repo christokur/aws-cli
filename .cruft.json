@@ -1,7 +1,7 @@
 {
   "template": "git@github.com:SandsB2B/cookiecutter-b2b-project.git",
-  "commit": "64bdb01ec81298abd6b02cef8e111940501f3715",
-  "checkout": "v0.26.3",
+  "commit": "0e0ba433d32832b92dc16072d74784291b45d0c3",
+  "checkout": "v0.26.8",
   "context": {
     "cookiecutter": {
       "authors": "Amazon Web Services",
@@ -13,7 +13,7 @@
       "description": "Universal Command Line Environment for AWS.",
       "license_text": "{ file = 'LICENSE.txt' }",
       "readme": "README.rst",
-      "version": "2.22.26post5",
+      "version": "2.22.26.post5",
       "package_name": "awscli",
       "packager": "flit",
       "dynamic": "",
@@ -32,7 +32,7 @@
       "python_ci_build_version": "3.12",
       "python_requires": ">=3.10.8",
       "python_toolbag_version": "~0.26.1",
-      "cruft_skip": "CODEOWNERS,docs/TODO.md,README.md,Makefile,.gitignore,poetry.toml,tests/__init__.py,tests/conftest.py,.python-version,.gitignore,.github/workflows/build-test-publish.yml,.bumpversion.cfg,bin,awscli,scripts,requirements*,exe,macpkg,proposals,doc,backends,.changes,docker,m4,bin,docs,.tflint.*,tests,.github/workflows/mkdocs-gh-pages.yml,Makefile.d,.coveragerc,CHANGELOG.rst,CODE_OF_CONDUCT.md,CONTRIBUTING.rst,DEPENDENCIES.md,LICENSE.txt,Makefile.in,Pipfile,Pipfile.lock,README.rst,configure,configure.ac,requirements-base-lock.txt,requirements-base.txt,requirements-build-lock.txt,requirements-build-win.txt,requirements-build.txt,requirements-check.txt,requirements-dev-lock.txt,requirements-dev.txt,requirements-docs-lock.txt,requirements-docs.txt,requirements-test-lock.txt,requirements-test.txt,requirements.txt,tox.ini,.editorconfig,.envrc,.gitlint,.gitownrc,.pre-commit-config.yaml,.pylintrc,mkdocs._yaml",
+      "cruft_skip": "cookiecutter_template_debugger_src,CODEOWNERS,docs/TODO.md,README.md,Makefile,.gitignore,poetry.toml,tests/__init__.py,tests/conftest.py,.python-version,.gitignore,.github/workflows/build-test-publish.yml,.bumpversion.cfg,bin,awscli,scripts,requirements*,exe,macpkg,proposals,doc,backends,.changes,docker,m4,bin,docs,.tflint.*,tests,.github/workflows/mkdocs-gh-pages.yml,Makefile.d,.coveragerc,CHANGELOG.rst,CODE_OF_CONDUCT.md,CONTRIBUTING.rst,DEPENDENCIES.md,LICENSE.txt,Makefile.in,Pipfile,Pipfile.lock,README.rst,configure,configure.ac,requirements-base-lock.txt,requirements-base.txt,requirements-build-lock.txt,requirements-build-win.txt,requirements-build.txt,requirements-check.txt,requirements-dev-lock.txt,requirements-dev.txt,requirements-docs-lock.txt,requirements-docs.txt,requirements-test-lock.txt,requirements-test.txt,requirements.txt,tox.ini,.editorconfig,.envrc,.gitlint,.gitownrc,.pre-commit-config.yaml,.pylintrc,mkdocs._yaml",
       "src_path_prefix": "",
       "site_name": "Universal Command Line Environment for AWS.",
       "site_description": "Universal Command Line Environment for AWS.",
@@ -267,7 +267,7 @@
         }
       },
       "_template": "git@github.com:SandsB2B/cookiecutter-b2b-project.git",
-      "_commit": "64bdb01ec81298abd6b02cef8e111940501f3715",
+      "_commit": "0e0ba433d32832b92dc16072d74784291b45d0c3",
       "ruff_extend_exclude_list": [],
       "test_exclude_list": [],
       "src_path_prefix_list": [

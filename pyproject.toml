@@ -1,20 +1,23 @@
 [build-system]
 requires = [
-    "flit_core>=3.7.1,<3.9.1",
+    "flit_core>=3.9.0,<3.10",
+        
 ]
 build-backend = "pep517"
-backend-path = ["backends"]
+backend-path = ['backends']
 
+# Flit
 [project]
 name = "awscli"
 description = "Universal Command Line Environment for AWS."
-version = "2.22.26post5"
+version = "2.22.26.post5"
 authors = [
-    {name = "Amazon Web Services"},
+    # 'Amazon Web Services'
+    { name = "Amazon Web Services" },
 ]
-license = { file = "LICENSE.txt" }
+license = { file = 'LICENSE.txt' }
 readme = "README.rst"
-requires-python = ">=3.10.13"
+requires-python = ">=3.10.8"
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
@@ -22,21 +25,16 @@ classifiers = [
     "Natural Language :: English",
     "License :: OSI Approved :: Apache Software License",
     "Programming Language :: Python",
-    'Programming Language :: Python :: 3 :: Only',
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3",    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
-    'Programming Language :: Python :: 3.12',
+    "Programming Language :: Python :: 3.12",
+
 ]
 dependencies = [
     "colorama>=0.2.5,<0.4.7",
     "docutils>=0.10,<0.20",
     "cryptography>=40.0.0,<43.0.2",
     "ruamel.yaml>=0.15.0,<=0.17.21",
-    # ruamel.yaml only requires ruamel.yaml.clib for Python versions
-    # less than or equal to Python 3.10. In order to ensure we have
-    # a consistent dependency closure across all Python versions,
-    # we explicitly include ruamel.yaml.clib as a dependency.
     "ruamel.yaml.clib>=0.2.0,<=0.2.8; python_version <= '3.10'",
     "prompt-toolkit>=3.0.24,<3.0.39",
     "distro>=1.5.0,<1.9.0",
@@ -44,11 +42,8 @@ dependencies = [
     "python-dateutil>=2.1,<=2.9.0",
     "jmespath>=0.7.1,<1.1.0",
     "urllib3>=1.25.4,<1.27",
-    "setuptools~=71.1.0; python_version >= '3.12'",
-    "packaging~=24.1; python_version >= '3.12'",
-    # zipp>=3.21.0 dropped support for Python 3.8. In order to ensure
-    # we have a consistent dependency closure across all Python
-    # versions, we explicitly include zipp as a dependency.
+    "setuptools>=75.6.0; python_version <= '3.10'",
+    "packaging~=24.1; python_version <= '3.10'",
     "zipp<3.21.0",
 ]
 #dynamic = ["version",]
@@ -67,7 +62,7 @@ include = [
     "Makefile.in",
     "exe/**/*",
 ]
-# end of cli sdist tool section
+            # end of cli sdist tool section
 # end flit
 
 [tool.black]
@@ -124,15 +119,15 @@ show-fixes = true
 # By default, always show source code snippets.
 # show-source = false
 # Allow imports relative to the "src" and "test" directories.
-src = ["", "", ]
-target-version = "py38"
+src = ["", ""]
+target-version = "py310"
 
 [tool.ruff.lint]
 # Allow unused variables when underscore-prefixed.
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 # Allow autofix for all enabled rules (when `--fix`) is provided.
 fixable = ["A", "ANN", "ARG", "B", "BLE", "C", "COM", "D", "DTZ", "E", "EM", "ERA", "EXE", "F", "FBT", "G", "I", "ICN", "INP", "ISC", "N", "PD", "PGH", "PIE", "PL", "PT", "PTH", "Q", "RET", "RUF", "S", "SIM", "T", "TCH", "TID", "TRY", "UP", "W", "YTT"]
-ignore = [ "ANN002", "ANN003", "ANN101", "D211","D213", "S101", "T20", "EM101", "EM102", "ERA001", "D417", "BLE001", "RET504", "UP038", "D212", "D407" ]
+ignore = [ "ANN002", "ANN003", "D211", "D213", "S101", "T20", "EM101", "EM102", "ERA001", "D417", "BLE001", "RET504", "UP038", "D212", "D407" ]
 per-file-ignores = {}
 # Enable pycodestyle (`E`) and Pyflakes (`F`) codes by default.
 # "FBT", "TRY",
@@ -188,7 +183,7 @@ filterwarnings = [
     # Python 3.12 introduced a new DeprecationWarning in calls to ast.Str, which
     # flit-core uses. When they release the removal of such calls, we should
     # be able to remove these filters.
-    'default:ast\.Str is deprecated and will be removed:DeprecationWarning',
+    'default:ast.Str is deprecated and will be removed:DeprecationWarning',
 
     # Python 3.12 introduced a new DeprecationWarning in flit-core. When they release the
     # removal of reference to 'attribute s', we should be able to remove these filters.
@@ -196,13 +191,13 @@ filterwarnings = [
 
     # Python 3.12 introduced a new DeprecationWarning which gets raised in our call to build_sdist of
     # pep517 backend. When we explicitly address this change, we should be able to remove these filters.
-    'default:Python 3\.14 will, by default, filter extracted tar archives and reject files or modify their metadata:DeprecationWarning',
+    'default:Python 3.14 will, by default, filter extracted tar archives and reject files or modify their metadata:DeprecationWarning',
 
     # Do not error out on deprecation warnings stemming from our current
     # version of setuptools (57.5.0) in a Python 3.10 environment. When we add
     # support for the latest version of setuptools, we should be able to remove
     # these filters.
-    'default:The distutils\.sysconfig module is deprecated:DeprecationWarning',
+    'default:The distutils.sysconfig module is deprecated:DeprecationWarning',
 
     # Python 3.10.9 introduced a new DeprecationWarning for the implicit
     # creation of event loops. Python plans to remove this warning in the
@@ -218,10 +213,111 @@ filterwarnings = [
     # https://github.com/pytest-dev/pytest-xdist/issues/825
     'default:The --rsyncdir command line argument and rsyncdirs config variable are deprecated.:DeprecationWarning'
 ]
-markers = [
-    "slow: marks tests as slow",
-    "validates_models: marks tests as one which validates service models",
+testpaths = [ "", "",  ]
+addopts = ["--doctest-modules"]
+norecursedirs = [
+    "build",
+    "dist",
 ]
+doctest_optionflags = "NORMALIZE_WHITESPACE ELLIPSIS"
+
+[tool.coverage.run]
+command_line = "-m pytest --doctest-modules"
+source = [ ]
+parallel = true
+branch = true # measure branch coverage in addition to statement coverage
+data_file = "coverage/.coverage"
+omit = [
+]
+
+[tool.coverage.report]
+fail_under = 5
+
+[tool.coverage.paths__]
+source = [
+    "awscli",
+    "**/site-packages/awscli",
+]
+omit = [
+]
+
+[tool.poetry_bump2version.options]
+list = true
+allow_dirty = true
+tag = true
+commit = true
+verbose = 1
+
+[tool.pydocstyle]
+convention = "google"
+add_select = "D401,D404"
+
+[tool.poe.env]
+PYTHONWARNINGS = "ignore::Warning:setuptools.command.install"
+
+[tool.poe.tasks]
+pyproject-fmt = { shell = "pyproject-fmt pyproject.toml" }
+check-lock = { shell = "poetry check --lock | grep -v 'not consistent'", help = "poetry lock workaround for https://github.com/nat-n/poethepoet/issues/91" }
+set-lock = { shell = "poetry lock --no-update", help = "Locks the project dependencies in poetry.lock" }
+pc-install = { shell = "pre-commit install; ", help = "Set up commit-msg and pre-commit hooks" }
+pc-autoupdate = { shell = "pre-commit autoupdate", help = "Auto update pre-commit hooks" }
+pc-reinstall = { shell = "pre-commit uninstall; ; pre-commit install; pre-commit gc; pre-commit autoupdate; ", help = "Reset commit-msg and pre-commit hooks" }
+pc-uninstall = { shell = "pre-commit uninstall; ", help = "Uninstall commit-msg and pre-commit hooks" }
+hooks = { shell = "git add -A; pre-commit run", help = "Run pre-commit hooks" }
+isort = { shell = "[ -z '' ] || { export PYTHONWARNINGS='ignore::Warning:setuptools.command.install'; isort  ; }", help = "isort imports in  and " }
+black = { shell = "[ -z '' ] || { black  ; }", help = "black formatting in  and " }
+tests = { shell = "[ -z '' ] || { poetry run pytest -s --doctest-modules  ; }", help = "pytest's" }
+pros = { shell = "prospector --profile prospector.yaml", help = "Prospector" }
+b2v = { cmd = "bump2version patch --new-version '${version}' --allow-dirty --commit", args = [{ name = "version", positional = true, multiple = false }], help = "Prospector" }
+gcl = { shell = "cz changelog --incremental || { echo 'With incremental changelog we are ok when there is nothing new to add ...'; true; }; python scripts/normalize_changelog.py", help = "Git Changelog" }
+format = { shell = "black --check --diff ." }
+add = { shell = "git add -A" }
+ibtl = { sequence = ["isort", "black", "tests", "lint"] }
+doctests = { shell = "[ -z '' ] || { poetry run pytest --doctest-modules --verbose  }", help = "doctest's" }
+deps = { shell = "bash -c 'poetry env info; poetry install --with local-dev,test,docs'", help = "Install project dependencies" }
+prepare = { sequence = ["locks", "deps", "formats", "tests", "gcl", "docs-make", "add", "hooks"], help = "Do things to prepare for release" }
+docs-make = { shell = "make docs || true" }
+docs-build = { shell = "[ -z '' ] || { rm -fr  || true; poetry run portray as_html; }" }
+docs-serve = { shell = "[ -z '' ] || { rm -fr  || true; poetry run portray in_browser --reload; }" }
+pu = { shell = "poetry update", help = "Poetry update" }
+pule = { sequence = ["pu", "locks", "exports"], help = "Poetry update and exports" }
+exports = { sequence = ["export", "export-dev"], help = "Do things to export" }
+formats = { sequence = ["isort", "black"], help = "Run checks" }
+locks = { sequence = ["set-lock", "check-lock"], help = "Manage poetry.lock" }
+ruff =       { shell = "[ -z '' ] || { poe formats; ruff check          ; }", help = "Ruff linter" }
+ruff-noqa  = { shell = "[ -z '' ] || { ruff check --select RUF --fix    ; }", help = "Ruff linter fix noqa" }
+ruff-watch = { shell = "[ -z '' ] || { poe formats; ruff check --watch  ; }", help = "Ruff linter in watch mode" }
+ruff-fix =   { shell = "[ -z '' ] || { ruff check --fix-only            ; }", help = "Ruff linter fixes" }
+tflint = { shell = "env bash bin/run-tflint.sh", help = "Terraform linter" }
+tffmt = { shell = "terraform fmt -list=true -recursive -write=true", help = "Terraform formatting" }
+cruft = { shell = "git add -A ; poe cruft-checkout-override :latest:; git status ", help = "Update cruft to latest with override" }
+cruftno = { shell = "git add -A ; poe cruft-checkout :latest:; git status ", help = "Update cruft to latest" }
+cruft-chore = { shell = "git add -A ; git commit -m 'chore: cruft update'; [ ! -f VERSION ] || { cat VERSION; git tag --force $(cat VERSION); }; [ 0 -ne $? ] || { git push; git push --tags --force; }", help = "Commit cruft updates" }
+cruft-latest = { shell = "poe cruft-checkout :latest: ", help = "Update cruft to latest" }
+cruft-all = { sequence = ["cruft", "cruft-chore"], help = "Update cruft stuff in one go." }
+
+[tool.poe.tasks.cruft-checkout-override]
+shell = "poetry run cruft update --force --strict --override --allow-modified-files --checkout ${checkout}"
+help = "Run cruft update"
+args = [
+    { name = "checkout", positional=true, help = "Tag to check out", required = true, multiple = false },
+]
+[tool.poe.tasks.cruft-checkout]
+shell = "poetry run cruft update --force --strict --no-override --allow-modified-files --checkout ${checkout}"
+help = "Run cruft update"
+args = [
+    { name = "checkout", positional=true, help = "Tag to check out", required = true, multiple = false },
+]
+
+[tool.poe.tasks.lint]
+shell = """
+[ -z '' ] || {
+python -m black --check  ;
+python -m isort --check-only  ;
+ruff check  ;
+}
+"""
+help = "Do a few lint checks"
 
 [tool.poe.tasks.test-cov]
 shell = """
@@ -252,16 +348,9 @@ help = "Export poetry deps to requirements.txt"
 env = { "PYTHONWARNINGS" = "ignore::Warning:setuptools.command.install" }
 interpreter = "bash"
 
-[tool.poe.tasks.cruft-checkout]
-shell = "cruft update --force --strict --override --allow-modified-files --checkout ${checkout}"
-help = "Run cruft update"
-args = [
-    { name = "checkout", positional=true, help = "Tag to check out", required = true, multiple = false },
-]
-
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "2.15.34post1"
+version = "2.22.26.post5"
 version_files = [
     ".bumpversion.cfg",
     "VERSION",
@@ -291,7 +380,6 @@ include_reference_documentation = true
 extra_markdown_extensions = ["admonition", "codehilite", "extra"]
 
 [tool.portray.pdocs]
-# TO_DO: [2023-01-25 Christo]: excluded_modules = ["cli.console.vendor",]
 
 [tool.portray.mkdocs]
 site_name = "Universal Command Line Environment for AWS."
@@ -331,4 +419,5 @@ accent = "yellow"
 toggle = { icon = "material/lightbulb-outline", name = "Switch to dark mode" }
 
 [tool.cruft]
-skip= ["CODEOWNERS","docs/TODO.md","README.md","Makefile",".gitignore","poetry.toml","tests/__init__.py","tests/conftest.py",".python-version",".gitignore",".github/workflows/build-test-publish.yml",".bumpversion.cfg","pyproject.toml",]
+# NOTE: Putting these here for real will work with cruft BUT it will require TWO cruft runs to take effect.
+#skip= ["cookiecutter_template_debugger_src","CODEOWNERS","docs/TODO.md","README.md","Makefile",".gitignore","poetry.toml","tests/__init__.py","tests/conftest.py",".python-version",".gitignore",".github/workflows/build-test-publish.yml",".bumpversion.cfg","bin","awscli","scripts","requirements*","exe","macpkg","proposals","doc","backends",".changes","docker","m4","bin","docs",".tflint.*","tests",".github/workflows/mkdocs-gh-pages.yml","Makefile.d",".coveragerc","CHANGELOG.rst","CODE_OF_CONDUCT.md","CONTRIBUTING.rst","DEPENDENCIES.md","LICENSE.txt","Makefile.in","Pipfile","Pipfile.lock","README.rst","configure","configure.ac","requirements-base-lock.txt","requirements-base.txt","requirements-build-lock.txt","requirements-build-win.txt","requirements-build.txt","requirements-check.txt","requirements-dev-lock.txt","requirements-dev.txt","requirements-docs-lock.txt","requirements-docs.txt","requirements-test-lock.txt","requirements-test.txt","requirements.txt","tox.ini",".editorconfig",".envrc",".gitlint",".gitownrc",".pre-commit-config.yaml",".pylintrc","mkdocs._yaml",]
