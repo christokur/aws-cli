@@ -92,9 +92,9 @@
       "ruff_select": "",
       "gitignore_items": "cookiecutter_template_debugger_src",
       "_extensions": [
-        "toolbag.utils.template_expander.extensions.ExpandCookiecutterTemplateExtension",
         "toolbag.utils.template_expander.extensions.python_extension.PythonExtension",
-        "toolbag.utils.template_expander.extensions.PythonExtension"
+        "toolbag.utils.template_expander.extensions.PythonExtension",
+        "toolbag.utils.template_expander.extensions.ExpandCookiecutterTemplateExtension"
       ],
       "_notes": {
         "lists": "Lists have a special meaning for Cookiecutter so we are forced to wrap them in a map or express as a CSV string and split in the template.",
@@ -117,7 +117,7 @@
         "colorama": ">=0.2.5,<0.4.7",
         "docutils": ">=0.10,<0.20",
         "cryptography": ">=40.0.0,<43.0.2",
-        "ruamel.yaml": ">=0.15.0,<=0.17.21",
+        "ruamel.yaml": ">=0.15.0,<=0.18.9",
         "ruamel.yaml.clib": {
           "version": ">=0.2.0,<=0.2.8",
           "python": [
