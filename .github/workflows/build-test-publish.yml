@@ -27,7 +27,7 @@ jobs:
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       AWS_REGION_TOOLS: "us-east-2"
-      AWS_ACCOUNT_TOOLS: "433714148419"
+      AWS_ACCOUNT_TOOLS: "747330015130"
       AWS_PROFILE_TOOLS: "cloud-services-prod"
       PYTHON_KEYRING_BACKEND: keyring.backends.null.Keyring
     steps:
@@ -48,10 +48,10 @@ jobs:
         shell: bash
 
       - name: configure-aws-credentials
-        uses: SandsB2B/configure-aws-credentials-action@main
+        uses: DLDInternetLLC/configure-aws-credentials-action@main
         with:
           role_name: "github-codeartifact-readwrite"
-          account_id: "433714148419"
+          account_id: "747330015130"
           aws_region: "us-east-2"
           aws_profile: "cloud-services-prod"
 
@@ -106,3 +106,4 @@ jobs:
 #          done
 
         shell: bash
+

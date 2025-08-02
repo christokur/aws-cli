@@ -34,7 +34,7 @@ def call_jira(
     """Call Jira API."""
     username = username or os.getenv("JIRA_USERNAME", None)
     password = password or os.getenv("JIRA_API_KEY", None)
-    instance_url = os.getenv("JIRA_INSTANCE_URL", "https://sandsb2b.atlassian.net")
+    instance_url = os.getenv("JIRA_INSTANCE_URL", "https://DLDInternetLLC.atlassian.net")
     api_path = os.getenv("JIRA_API_PATH", "/rest/api/3")
     url = f"{instance_url}{api_path}{api}"
     auth = HTTPBasicAuth(username, password)

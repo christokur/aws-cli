@@ -384,10 +384,10 @@ extra_markdown_extensions = ["admonition", "codehilite", "extra"]
 [tool.portray.mkdocs]
 site_name = "Universal Command Line Environment for AWS."
 site_description = "Universal Command Line Environment for AWS."
-site_url = "https://aws-cli.docs.infra-area2.com/"
-repo_url = "https://github.com/SandsB2B/aws-cli"
+site_url = "https://aws-cli.docs.dldinternet.com/"
+repo_url = "https://github.com/DLDInternetLLC/aws-cli"
 edit_uri = "edit/master"
-copyright = "(c) 2022 Las Vegas Sands"
+copyright = "(c) 2020 DLDInternet LLC"
 
 extra = { generator = false }
 extra_css = ["/docs/css/termynal.css", "/docs/css/custom.css"]

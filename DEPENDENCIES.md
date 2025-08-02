@@ -10,8 +10,8 @@
 
     To solve we must first make awscli compatible with python 3.12, then we can update python-toolbag.
 
-2.      awscli --> cruft + cookiecutter-b2b-project
-        cookiecutter-b2b-project --> python extension from python-toolbag
+2.      awscli --> cruft + cookiecutter-python-project
+        cookiecutter-python-project --> python extension from python-toolbag
         python-toolbag --> awscli
         awscli --> ruamel.yaml.clib
         ruamel.yaml.clib --> python < 3.12
