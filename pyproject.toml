@@ -54,12 +54,12 @@ homepage = "http://aws.amazon.com/cli/"
 [tool.flit.module]
 name = "awscli"
 
-[project.scripts]
-aws = "awscli.clidriver:main"
-aws_completer = "awscli.autocomplete.main:autocomplete"
-aws_bash_completer = "awscli.autocomplete.main:autocomplete"
-aws_zsh_completer = "awscli.autocomplete.main:autocomplete"
-"aws.cmd" = "awscli.clidriver:main"
+#[project.scripts]
+#aws = "awscli.clidriver:main"
+#aws_completer = "awscli.autocomplete.main:autocomplete"
+#aws_bash_completer = "awscli.autocomplete.main:autocomplete"
+#aws_zsh_completer = "awscli.autocomplete.main:autocomplete"
+#"aws.cmd" = "awscli.clidriver:main"
 
 [tool.awscli.sdist]
 include = [
