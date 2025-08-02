@@ -88,18 +88,25 @@ jobs:
       - name: Publish
         if: matrix.python-version == '3.12' && matrix.os == 'ubuntu-latest'
         run: |
-          pip install flit --upgrade
-          export FLIT_USERNAME=aws
-          export FLIT_PASSWORD=`aws codeartifact get-authorization-token --domain artifacts --domain-owner $AWS_ACCOUNT_TOOLS --query authorizationToken --output text --profile=cloud-services-prod`
-          export FLIT_INDEX_URL=`aws codeartifact get-repository-endpoint --domain artifacts --domain-owner $AWS_ACCOUNT_TOOLS --repository pypi --format pypi --query repositoryEndpoint --output text --profile=cloud-services-prod`
-          flit publish
+#          pip install flit --upgrade
+#          export FLIT_USERNAME=aws
+#          export FLIT_PASSWORD=`aws codeartifact get-authorization-token --domain artifacts --domain-owner $AWS_ACCOUNT_TOOLS --query authorizationToken --output text --profile=cloud-services-prod`
+#          export FLIT_INDEX_URL=`aws codeartifact get-repository-endpoint --domain artifacts --domain-owner $AWS_ACCOUNT_TOOLS --repository pypi --format pypi --query repositoryEndpoint --output text --profile=cloud-services-prod`
+#          flit publish
 
-#          pip install wheel twine
-#          cat ~/.pypirc
-#          #export TWINE_USERNAME=aws
-#          #export TWINE_PASSWORD=`aws codeartifact get-authorization-token --domain artifacts --domain-owner $AWS_ACCOUNT_TOOLS --query authorizationToken --output text --profile=cloud-services-prod`
-#          #export TWINE_REPOSITORY_URL=`aws codeartifact get-repository-endpoint --domain artifacts --domain-owner $AWS_ACCOUNT_TOOLS --repository pypi --format pypi --query repositoryEndpoint --output text --profile=cloud-services-prod`
-#          #set | grep TWINE
+          #export TWINE_USERNAME=aws
+          #export TWINE_PASSWORD=`aws codeartifact get-authorization-token --domain artifacts --domain-owner $AWS_ACCOUNT_TOOLS --query authorizationToken --output text --profile=cloud-services-prod`
+          #export TWINE_REPOSITORY_URL=`aws codeartifact get-repository-endpoint --domain artifacts --domain-owner $AWS_ACCOUNT_TOOLS --repository pypi --format pypi --query repositoryEndpoint --output text --profile=cloud-services-prod`
+          #set | grep TWINE
+
+          pip install wheel twine
+          
+          [ type setup_netrc_from_pipconffile 2>/dev/null ] || . $GITHUB_WORKSPACE/cicd/rc/configure_aws_codeartifact.rc
+          setup_netrc_from_pipconffile
+          
+          cat ~/.pypirc
+          twine upload --repository gitlab dist/* --verbose
+
 #          for whl in dist/*.whl; do
 #            #twine upload --repository-url $TWINE_REPOSITORY_URL -u $TWINE_USERNAME -p $TWINE_PASSWORD --verbose $whl
 #            twine upload --repository codeartifact $whl

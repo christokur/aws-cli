@@ -4,6 +4,8 @@
 #set -x
 set +e
 
+__version__="0.27.37"
+
 function aws_setup_npm_codeartifact_access() {
     set +e
     ca_repo=${1:-npm}
@@ -20,6 +22,21 @@ function aws_setup_pip_codeartifact_access() {
     aws codeartifact login --tool pip --repository ${ca_repo} --domain artifacts --domain-owner $AWS_ACCOUNT_TOOLS --profile=$AWS_PROFILE --region=${AWS_REGION_TOOLS:-us-east-2}
 }
 
+function aws_setup_uv_codeartifact_access() {
+    set +e
+    aws_setup_pip_codeartifact_access
+    #pip config list
+    # shellcheck disable=SC2155
+    export UV_INDEX_URL=${UV_INDEX_URL:-$(pip config list | grep global.index-url | cut -d'=' -f2- | tr -d ' ' | tr -d "'")}
+    export UV_EXTRA_INDEX_URL=${UV_EXTRA_INDEX_URL:-"https://pypi.org/simple/"}
+    # shellcheck disable=SC2155
+    # shellcheck disable=SC2086
+    # shellcheck disable=SC2046
+    export UV_PROJECT_ENVIRONMENT=${UV_PROJECT_ENVIRONMENT:-$(poetry env info --path)}
+    # shellcheck disable=SC2155
+    [ ! -z "${UV_PROJECT_ENVIRONMENT}" ] || export UV_PROJECT_ENVIRONMENT=$(dirname "$(dirname $PYTHON_EXE)")
+}
+
 function aws_setup_codeartifact_access() {
     set +e
     ca_repo=${1:-pypi}
@@ -33,5 +50,53 @@ function aws_setup_codeartifact_access() {
 
     AWS_CODEARTIFACT_GRE=$(aws codeartifact get-repository-endpoint --domain artifacts --domain-owner ${AWS_ACCOUNT_TOOLS} --profile ${AWS_PROFILE} --region ${AWS_REGION_TOOLS} --repository ${ca_repo} --format pypi --query @.repositoryEndpoint --output text)
     AWS_CODEARTIFACT_GAT=$(aws codeartifact get-authorization-token --domain artifacts --domain-owner ${AWS_ACCOUNT_TOOLS} --profile ${AWS_PROFILE} --region ${AWS_REGION_TOOLS} --query @.authorizationToken --output text)
+
+    poetry config --unset repos.${poetry_repo} || true
+    poetry config repo.${poetry_repo} ${AWS_CODEARTIFACT_GRE}
+    poetry config http-basic.${poetry_repo} aws ${AWS_CODEARTIFACT_GAT}
+
+    [ ${VERBOSE:-0} -lt 1 ] || { set | egrep -e '^(POETRY|PYTHON|AWS)'; poetry config --list || true; }
     aws codeartifact login --tool twine --repository ${ca_repo} --domain artifacts --domain-owner $AWS_ACCOUNT_TOOLS --profile=$AWS_PROFILE --region=${AWS_REGION_TOOLS:-us-east-2}
+}
+
+function pipconffile() {
+  # Store pip config output
+  local PIP_OUTPUT
+  PIP_OUTPUT=$(pip config debug)
+
+  # Look for pip.conf with exists: True and extract the filename
+  echo "$PIP_OUTPUT" | while IFS= read -r line; do
+      if [[ $line == *"pip.conf"* && $line == *"exists: True"* ]]; then
+          # Extract filename (everything before the comma)
+          filename=$(echo "$line" | sed 's/,.*$//')
+          echo $filename
+          break
+      fi
+  done
+}
+function netrcfrompipconffile() {
+  local pcf
+  pcf="$(pipconffile)"
+  if [[ -n "$pcf" && -f "$pcf" ]]; then
+    # Extract URL from pip.conf
+    local url
+    url=$(grep -E "^index-url\s*=" "$pcf" | sed 's/.*=\s*//' | tr -d '"' | tr -d "'")
+    if [[ -n "$url" ]]; then
+      # Parse URL components
+      local host username password
+      # Extract credentials and host from URL
+      if [[ $url =~ https?://([^:]+):([^@]+)@([^/]+) ]]; then
+        username="${BASH_REMATCH[1]}"
+        password="${BASH_REMATCH[2]}"
+        host="${BASH_REMATCH[3]}"
+
+        echo "machine $host"
+        echo "login $username"
+        echo "password $password"
+      fi
+    fi
+  fi
+}
+function setup_netrc_from_pipconffile() {
+  netrcfrompipconffile > ~/.netrc
 }
