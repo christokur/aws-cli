@@ -55,11 +55,11 @@ homepage = "http://aws.amazon.com/cli/"
 name = "awscli"
 
 [project.scripts]
-aws = "bin.aws:main"
-aws_completer = "bin.aws_completer:main"
-aws_bash_completer = "bin.aws_bash_completer:main"
-aws_zsh_completer = "bin.aws_zsh_completer:main"
-"aws.cmd" = "bin.aws:main"
+aws = "awscli.clidriver:main"
+aws_completer = "awscli.autocomplete.main:autocomplete"
+aws_bash_completer = "awscli.autocomplete.main:autocomplete"
+aws_zsh_completer = "awscli.autocomplete.main:autocomplete"
+"aws.cmd" = "awscli.clidriver:main"
 
 [tool.awscli.sdist]
 include = [
