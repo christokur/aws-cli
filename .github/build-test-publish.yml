@@ -1,3 +1,5 @@
+THIS DOES NOT WORK
+
 name: Build, Test and Publish
 
 on:
@@ -26,9 +28,6 @@ jobs:
     runs-on: ${{ matrix.os }}
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      AWS_REGION_TOOLS: "us-east-2"
-      AWS_ACCOUNT_TOOLS: "433714148419"
-      AWS_PROFILE_TOOLS: "cloud-services-prod"
       PYTHON_KEYRING_BACKEND: keyring.backends.null.Keyring
     steps:
       - uses: actions/checkout@v3
