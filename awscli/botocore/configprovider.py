@@ -137,6 +137,24 @@ BOTOCORE_DEFAUT_SESSION_VARIABLES = {
         None,
         None,
     ),
+    'request_checksum_calculation': (
+        'request_checksum_calculation',
+        'AWS_REQUEST_CHECKSUM_CALCULATION',
+        "when_supported",
+        None,
+    ),
+    'response_checksum_validation': (
+        'response_checksum_validation',
+        'AWS_RESPONSE_CHECKSUM_VALIDATION',
+        "when_supported",
+        None,
+    ),
+    'disable_host_prefix_injection': (
+        'disable_host_prefix_injection',
+        'AWS_DISABLE_HOST_PREFIX_INJECTION',
+        None,
+        utils.ensure_boolean,
+    ),
 }
 # A mapping for the s3 specific configuration vars. These are the configuration
 # vars that typically go in the s3 section of the config file. This mapping
@@ -336,7 +354,7 @@ class ConfigValueStore(object):
 
     def get_config_variable(self, logical_name):
         """
-        Retrieve the value associeated with the specified logical_name
+        Retrieve the value associated with the specified logical_name
         from the corresponding provider. If no value is found None will
         be returned.
 

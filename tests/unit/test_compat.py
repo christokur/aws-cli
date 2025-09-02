@@ -10,19 +10,24 @@
 # distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF
 # ANY KIND, either express or implied. See the License for the specific
 # language governing permissions and limitations under the License.
+import io
 import locale
 import os
 import signal
 
 import pytest
 
-from awscli.compat import ensure_text_type
-from awscli.compat import compat_shell_quote
-from awscli.compat import compat_open
-from awscli.compat import get_popen_kwargs_for_pager_cmd
-from awscli.compat import getpreferredencoding
-from awscli.compat import ignore_user_entered_signals
-from awscli.testutils import mock, unittest, skip_if_windows, FileCreator
+from awscli.compat import (
+    compat_open,
+    compat_shell_quote,
+    ensure_text_type,
+    get_popen_kwargs_for_pager_cmd,
+    getpreferredencoding,
+    ignore_user_entered_signals,
+    set_preferred_output_encoding,
+    validate_preferred_output_encoding,
+)
+from awscli.testutils import FileCreator, mock, skip_if_windows, unittest
 
 
 class TestEnsureText(unittest.TestCase):
@@ -39,7 +44,7 @@ class TestEnsureText(unittest.TestCase):
         self.assertEqual(response, 'bar')
 
     def test_unicode(self):
-        value = u'baz'
+        value = 'baz'
         response = ensure_text_type(value)
         self.assertIsInstance(response, str)
         self.assertEqual(response, 'baz')
@@ -48,7 +53,7 @@ class TestEnsureText(unittest.TestCase):
         value = b'\xe2\x9c\x93'
         response = ensure_text_type(value)
         self.assertIsInstance(response, str)
-        self.assertEqual(response, u'\u2713')
+        self.assertEqual(response, '\u2713')
 
     def test_non_string_or_bytes_raises_error(self):
         value = 500
@@ -68,7 +73,7 @@ class TestEnsureText(unittest.TestCase):
         ('\\\\"', '\\\\\\\\\\"'),
         ('foo bar', '"foo bar"'),
         ('foo\tbar', '"foo\tbar"'),
-    )
+    ),
 )
 def test_compat_shell_quote_windows(input_string, expected_output):
     assert compat_shell_quote(input_string, "win32") == expected_output
@@ -83,8 +88,8 @@ def test_compat_shell_quote_windows(input_string, expected_output):
         ('foo bar', "'foo bar'"),
         ('foo\tbar', "'foo\tbar'"),
         ('foo\nbar', "'foo\nbar'"),
-        ("foo'bar", '\'foo\'"\'"\'bar\'')
-    )
+        ("foo'bar", '\'foo\'"\'"\'bar\''),
+    ),
 )
 def test_comat_shell_quote_linux(input_string, expected_output):
     assert compat_shell_quote(input_string, "linux2") == expected_output
@@ -99,8 +104,8 @@ def test_comat_shell_quote_linux(input_string, expected_output):
         ('foo bar', "'foo bar'"),
         ('foo\tbar', "'foo\tbar'"),
         ('foo\nbar', "'foo\nbar'"),
-        ("foo'bar", '\'foo\'"\'"\'bar\'')
-    )
+        ("foo'bar", '\'foo\'"\'"\'bar\''),
+    ),
 )
 def test_comat_shell_quote_darwin(input_string, expected_output):
     assert compat_shell_quote(input_string, "darwin") == expected_output
@@ -139,8 +144,10 @@ class TestIgnoreUserSignals(unittest.TestCase):
             try:
                 os.kill(os.getpid(), signal.SIGINT)
             except KeyboardInterrupt:
-                self.fail('The ignore_user_entered_signals context '
-                          'manager should have ignored')
+                self.fail(
+                    'The ignore_user_entered_signals context '
+                    'manager should have ignored'
+                )
 
     @skip_if_windows("These signals are not supported for windows")
     def test_ignore_signal_sigquit(self):
@@ -156,7 +163,6 @@ class TestIgnoreUserSignals(unittest.TestCase):
 
 
 class TestGetPreferredEncoding(unittest.TestCase):
-
     @mock.patch.dict(os.environ, {'AWS_CLI_FILE_ENCODING': 'cp1252'})
     def test_getpreferredencoding_with_env_var(self):
         encoding = getpreferredencoding()
@@ -172,7 +178,8 @@ class TestGetPreferredEncoding(unittest.TestCase):
     @mock.patch('locale.setlocale', return_value='English_United States.1252')
     @mock.patch('locale.getpreferredencoding')
     def test_runs_locale_getpreferredencoding_wo_env_var_and_posix(
-            self, getprefedencoding, *args):
+        self, getprefedencoding, *args
+    ):
         getpreferredencoding()
         getprefedencoding.assert_called_once_with()
 
@@ -200,3 +207,27 @@ class TestCompatOpenWithAccessPermissions(unittest.TestCase):
         with compat_open(file_path, access_permissions=0o600, mode='w') as f:
             f.write('bar')
         self.assertEqual(os.stat(file_path).st_mode, expected_st_mode)
+
+
+@pytest.mark.parametrize(
+    'env_vars, expected_encoding',
+    [
+        ({}, 'cp1252'),
+        ({'AWS_CLI_OUTPUT_ENCODING': 'UTF-8'}, 'UTF-8'),
+        ({'PYTHONUTF8': '1'}, 'UTF-8'),
+    ],
+)
+def test_set_preferred_output_encoding(env_vars, expected_encoding):
+    stdout_b = io.BytesIO()
+    stdout = io.TextIOWrapper(stdout_b, encoding="cp1252")
+
+    with mock.patch.dict(os.environ, env_vars):
+        set_preferred_output_encoding(stdout)
+
+    assert stdout.encoding == expected_encoding
+
+
+def test_validate_preferred_output_encoding():
+    with mock.patch.dict(os.environ, {'AWS_CLI_OUTPUT_ENCODING': 'invalid'}):
+        with pytest.raises(ValueError):
+            validate_preferred_output_encoding()
