@@ -11,11 +11,11 @@ This package provides a unified command line interface to Amazon Web Services.
 
 The aws-cli package works on Python versions:
 
-* 3.8.x
 * 3.9.x
 * 3.10.x
 * 3.11.x
 * 3.12.x
+* 3.13.x
 
 .. attention::
    We recommend that all customers regularly monitor the
@@ -371,11 +371,11 @@ The latest changes to the CLI are in the ``v2`` branch on github.  This is
 to make sure you ``git checkout v2``.
 
 If you just want to install a snapshot of the latest development version of
-the CLI, you can use the ``requirements-dev.txt`` file included in this repo.
+the CLI, you can use the ``requirements-dev-lock.txt`` file included in this repo.
 This file points to the development version of our dependencies::
 
     $ cd <path_to_awscli> && git checkout v2
-    $ pip install -r requirements-dev.txt
+    $ pip install -r requirements-dev-lock.txt
     $ pip install -e .
 
 Verify that the AWS CLI is correctly installed. Note that the word ``source`` should appear in the output::

@@ -25,7 +25,7 @@ from build_system.utils import (
     parse_requirements,
 )
 
-from tests.backends.build_system.markers import if_windows, skip_if_windows
+from tests.markers import if_windows, skip_if_windows
 
 
 @pytest.fixture
@@ -45,10 +45,6 @@ def utils():
             Requirement("colorama", ">=0.2.5", "<0.4.4"),
         ),
         ("docutils>=0.10,<0.16", Requirement("docutils", ">=0.10", "<0.16")),
-        (
-            "cryptography>=3.3.2,<37.0.0",
-            Requirement("cryptography", ">=3.3.2", "<37.0.0"),
-        ),
         (
             "ruamel.yaml>=0.15.0,<=0.17.21",
             Requirement("ruamel.yaml", ">=0.15.0", "<=0.17.21"),

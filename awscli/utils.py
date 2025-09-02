@@ -10,6 +10,7 @@
 # distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF
 # ANY KIND, either express or implied. See the License for the specific
 # language governing permissions and limitations under the License.
+import base64
 import contextlib
 import csv
 import datetime
@@ -25,6 +26,7 @@ from botocore.useragent import UserAgentComponent
 from botocore.utils import (
     BadIMDSRequestError,
     IMDSFetcher,
+    original_ld_library_path,
     resolve_imds_endpoint_mode,
 )
 
@@ -371,11 +373,14 @@ def operation_uses_document_types(operation_model):
 
 
 def json_encoder(obj):
-    """JSON encoder that formats datetimes as ISO8601 format."""
+    """JSON encoder that formats datetimes as ISO8601 format
+    and encodes bytes to UTF-8 Base64 string."""
     if isinstance(obj, datetime.datetime):
         return obj.isoformat()
+    elif isinstance(obj, bytes):
+        return base64.b64encode(obj).decode("utf-8")
     else:
-        return obj
+        raise TypeError('Encountered unrecognized type in JSON encoder.')
 
 
 @contextlib.contextmanager
@@ -415,7 +420,11 @@ class OutputStreamFactory:
             self._popen = Popen
         self._environ = environ
         if environ is None:
-            self._environ = os.environ.copy()
+            # When calling out to the system's pager, we want to avoid using
+            # shared libraries bundled with the AWS CLI so that the pager uses
+            # the system's shared libraries.
+            with original_ld_library_path():
+                self._environ = os.environ.copy()
         self._default_less_flags = default_less_flags
 
     def get_output_stream(self):
