@@ -10,7 +10,7 @@ backend-path = ['backends']
 [project]
 name = "awscli"
 description = "Universal Command Line Environment for AWS."
-version = "2.22.26.post5"
+version = "2.22.34.post1"
 authors = [
     # 'Amazon Web Services'
     { name = "Amazon Web Services" },
@@ -25,7 +25,8 @@ classifiers = [
     "Natural Language :: English",
     "License :: OSI Approved :: Apache Software License",
     "Programming Language :: Python",
-    "Programming Language :: Python :: 3",    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
 
@@ -431,3 +432,64 @@ toggle = { icon = "material/lightbulb-outline", name = "Switch to dark mode" }
 [tool.cruft]
 # NOTE: Putting these here for real will work with cruft BUT it will require TWO cruft runs to take effect.
 #skip= ["cookiecutter_template_debugger_src","CODEOWNERS","docs/TODO.md","README.md","Makefile",".gitignore","poetry.toml","tests/__init__.py","tests/conftest.py",".python-version",".gitignore",".github/workflows/build-test-publish.yml",".bumpversion.cfg","bin","awscli","scripts","requirements*","exe","macpkg","proposals","doc","backends",".changes","docker","m4","bin","docs",".tflint.*","tests",".github/workflows/mkdocs-gh-pages.yml","Makefile.d",".coveragerc","CHANGELOG.rst","CODE_OF_CONDUCT.md","CONTRIBUTING.rst","DEPENDENCIES.md","LICENSE.txt","Makefile.in","Pipfile","Pipfile.lock","README.rst","configure","configure.ac","requirements-base-lock.txt","requirements-base.txt","requirements-build-lock.txt","requirements-build-win.txt","requirements-build.txt","requirements-check.txt","requirements-dev-lock.txt","requirements-dev.txt","requirements-docs-lock.txt","requirements-docs.txt","requirements-test-lock.txt","requirements-test.txt","requirements.txt","tox.ini",".editorconfig",".envrc",".gitlint",".gitownrc",".pre-commit-config.yaml",".pylintrc","mkdocs._yaml",]
+
+[tool.ruff]
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pyenv",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "site-packages",
+    "venv",
+]
+
+force-exclude = true
+
+# Format same as Black.
+line-length = 79
+indent-width = 4
+
+[tool.ruff.lint]
+# Enable Pyflakes (`F`) and a subset of the pycodestyle (`E`)  codes by default.
+# Unlike Flake8, Ruff doesn't enable pycodestyle warnings (`W`) or
+# McCabe complexity (`C901`) by default.
+select = ["E4", "E7", "E9", "F", "I", "UP"]
+ignore = ["F401"]
+
+# Allow fix for all enabled rules (when `--fix`) is provided.
+fixable = ["ALL"]
+unfixable = []
+
+# Allow unused variables when underscore-prefixed.
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[tool.ruff.format]
+# Like Black, use double quotes for strings, spaces for indents
+# and trailing commas.
+quote-style = "preserve"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+docstring-code-format = false
+docstring-code-line-length = "dynamic"

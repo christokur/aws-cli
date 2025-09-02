@@ -2,6 +2,76 @@
 CHANGELOG
 =========
 
+2.22.34
+=======
+
+* api-change:``ec2``: Add support for DisconnectOnSessionTimeout flag in CreateClientVpnEndpoint and ModifyClientVpnEndpoint requests and DescribeClientVpnEndpoints responses
+* api-change:``bedrock``: With this release, Bedrock Evaluation will now support latency-optimized inference for foundation models.
+* api-change:``kafkaconnect``: Support updating connector configuration via UpdateConnector API. Release Operations API to monitor the status of the connector operation.
+* api-change:``artifact``: Support resolving regional API calls to partition's leader region endpoint.
+* api-change:``transcribe``: This update provides tagging support for Transcribe's Call Analytics Jobs and Call Analytics Categories.
+
+
+2.22.33
+=======
+
+* api-change:``sts``: Fixed typos in the descriptions.
+* api-change:``redshift``: Additions to the PubliclyAccessible and Encrypted parameters clarifying what the defaults are.
+* api-change:``securitylake``: Doc only update for ServiceName that fixes several customer-reported issues
+
+
+2.22.32
+=======
+
+* api-change:``codebuild``: AWS CodeBuild Now Supports BuildBatch in Reserved Capacity and Lambda
+* api-change:``compute-optimizer``: This release expands AWS Compute Optimizer rightsizing recommendation support for Amazon EC2 Auto Scaling groups to include those with scaling policies and multiple instance types.
+* api-change:``fms``: AWS Firewall Manager now lets you combine multiple resource tags using the logical AND operator or the logical OR operator.
+
+
+2.22.31
+=======
+
+* api-change:``sagemaker``: Adds support for IPv6 for SageMaker HyperPod cluster nodes.
+* api-change:``route53``: Amazon Route 53 now supports the Asia Pacific (Thailand) Region (ap-southeast-7) for latency records, geoproximity records, and private DNS for Amazon VPCs in that region
+* api-change:``rds``: Updates Amazon RDS documentation to clarify the RestoreDBClusterToPointInTime description.
+
+
+2.22.30
+=======
+
+* enhancement:``s3 ls``: Expose low-level ``ListBuckets` parameters ``Prefix`` and ``BucketRegion`` to high-level ``s3 ls`` command as ``--bucket-name-prefix`` and ``--bucket-region``.
+* api-change:``dynamodb``: This release makes Amazon DynamoDB point-in-time-recovery (PITR) to be configurable. You can set PITR recovery period for each table individually to between 1 and 35 days.
+* api-change:``imagebuilder``: This release adds support for importing images from ISO disk files. Added new ImportDiskImage API operation.
+* api-change:``cloudhsmv2``: Adds support to ModifyCluster for modifying a Cluster's Hsm Type.
+
+
+2.22.29
+=======
+
+* api-change:``supplychain``: Allow vanity DNS domain when creating a new ASC instance
+* api-change:``iotsecuretunneling``: Adds dualstack endpoint support for IoT Secure Tunneling
+
+
+2.22.28
+=======
+
+* api-change:``s3``: This change is only for updating the model regexp of CopySource which is not for validation but only for documentation and user guide change.
+* api-change:``route53domains``: Doc only update for Route 53 Domains that fixes several customer-reported issues
+* api-change:``ecs``: Adding SDK reference examples for Amazon ECS operations.
+
+
+2.22.27
+=======
+
+* api-change:``appsync``: Modify UpdateGraphQLAPI operation and flag authenticationType as required.
+* api-change:``organizations``: Added ALL_FEATURES_MIGRATION_ORGANIZATION_SIZE_LIMIT_EXCEEDED to ConstraintViolationException for the EnableAllFeatures operation.
+* api-change:``sagemaker``: Adding ETag information with Model Artifacts for Model Registry
+* api-change:``gamelift``: Amazon GameLift releases a new game session shutdown feature. Use the Amazon GameLift console or AWS CLI to terminate an in-progress game session that's entered a bad state or is no longer needed.
+* api-change:``mediaconnect``: AWS Elemental MediaConnect now supports Content Quality Analysis for enhanced source stream monitoring. This enables you to track specific audio and video metrics in transport stream source flows, ensuring your content meets quality standards.
+* api-change:``sqs``: In-flight message typo fix from 20k to 120k.
+* api-change:``mediaconvert``: This release adds support for the AVC3 codec and fixes an alignment issue with Japanese vertical captions.
+
+
 2.22.26
 =======
 
